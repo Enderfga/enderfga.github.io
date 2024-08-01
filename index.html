@@ -189,9 +189,14 @@
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://scholar.google.com/citations?view_op=search_authors&mauthors=xiaodan+liang&hl=zh-CN&oi=ao">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/">Shencai Liao</a>.</p>
                 <p>Additionally, I'm a research scientist at <strong><a href="https://www.cybever.ai/">Cybever AI</a></strong> in Sunnyvale, where I cooperate with a small team that mostly works on 3D computer vision and Large language model.</p>
             </div>
-            <div class="profile-image">
-                <a href="images/guian.jpg"><img alt="profile photo" src="images/guian.jpg"></a>
-            </div>
+            <div class="profile-image" onmouseover="guian_start()" onmouseout="guian_stop()" style="position: relative; display: inline-block;">
+                <div class="image-container" id="guian_image" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <img src="images/guian.gif" alt="profile photo" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <a href="images/guian.jpg">
+                  <img src="images/guian.jpg" alt="profile photo" style="max-width: 100%; height: auto; display: block;">
+                </a>
+              </div>
         </section>
 
 
@@ -331,18 +336,16 @@
             // Initialize to light mode by default
             document.getElementById('footer-ui-mode-left').checked = true;
         });
-        function enlargeImage(img) {
-        // 检查全屏API是否可用
-        if (img.requestFullscreen) {
-            img.requestFullscreen(); // W3C API
-        } else if (img.mozRequestFullScreen) {
-            img.mozRequestFullScreen(); // Firefox
-        } else if (img.webkitRequestFullscreen) {
-            img.webkitRequestFullscreen(); // Chrome and Safari
-        } else if (img.msRequestFullscreen) {
-            img.msRequestFullscreen(); // IE/Edge
-        }
-        }
     </script>
+    <script type="text/javascript">
+        function guian_start() {
+          document.getElementById('guian_image').style.opacity = "1";
+        }
+      
+        function guian_stop() {
+          document.getElementById('guian_image').style.opacity = "0";
+        }
+        guian_stop();
+      </script>
 </body>
 </html>
