@@ -7,34 +7,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="stylesheet.css">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
         }
         nav {
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             background: #333;
-            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         nav ul {
             margin: 0;
             padding: 0;
             list-style: none;
-            text-align: center;
+            display: flex;
         }
         nav ul li {
-            display: inline;
+            margin: 0 10px;
         }
         nav ul li a {
-            display: inline-block;
-            padding: 20px;
             color: #fff;
             text-decoration: none;
+            font-size: 1em;
+            padding: 10px;
         }
         nav ul li a:hover {
-            background: #575757;
+            color: #ccc;
+        }
+        .social-icons {
+            display: flex;
+            align-items: center;
+        }
+        .social-icons a {
+            color: #fff;
+            margin-left: 10px;
+            font-size: 1.2em;
+        }
+        .social-icons a:hover {
+            color: #ccc;
+        }
+        .theme-switcher {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+        .three-way-radio {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            width: 45px; /* 调整宽度以适应新的位置 */
+            height: 20px;
+            background-color: #666;
+            border-radius: 10px;
+        }
+        .three-way-radio input {
+            display: none;
+        }
+        .three-way-radio label {
+            display: none;
+        }
+        .indicator {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        #footer-ui-mode-left:checked ~ .indicator {
+            transform: translateX(0);
+        }
+        #footer-ui-mode-center:checked ~ .indicator {
+            transform: translateX(22px); /* 调整为合适的位置 */
+        }
+        #footer-ui-mode-right:checked ~ .indicator {
+            transform: translateX(25px); /* 调整为合适的位置 */
         }
         #content {
+            padding-top: 70px;
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
@@ -66,25 +136,50 @@
             width: 100%;
             border-radius: 50%;
         }
-        .social-icons a {
-            margin: 0 10px;
-            color: #333;
-            text-decoration: none;
-            font-size: 1.5em;
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
         }
-        .social-icons a:hover {
-            color: #0073e6;
-        }
+        nav a.to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #666;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
     </style>
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#honors">Honors & Awards</a></li>
-            <li><a href="#activities">Activities & Services</a></li>
-            <li><a href="#acknowledgements">Acknowledgements</a></li>
+            <li><a href="#research" id="nav-research">🔍 Research</a></li>
+            <li><a href="#honors" id="nav-honors">🏆 Honors & Awards</a></li>
+            <li><a href="#activities" id="nav-activities">🌟 Activities & Services</a></li>
+            <li><a href="#acknowledgements" id="nav-acknowledgements">📜 Acknowledgements</a></li>
         </ul>
+        <a href="#top" class="to-top" style="display:none;">⬆️</a>
+        <div class="social-icons">
+            <a href="mailto:guianfang@u.nus.edu"><i class="fas fa-envelope"></i></a>
+            <a href="data/cv.pdf"><i class="fas fa-file-alt"></i></a>
+            <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"><i class="fas fa-graduation-cap"></i></a>
+            <a href="https://www.linkedin.com/in/enderfga" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/Enderfga" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/Enderfga" target="_blank"><i class="fab fa-github"></i></a>
+            <div class="theme-switcher">
+                <span><i data-feather="sun"></i></span>
+                <div class="three-way-radio">
+                    <input type="radio" name="ui-mode" id="footer-ui-mode-left" class="left" value="left" data-action="ui-mode-light">
+                    <input type="radio" name="ui-mode" id="footer-ui-mode-center" class="center" value="center" data-action="ui-mode-system">
+                    <input type="radio" name="ui-mode" id="footer-ui-mode-right" class="right" value="right" data-action="ui-mode-dark">
+                    <div class="indicator"></div>
+                </div>
+                <span><i data-feather="moon"></i></span>
+            </div>
+        </div>
     </nav>
     <div id="content">
         <section class="profile-section">
@@ -93,22 +188,65 @@
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl">Prof. Mike Zheng Shou</a>.</p>
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://scholar.google.com/citations?view_op=search_authors&mauthors=xiaodan+liang&hl=zh-CN&oi=ao">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/">Shencai Liao</a>.</p>
                 <p>Additionally, I'm a research scientist at <strong><a href="https://www.cybever.ai/">Cybever AI</a></strong> in Sunnyvale, where I cooperate with a small team that mostly works on 3D computer vision and Large language model.</p>
-                <p style="text-align:center;" class="social-icons">
-                    <a href="mailto:guianfang@u.nus.edu"><i class="fas fa-envelope"></i></a>
-                    <a href="data/cv.pdf"><i class="fas fa-file-alt"></i></a>
-                    <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"><i class="fas fa-graduation-cap"></i></a>
-                    <a href="https://www.linkedin.com/in/enderfga/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://twitter.com/Enderfga"><i class="fab fa-twitter"></i></a>
-                    <a href="https://github.com/Enderfga/"><i class="fab fa-github"></i></a>
-                </p>
             </div>
             <div class="profile-image">
                 <a href="images/guian.jpg"><img alt="profile photo" src="images/guian.jpg"></a>
             </div>
         </section>
+
+
         <section id="research">
             <h2>Research</h2>
             <p>I'm interested in computer vision, deep learning, generative AI, and AI alignment. Most of my research will be about video understanding and generation. Representative papers are <span class="highlight">highlighted</span>.</p>
+        
+            <table bgcolor="#ffffd0" style="width:100%;">
+                <tr>
+                  <td style="padding:10px;vertical-align:middle">
+                    <img src='images/humanrefiner.jpg' style="width:100%; margin:auto; display:block;">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:15px;vertical-align:middle">
+                    <a href="https://github.com/Enderfga/HumanRefiner">
+                      <span class="papertitle">HumanRefiner: Benchmarking Abnormal Human Generation and Refining with Coarse-to-fine Pose-Reversible Guidance</span>
+                    </a>
+                    <br>
+                    <strong>Guian Fang</strong>*, Wenbiao Yan*, Yuanfan Guo*, Jianhua Han, Zutao Jiang, Hang Xu, Shengcai Liao, Xiaodan Liang
+                    <br>
+                    <em>ECCV</em>, 2024
+                    <br>
+                    <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner">dataset page</a> /
+                    <a href="https://arxiv.org/abs/2407.06937">arXiv</a>
+                    <p>
+                      In this project, we introduce AbHuman, the first large-scale benchmark focused on anatomical anomalies. The benchmark consists of 56K synthesized human images, each annotated with 147K human anomalies in 18 different categories. Based on this, we developed HumanRefiner, a novel plug-and-play method for coarse-to-fine refinement of human anomalies.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
+            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+                <tr>
+                  <td style="width:25%; padding:20px; vertical-align:middle">
+                    <img src='images/ChartThinker.png' width="330">
+                  </td>
+                  <td style="width:75%; padding:20px; vertical-align:middle">
+                    <a href="https://github.com/Notonion/ChartThinker">
+                      <span class="papertitle">ChartThinker: A Contextual Chain-of-Thought Approach to Optimized Chart Summarization</span>
+                    </a>
+                    <br>
+                    Mengsha Liu, Daoyuan Chen, Yaliang Li, <strong>Guian Fang</strong>, Ying Shen
+                    <br>
+                    <em>LREC-Coling</em>, 2024
+                    <br>
+                    <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA">dataset page</a> /
+                    <a href="https://arxiv.org/abs/2403.11236">arXiv</a>
+                    <p>
+                      In this project, we address the challenges of chart summarization through our development of ChartThinker, an innovative method that leverages natural language processing to enhance visual-language matching and reasoning capabilities. Our approach involves a large-scale dataset featuring diverse chart-caption pairs and detailed fine-tuning instructions, significantly improving training data effectiveness. ChartThinker employs thought chains and context retrieval strategies to produce logically coherent and accurate summaries. Demonstrating superior performance, our model outperforms eight state-of-the-art models across seven evaluation metrics.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
         </section>
         <section id="honors">
             <h2>Honors & Awards</h2>
@@ -143,5 +281,68 @@
             <p style="text-align:right;font-size:small;">Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
         </footer>
     </div>
+    <script>
+        // 突出显示当前导航项
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('nav a').forEach(nav => nav.style.textDecoration = 'none');
+                this.style.textDecoration = 'underline';
+            });
+        });
+
+        // 显示或隐藏回到顶部按钮
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.querySelector('.to-top').style.display = "block";
+            } else {
+                document.querySelector('.to-top').style.display = "none";
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            feather.replace();
+
+            const body = document.body;
+            const radios = document.querySelectorAll('.three-way-radio input');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.classList.contains('left')) {
+                        body.classList.remove('dark-mode');
+                    } else if (radio.classList.contains('right')) {
+                        body.classList.add('dark-mode');
+                    } else {
+                        // Implement system default mode logic here
+                    }
+                });
+            });
+
+            // Click the icons to change mode
+            document.querySelector('.theme-switcher span:first-child').addEventListener('click', () => {
+                document.getElementById('footer-ui-mode-left').checked = true;
+                body.classList.remove('dark-mode');
+            });
+
+            document.querySelector('.theme-switcher span:last-child').addEventListener('click', () => {
+                document.getElementById('footer-ui-mode-right').checked = true;
+                body.classList.add('dark-mode');
+            });
+
+            // Initialize to light mode by default
+            document.getElementById('footer-ui-mode-left').checked = true;
+        });
+        function enlargeImage(img) {
+        // 检查全屏API是否可用
+        if (img.requestFullscreen) {
+            img.requestFullscreen(); // W3C API
+        } else if (img.mozRequestFullScreen) {
+            img.mozRequestFullScreen(); // Firefox
+        } else if (img.webkitRequestFullscreen) {
+            img.webkitRequestFullscreen(); // Chrome and Safari
+        } else if (img.msRequestFullscreen) {
+            img.msRequestFullscreen(); // IE/Edge
+        }
+        }
+    </script>
 </body>
 </html>
