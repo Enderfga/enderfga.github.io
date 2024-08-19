@@ -1,177 +1,0 @@
-No cache found for this author. Running from scratch.
-
-Author profile found, with 8 publications.
-
-Filling metadata for your 8 publications:   0%|          | 0/8 [00:00<?, ?it/s]Filling metadata for your 8 publications:  12%|█▎        | 1/8 [00:03<00:21,  3.04s/it]Filling metadata for your 8 publications:  25%|██▌       | 2/8 [00:03<00:10,  1.74s/it]Filling metadata for your 8 publications:  38%|███▊      | 3/8 [00:04<00:06,  1.31s/it]Filling metadata for your 8 publications:  50%|█████     | 4/8 [00:05<00:04,  1.16s/it]Filling metadata for your 8 publications: 100%|██████████| 8/8 [00:05<00:00,  1.43it/s]
-Finding citing authors and papers on your 6 publications:   0%|          | 0/6 [00:00<?, ?it/s]Finding citing authors and papers on your 6 publications:  17%|█▋        | 1/6 [00:07<00:38,  7.63s/it]Finding citing authors and papers on your 6 publications: 100%|██████████| 6/6 [00:07<00:00,  1.27s/it]
-A total of 93 citing authors recorded.
-
-Saved to cache: cache/2z4sraUAAAAJ/all_citing_author_paper_tuple_list.pkl.
-
-Identifying affiliations using the aggressive approach.
-Finding citing affiliations from 93 citing authors:   0%|          | 0/93 [00:00<?, ?it/s]Finding citing affiliations from 93 citing authors:   1%|          | 1/93 [00:04<06:49,  4.45s/it]Finding citing affiliations from 93 citing authors:   2%|▏         | 2/93 [00:05<03:53,  2.57s/it]Finding citing affiliations from 93 citing authors:   4%|▍         | 4/93 [00:06<01:48,  1.22s/it]Finding citing affiliations from 93 citing authors:  18%|█▊        | 17/93 [00:09<00:26,  2.91it/s]Finding citing affiliations from 93 citing authors:  26%|██▌       | 24/93 [00:10<00:19,  3.56it/s]Finding citing affiliations from 93 citing authors:  28%|██▊       | 26/93 [00:10<00:18,  3.72it/s]Finding citing affiliations from 93 citing authors:  30%|███       | 28/93 [00:11<00:16,  3.95it/s]Finding citing affiliations from 93 citing authors:  33%|███▎      | 31/93 [00:12<00:18,  3.27it/s]Finding citing affiliations from 93 citing authors:  40%|███▉      | 37/93 [00:12<00:10,  5.18it/s]Finding citing affiliations from 93 citing authors:  42%|████▏     | 39/93 [00:14<00:18,  2.85it/s]Finding citing affiliations from 93 citing authors:  43%|████▎     | 40/93 [00:15<00:19,  2.67it/s]Finding citing affiliations from 93 citing authors:  53%|█████▎    | 49/93 [00:17<00:11,  3.86it/s]Finding citing affiliations from 93 citing authors:  54%|█████▍    | 50/93 [00:17<00:11,  3.71it/s]Finding citing affiliations from 93 citing authors:  57%|█████▋    | 53/93 [00:18<00:12,  3.22it/s]Finding citing affiliations from 93 citing authors:  60%|██████    | 56/93 [00:20<00:14,  2.50it/s]Finding citing affiliations from 93 citing authors:  65%|██████▍   | 60/93 [00:21<00:09,  3.40it/s]Finding citing affiliations from 93 citing authors:  66%|██████▌   | 61/93 [00:21<00:08,  3.62it/s]Finding citing affiliations from 93 citing authors:  68%|██████▊   | 63/93 [00:21<00:07,  4.11it/s]Finding citing affiliations from 93 citing authors:  72%|███████▏  | 67/93 [00:22<00:05,  4.84it/s]Finding citing affiliations from 93 citing authors:  75%|███████▌  | 70/93 [00:23<00:07,  2.99it/s]Finding citing affiliations from 93 citing authors:  83%|████████▎ | 77/93 [00:27<00:06,  2.47it/s]Finding citing affiliations from 93 citing authors:  86%|████████▌ | 80/93 [00:27<00:04,  3.12it/s]Finding citing affiliations from 93 citing authors:  97%|█████████▋| 90/93 [00:28<00:00,  5.11it/s]Finding citing affiliations from 93 citing authors: 100%|██████████| 93/93 [00:29<00:00,  4.42it/s]Finding citing affiliations from 93 citing authors: 100%|██████████| 93/93 [00:29<00:00,  3.17it/s]
-
-A total of 93 citing affiliations recorded.
-
-Taking the aggressive approach. Cleaning the affiliation names.
-List of all citing authors and affiliations before cleaning:
-
-Author: Baiqi Li. Affiliation: Carnegie Mellon University.
-Author: Bolin Ding. Affiliation: Alibaba Group.
-Author: Bolin Lai. Affiliation: Georgia Institute of Technology.
-Author: Ce Ge. Affiliation: Alibaba Group.
-Author: Chaoning Zhang. Affiliation: Assistant Professor at Kyung Hee University.
-Author: Chen Min. Affiliation: Institute of Computing Technology, Chinese Academy of Sciences.
-Author: Chenlin Meng. Affiliation: Stanford University.
-Author: Chuyang Xiao. Affiliation: ShanghaiTech University.
-Author: Daoyuan Chen. Affiliation: Alibaba Group.
-Author: Deepak Pathak. Affiliation: Assistant Professor, Carnegie Mellon University.
-Author: Dongzhi Jiang. Affiliation: MMLab, CUHK.
-Author: Furu Wei. Affiliation: Partner Research Manager, Microsoft Research.
-Author: Gang YU. Affiliation: StepFun.
-Author: Graham Neubig. Affiliation: Carnegie Mellon University, All Hands AI.
-Author: Guan Pang. Affiliation: Facebook AI.
-Author: Guanglu Song. Affiliation: Senior Researcher @Sensetime Base Model.
-Author: Haopeng Zhang. Affiliation: University of Hawaii at Manoa.
-Author: Hesen Chen. Affiliation: Alibaba Group.
-Author: Huan Yang. Affiliation: 01.AI.
-Author: Huiguo He. Affiliation: Sun Yat-sen University.
-Author: Huilin Tai. Affiliation: Bachelor student, McGill University.
-Author: James M. Rehg. Affiliation: Founder Professor of Computer Science, University of Illinois at Urbana-Champaign.
-Author: Jiachen Li. Affiliation: UC Santa Barbara.
-Author: Jiawei Zhang. Affiliation: University of California, Davis (UC Davis).
-Author: Jiayao Li. Affiliation: Carnegie Mellon University.
-Author: Jiazhi Yang. Affiliation: Shanghai AI Lab.
-Author: Kailai Yang. Affiliation: The University of Manchester.
-Author: Kashyap Chitta. Affiliation: University of Tübingen.
-Author: Kewen Wu. Affiliation: Undergraduate student, Tsinghua University.
-Author: Lawrence Chen. Affiliation: Machine Learning Engineer, Meta.
-Author: Li Chen. Affiliation: HKU | Shanghai AI Lab.
-Author: Ling Yang. Affiliation: Peking University.
-Author: Liuyi Yao. Affiliation: Alibaba Group.
-Author: Michael Saxon. Affiliation: PhD Student, NLP Lab, UC Santa Barbara.
-Author: Min Dou. Affiliation: Shanghai AI Laboratory.
-Author: Minkai Xu. Affiliation: Stanford University.
-Author: Nianchen Deng. Affiliation: Shanghai AI Laboratory.
-Author: Philip S. Yu. Affiliation: Professor of Computer Science, University of Illinons at Chicago.
-Author: Renrui Zhang. Affiliation: MMLab CUHK & Peking University.
-Author: Rui Wang. Affiliation: Huazhong University of Science and Technology.
-Author: Shaohan Huang. Affiliation: Microsoft Research Asia.
-Author: Sheng Zheng. Affiliation: Beijing Institute of Technology.
-Author: Stefano Ermon. Affiliation: Stanford University.
-Author: Tianlin Zhang. Affiliation: The University of Manchester,  National Centre for Text Mining.
-Author: Tsu-Jui Fu. Affiliation: Apple.
-Author: Wangbo Zhao. Affiliation: National University of Singapore.
-Author: Weixi Feng. Affiliation: Ph.D. candidate, University of California, Santa Barbara.
-Author: Wenhao Wang. Affiliation: University of Technology Sydney.
-Author: Wenhu Chen. Affiliation: Assistant Professor at University of Waterloo.
-Author: Xiao CAO. Affiliation: National University of Singapore (NUS).
-Author: Xiaofeng Wang. Affiliation: Institute of Automation, Chinese Academy of Sciences.
-Author: Xiaoliang Dai. Affiliation: Research Scientist, Facebook.
-Author: Xiaoshi Wu. Affiliation: Ph.D. student, CUHK.
-Author: Xide Xia. Affiliation: Research Scientist, Meta GenAI.
-Author: Xiwei Hu. Affiliation: Shanghai Jiao Tong University.
-Author: Xun Wu. Affiliation: Tsinghua University.
-Author: Yaliang Li. Affiliation: Alibaba Group.
-Author: Yilun Huang. Affiliation: Alibaba Group; Peking University.
-Author: Yixiao Fang. Affiliation: Tencent.
-Author: Yu Qiao. Affiliation: Professor of Shanghai AI Laboratory; Shenzhen Institutes of Advanced Technology, CAS.
-Author: Yuhang Zhang. Affiliation: BUPT.
-Author: ZHEN QIN. Affiliation: Gyeongsang National University.
-Author: Zheng Zhu. Affiliation: Giga AI, Tsinghua University.
-Author: Zhiqiu Lin. Affiliation: Carnegie Mellon University.
-Author: Zhiwei Liu. Affiliation: University of Manchester.
-Author: 𝐘𝐢𝐡𝐚𝐧𝐠 𝐐𝐢𝐮. Affiliation: Shanghai Jiao Tong University.
-Author: 𝕊𝕙𝕖𝕟𝕪𝕦𝕒𝕟 𝔾𝕒𝕠. Affiliation: Hong Kong University of Science and Technology.
-
-List of all citing authors and affiliations after cleaning:
-
-Author: Baiqi Li. Affiliation: Carnegie Mellon University.
-Author: Bolin Ding. Affiliation: Alibaba Group.
-Author: Bolin Lai. Affiliation: Georgia Institute of Technology.
-Author: Ce Ge. Affiliation: Alibaba Group.
-Author: Chaoning Zhang. Affiliation: Kyung Hee University.
-Author: Chen Min. Affiliation: Chinese Academy of Sciences.
-Author: Chen Min. Affiliation: Institute of Computing Technology.
-Author: Chenlin Meng. Affiliation: Stanford University.
-Author: Chuyang Xiao. Affiliation: ShanghaiTech University.
-Author: Daoyuan Chen. Affiliation: Alibaba Group.
-Author: Deepak Pathak. Affiliation: Carnegie Mellon University.
-Author: Dongzhi Jiang. Affiliation: CUHK.
-Author: Dongzhi Jiang. Affiliation: MMLab.
-Author: Furu Wei. Affiliation: Microsoft Research.
-Author: Gang YU. Affiliation: StepFun.
-Author: Graham Neubig. Affiliation: All Hands AI.
-Author: Graham Neubig. Affiliation: Carnegie Mellon University.
-Author: Guan Pang. Affiliation: Facebook AI.
-Author: Guanglu Song. Affiliation: Sensetime Base Model.
-Author: Haopeng Zhang. Affiliation: Manoa.
-Author: Hesen Chen. Affiliation: Alibaba Group.
-Author: Huan Yang. Affiliation: 01.AI.
-Author: Huiguo He. Affiliation: Sun Yat-sen University.
-Author: Huilin Tai. Affiliation: McGill University.
-Author: James M. Rehg. Affiliation: Urbana-Champaign.
-Author: Jiachen Li. Affiliation: UC Santa Barbara.
-Author: Jiawei Zhang. Affiliation: Davis (UC Davis).
-Author: Jiawei Zhang. Affiliation: University of California.
-Author: Jiayao Li. Affiliation: Carnegie Mellon University.
-Author: Jiazhi Yang. Affiliation: Shanghai AI Lab.
-Author: Kailai Yang. Affiliation: The University of Manchester.
-Author: Kashyap Chitta. Affiliation: University of Tübingen.
-Author: Kewen Wu. Affiliation: Tsinghua University.
-Author: Lawrence Chen. Affiliation: Meta.
-Author: Li Chen. Affiliation: HKU | Shanghai AI Lab.
-Author: Ling Yang. Affiliation: Peking University.
-Author: Liuyi Yao. Affiliation: Alibaba Group.
-Author: Michael Saxon. Affiliation: NLP Lab.
-Author: Michael Saxon. Affiliation: UC Santa Barbara.
-Author: Min Dou. Affiliation: Shanghai AI Laboratory.
-Author: Minkai Xu. Affiliation: Stanford University.
-Author: Nianchen Deng. Affiliation: Shanghai AI Laboratory.
-Author: Philip S. Yu. Affiliation: Chicago.
-Author: Renrui Zhang. Affiliation: MMLab CUHK & Peking University.
-Author: Rui Wang. Affiliation: Huazhong University of Science.
-Author: Rui Wang. Affiliation: Technology.
-Author: Shaohan Huang. Affiliation: Microsoft Research Asia.
-Author: Sheng Zheng. Affiliation: Beijing Institute of Technology.
-Author: Stefano Ermon. Affiliation: Stanford University.
-Author: Tianlin Zhang. Affiliation: National Centre for Text Mining.
-Author: Tianlin Zhang. Affiliation: The University of Manchester.
-Author: Tsu-Jui Fu. Affiliation: Apple.
-Author: Wangbo Zhao. Affiliation: National University of Singapore.
-Author: Weixi Feng. Affiliation: Santa Barbara.
-Author: Weixi Feng. Affiliation: University of California.
-Author: Wenhao Wang. Affiliation: University of Technology Sydney.
-Author: Wenhu Chen. Affiliation: University of Waterloo.
-Author: Xiao CAO. Affiliation: National University of Singapore (NUS).
-Author: Xiaofeng Wang. Affiliation: Chinese Academy of Sciences.
-Author: Xiaofeng Wang. Affiliation: Institute of Automation.
-Author: Xiaoliang Dai. Affiliation: Facebook.
-Author: Xiaoshi Wu. Affiliation: CUHK.
-Author: Xide Xia. Affiliation: Meta GenAI.
-Author: Xiwei Hu. Affiliation: Shanghai Jiao Tong University.
-Author: Xun Wu. Affiliation: Tsinghua University.
-Author: Yaliang Li. Affiliation: Alibaba Group.
-Author: Yilun Huang. Affiliation: Alibaba Group.
-Author: Yilun Huang. Affiliation: Peking University.
-Author: Yixiao Fang. Affiliation: Tencent.
-Author: Yu Qiao. Affiliation: CAS.
-Author: Yu Qiao. Affiliation: Shenzhen Institutes of Advanced Technology.
-Author: Yuhang Zhang. Affiliation: BUPT.
-Author: ZHEN QIN. Affiliation: Gyeongsang National University.
-Author: Zheng Zhu. Affiliation: Giga AI.
-Author: Zheng Zhu. Affiliation: Tsinghua University.
-Author: Zhiqiu Lin. Affiliation: Carnegie Mellon University.
-Author: Zhiwei Liu. Affiliation: University of Manchester.
-Author: 𝐘𝐢𝐡𝐚𝐧𝐠 𝐐𝐢𝐮. Affiliation: Shanghai Jiao Tong University.
-Author: 𝕊𝕙𝕖𝕟𝕪𝕦𝕒𝕟 𝔾𝕒𝕠. Affiliation: Hong Kong University of Science.
-Author: 𝕊𝕙𝕖𝕟𝕪𝕦𝕒𝕟 𝔾𝕒𝕠. Affiliation: Technology.
-
-Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   0%|          | 0/84 [00:00<?, ?it/s]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   1%|          | 1/84 [00:01<02:15,  1.63s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   2%|▏         | 2/84 [00:02<01:50,  1.35s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   4%|▎         | 3/84 [00:03<01:35,  1.17s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   5%|▍         | 4/84 [00:05<01:43,  1.30s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   6%|▌         | 5/84 [00:06<01:34,  1.19s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   7%|▋         | 6/84 [00:07<01:29,  1.14s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:   8%|▊         | 7/84 [00:08<01:22,  1.07s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  10%|▉         | 8/84 [00:09<01:20,  1.06s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  11%|█         | 9/84 [00:10<01:30,  1.21s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  12%|█▏        | 10/84 [00:12<01:36,  1.31s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  13%|█▎        | 11/84 [00:13<01:30,  1.23s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  14%|█▍        | 12/84 [00:14<01:25,  1.18s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  15%|█▌        | 13/84 [00:15<01:30,  1.27s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  17%|█▋        | 14/84 [00:17<01:27,  1.26s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  18%|█▊        | 15/84 [00:18<01:24,  1.22s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  19%|█▉        | 16/84 [00:19<01:29,  1.31s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  20%|██        | 17/84 [00:21<01:31,  1.37s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  21%|██▏       | 18/84 [00:22<01:31,  1.39s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  23%|██▎       | 19/84 [00:23<01:23,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  24%|██▍       | 20/84 [00:26<01:51,  1.74s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  25%|██▌       | 21/84 [00:27<01:31,  1.46s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  26%|██▌       | 22/84 [00:28<01:19,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  27%|██▋       | 23/84 [00:29<01:14,  1.23s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  29%|██▊       | 24/84 [00:30<01:16,  1.27s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  30%|██▉       | 25/84 [00:32<01:21,  1.38s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  31%|███       | 26/84 [00:33<01:14,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  32%|███▏      | 27/84 [00:34<01:16,  1.34s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  33%|███▎      | 28/84 [00:35<01:07,  1.20s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  35%|███▍      | 29/84 [00:36<01:02,  1.14s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  36%|███▌      | 30/84 [00:37<01:02,  1.15s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  37%|███▋      | 31/84 [00:39<01:04,  1.22s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  38%|███▊      | 32/84 [00:40<00:59,  1.14s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  39%|███▉      | 33/84 [00:41<01:05,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  40%|████      | 34/84 [00:42<00:58,  1.18s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  42%|████▏     | 35/84 [00:44<01:00,  1.23s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  43%|████▎     | 36/84 [00:45<01:03,  1.32s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  44%|████▍     | 37/84 [00:46<00:58,  1.24s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  45%|████▌     | 38/84 [00:47<00:56,  1.22s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  46%|████▋     | 39/84 [00:48<00:50,  1.13s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  48%|████▊     | 40/84 [00:50<00:52,  1.20s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  49%|████▉     | 41/84 [00:51<00:57,  1.34s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  50%|█████     | 42/84 [00:53<00:55,  1.32s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  51%|█████     | 43/84 [00:54<00:54,  1.32s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  52%|█████▏    | 44/84 [00:55<00:47,  1.19s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  54%|█████▎    | 45/84 [00:56<00:42,  1.10s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  55%|█████▍    | 46/84 [00:57<00:40,  1.07s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  56%|█████▌    | 47/84 [00:59<00:54,  1.46s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  57%|█████▋    | 48/84 [01:00<00:48,  1.36s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  58%|█████▊    | 49/84 [01:02<00:46,  1.34s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  60%|█████▉    | 50/84 [01:03<00:47,  1.40s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  61%|██████    | 51/84 [01:05<00:48,  1.47s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  62%|██████▏   | 52/84 [01:06<00:41,  1.29s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  63%|██████▎   | 53/84 [01:07<00:37,  1.22s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  64%|██████▍   | 54/84 [01:08<00:34,  1.15s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  65%|██████▌   | 55/84 [01:09<00:37,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  67%|██████▋   | 56/84 [01:10<00:32,  1.16s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  68%|██████▊   | 57/84 [01:12<00:34,  1.27s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  69%|██████▉   | 58/84 [01:13<00:30,  1.19s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  70%|███████   | 59/84 [01:14<00:28,  1.16s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  71%|███████▏  | 60/84 [01:15<00:26,  1.08s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  73%|███████▎  | 61/84 [01:16<00:29,  1.28s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  74%|███████▍  | 62/84 [01:17<00:25,  1.15s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  75%|███████▌  | 63/84 [01:19<00:26,  1.27s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  76%|███████▌  | 64/84 [01:20<00:23,  1.18s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  77%|███████▋  | 65/84 [01:21<00:23,  1.24s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  79%|███████▊  | 66/84 [01:22<00:22,  1.25s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  80%|███████▉  | 67/84 [01:23<00:19,  1.16s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  81%|████████  | 68/84 [01:24<00:17,  1.11s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  82%|████████▏ | 69/84 [01:26<00:17,  1.20s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  83%|████████▎ | 70/84 [01:27<00:16,  1.15s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  85%|████████▍ | 71/84 [01:28<00:15,  1.17s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  86%|████████▌ | 72/84 [01:29<00:14,  1.18s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  87%|████████▋ | 73/84 [01:30<00:12,  1.15s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  88%|████████▊ | 74/84 [01:31<00:11,  1.11s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  89%|████████▉ | 75/84 [01:32<00:09,  1.07s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  90%|█████████ | 76/84 [01:33<00:08,  1.04s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  92%|█████████▏| 77/84 [01:34<00:07,  1.05s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  93%|█████████▎| 78/84 [01:36<00:07,  1.18s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  94%|█████████▍| 79/84 [01:37<00:05,  1.13s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  95%|█████████▌| 80/84 [01:38<00:05,  1.26s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  96%|█████████▋| 81/84 [01:39<00:03,  1.14s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  98%|█████████▊| 82/84 [01:41<00:02,  1.31s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries:  99%|█████████▉| 83/84 [01:42<00:01,  1.31s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries: 100%|██████████| 84/84 [01:44<00:00,  1.35s/it]Finding geographic coordinates from 84 unique citing affiliations in 148 entries: 100%|██████████| 84/84 [01:44<00:00,  1.24s/it]
-
-Converted 48/84 affiliations to Geocodes.
-
-Map created and saved at citation_map.html.
-
-
-Citation information exported to citation_info.csv.
