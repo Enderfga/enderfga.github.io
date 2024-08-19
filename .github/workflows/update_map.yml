@@ -22,9 +22,16 @@ jobs:
       run: pip install citation_map
 
     - name: Generate citation map
-      run: python generate_map.py
+      id: generate_map
+      run: |
+        python generate_map.py > output.log 2>&1 || true
+        if grep -q '\[Warning!\]' output.log; then
+          echo "Warning detected, skipping commit and push."
+          exit 0
+        fi
 
     - name: Commit and push changes
+      if: steps.generate_map.outcome == 'success'
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       run: |
