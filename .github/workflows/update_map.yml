@@ -21,17 +21,18 @@ jobs:
     - name: Install dependencies
       run: pip install citation_map
 
-    - name: Generate citation map
-      id: generate_map
+    - name: Measure execution time and generate citation map
+      id: run_script
       run: |
-        python generate_map.py > output.log 2>&1 || true
-        if grep -q '\[Warning!\]' output.log; then
-          echo "Warning detected, skipping commit and push."
-          exit 0
-        fi
+        start_time=$(date +%s)
+        python generate_map.py
+        end_time=$(date +%s)
+        elapsed_time=$(( end_time - start_time ))
+        echo "Execution time: $elapsed_time seconds"
+        echo "elapsed_time=$elapsed_time" >> $GITHUB_ENV
 
-    - name: Commit and push changes
-      if: steps.generate_map.outcome == 'success'
+    - name: Commit and push changes if runtime >= 3 minutes
+      if: env.elapsed_time >= 180
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       run: |
