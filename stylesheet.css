@@ -133,3 +133,167 @@ h2 {
 span.highlight {
   background-color: #ffffd0;
 }
+    footer {
+        background-color: #f8f8f8; /* 背景色 */
+        padding: 20px; /* 内边距 */
+        text-align: center; /* 文本居中 */
+        border-top: 1px solid #ddd; /* 顶部边框 */
+    }
+    footer a {
+        color: #007BFF; /* 链接颜色 */
+        text-decoration: none; /* 移除链接下划线 */
+    }
+    footer a:hover {
+        text-decoration: underline; /* 鼠标悬停时添加下划线 */
+    }
+    footer img {
+        max-width: 100%; /* 图像最大宽度 */
+        height: auto; /* 图像自动高度 */
+        margin-bottom: 10px; /* 图像下方外边距 */
+    }
+    footer p {
+        font-size: 14px; /* 字体大小 */
+        color: #666; /* 字体颜色 */
+        margin: 0; /* 移除默认外边距 */
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    nav {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #333;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1em;
+        padding: 10px;
+    }
+    nav ul li a:hover {
+        color: #ccc;
+    }
+    .social-icons {
+        display: flex;
+        align-items: center;
+    }
+    .social-icons a {
+        color: #fff;
+        margin-left: 10px;
+        font-size: 1.2em;
+    }
+    .social-icons a:hover {
+        color: #ccc;
+    }
+    .theme-switcher {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 1.2em;
+        margin-left: 10px;
+    }
+    .three-way-radio {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+        width: 45px; /* 调整宽度以适应新的位置 */
+        height: 20px;
+        background-color: #666;
+        border-radius: 10px;
+    }
+    .three-way-radio input {
+        display: none;
+    }
+    .three-way-radio label {
+        display: none;
+    }
+    .indicator {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+    #footer-ui-mode-left:checked ~ .indicator {
+        transform: translateX(0);
+    }
+    #footer-ui-mode-center:checked ~ .indicator {
+        transform: translateX(22px); /* 调整为合适的位置 */
+    }
+    #footer-ui-mode-right:checked ~ .indicator {
+        transform: translateX(25px); /* 调整为合适的位置 */
+    }
+    #content {
+        padding-top: 70px;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    section {
+        padding: 20px 0;
+    }
+    .name {
+        text-align: center;
+        font-size: 2em;
+    }
+    .highlight {
+        font-weight: bold;
+    }
+    .profile-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .profile-text {
+        width: 58%;
+    }
+    .profile-image {
+        width: 38%;
+        max-width: 38%;
+    }
+    .profile-image img {
+        width: 100%;
+        border-radius: 50%;
+    }
+    .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+    }
+    nav a.to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #666;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
