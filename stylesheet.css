@@ -134,27 +134,26 @@ span.highlight {
   background-color: #ffffd0;
 }
     footer {
-        background-color: #f8f8f8; /* 背景色 */
-        padding: 20px; /* 内边距 */
-        text-align: center; /* 文本居中 */
-        border-top: 1px solid #ddd; /* 顶部边框 */
+        padding: 30px 0 20px;
+        text-align: center;
+        margin-top: 20px;
     }
     footer a {
-        color: #007BFF; /* 链接颜色 */
-        text-decoration: none; /* 移除链接下划线 */
+        color: #1772d0;
+        text-decoration: none;
+        transition: color 0.3s ease;
     }
     footer a:hover {
-        text-decoration: underline; /* 鼠标悬停时添加下划线 */
-    }
-    footer img {
-        max-width: 100%; /* 图像最大宽度 */
-        height: auto; /* 图像自动高度 */
-        margin-bottom: 10px; /* 图像下方外边距 */
+        color: #f09228;
     }
     footer p {
-        font-size: 14px; /* 字体大小 */
-        color: #666; /* 字体颜色 */
-        margin: 0; /* 移除默认外边距 */
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+        line-height: 1.5;
+    }
+    .dark-mode footer p {
+        color: #999;
     }
     body {
         font-family: Arial, sans-serif;

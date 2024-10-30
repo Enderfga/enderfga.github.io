@@ -10,33 +10,45 @@
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#research" id="nav-research">🔍 Research</a></li>
-            <li><a href="#honors" id="nav-honors">🏆 Honors & Awards</a></li>
-            <li><a href="#activities" id="nav-activities">🌟 Activities & Services</a></li>
-            <li><a href="#acknowledgements" id="nav-acknowledgements">📜 Acknowledgements</a></li>
-        </ul>
-        <a href="#top" class="to-top" style="display:none;">⬆️</a>
-        <div class="social-icons">
-            <a href="mailto:guianfang@u.nus.edu"><i class="fas fa-envelope"></i></a>
-            <a href="data/cv.pdf"><i class="fas fa-file-alt"></i></a>
-            <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"><i class="fas fa-graduation-cap"></i></a>
-            <a href="https://www.linkedin.com/in/enderfga" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://twitter.com/Enderfga" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://github.com/Enderfga" target="_blank"><i class="fab fa-github"></i></a>
-            <div class="theme-switcher">
-                <span><i data-feather="sun"></i></span>
-                <div class="three-way-radio">
-                    <input type="radio" name="ui-mode" id="footer-ui-mode-left" class="left" value="left" data-action="ui-mode-light">
-                    <input type="radio" name="ui-mode" id="footer-ui-mode-center" class="center" value="center" data-action="ui-mode-system">
-                    <input type="radio" name="ui-mode" id="footer-ui-mode-right" class="right" value="right" data-action="ui-mode-dark">
-                    <div class="indicator"></div>
-                </div>
-                <span><i data-feather="moon"></i></span>
+ <!-- 地图部分 -->
+<!-- 左侧地图 -->
+<a href='https://clustrmaps.com/site/1c0ri' title='Visit tracker' style="position: fixed; top: 0; left: 2vw; z-index: 999;">
+    <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' alt='ClustrMaps Tracker' style="width: 10vw; min-width: 120px; max-width: 180px;"/>
+</a>
+
+<!-- 右侧citation map -->
+<a href="citation_map.html" style="position: fixed; top: 0; right: 2vw; z-index: 999;">
+    <img src="citation_map.png" alt="Citation Map" style="width: 10vw; min-width: 120px; max-width: 180px;"/>
+</a>
+
+<!-- 导航栏部分 -->
+<nav style="padding: 2 0vw;"> <!-- 使用vw单位使padding随视窗宽度变化 -->
+    <ul>
+        <li><a href="#research" id="nav-research">🔍 Research</a></li>
+        <li><a href="#honors" id="nav-honors">🏆 Honors & Awards</a></li>
+        <li><a href="#activities" id="nav-activities">🌟 Activities & Services</a></li>
+        <li><a href="#acknowledgements" id="nav-acknowledgements">📜 Acknowledgements</a></li>
+    </ul>
+    <a href="#top" class="to-top" style="display:none;">⬆️</a>
+    <div class="social-icons">
+        <a href="mailto:guianfang@u.nus.edu"><i class="fas fa-envelope"></i></a>
+        <a href="data/cv.pdf"><i class="fas fa-file-alt"></i></a>
+        <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"><i class="fas fa-graduation-cap"></i></a>
+        <a href="https://www.linkedin.com/in/enderfga" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://twitter.com/Enderfga" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://github.com/Enderfga" target="_blank"><i class="fab fa-github"></i></a>
+        <div class="theme-switcher">
+            <span><i data-feather="sun"></i></span>
+            <div class="three-way-radio">
+                <input type="radio" name="ui-mode" id="footer-ui-mode-left" class="left" value="left" data-action="ui-mode-light">
+                <input type="radio" name="ui-mode" id="footer-ui-mode-center" class="center" value="center" data-action="ui-mode-system">
+                <input type="radio" name="ui-mode" id="footer-ui-mode-right" class="right" value="right" data-action="ui-mode-dark">
+                <div class="indicator"></div>
             </div>
+            <span><i data-feather="moon"></i></span>
         </div>
-    </nav>
+    </div>
+</nav>
     <div id="content">
         <section class="profile-section">
             <div class="profile-text">
@@ -202,9 +214,6 @@
         </section>
         <footer>
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
-            <a href='https://clustrmaps.com/site/1c0ri' title='Visit tracker'>
-                <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' alt='ClustrMaps Tracker'/>
-            </a>
         </footer>
     </div>
     <script>

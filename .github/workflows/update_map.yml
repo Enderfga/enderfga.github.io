@@ -19,8 +19,11 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install citation_map
-
+      run: |
+        pip install citation_map
+        pip install playwright
+        python -m playwright install chromium
+  
     - name: Measure execution time and generate citation map
       id: run_script
       run: |
