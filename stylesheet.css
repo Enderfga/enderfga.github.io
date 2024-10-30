@@ -134,9 +134,8 @@ span.highlight {
   background-color: #ffffd0;
 }
     footer {
-        padding: 30px 0 20px;
+        padding: 30px 0 0;
         text-align: center;
-        margin-top: 20px;
     }
     footer a {
         color: #1772d0;
