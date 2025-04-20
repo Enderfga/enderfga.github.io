@@ -20,8 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install citation_map
-        pip install playwright
+        pip install scholarly citation_map httpx==0.23.3 playwright
         python -m playwright install chromium
   
     - name: Measure execution time and generate citation map
