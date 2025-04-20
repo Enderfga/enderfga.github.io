@@ -43,18 +43,25 @@ def capture_citation_map():
 
 def main():
     try:
+        # 设置免费代理
+        from scholarly import ProxyGenerator, scholarly
+        pg = ProxyGenerator()
+        pg.FreeProxies()
+        scholarly.use_proxy(pg)
+
         # 生成引用图
         scholar_id = '2z4sraUAAAAJ'
         generate_citation_map(scholar_id)
-        print("Citation map HTML generated successfully")  # 调试信息
-        
+        print("Citation map HTML generated successfully")
+
         # 截图保存
         capture_citation_map()
-        print("Screenshot captured successfully")  # 调试信息
-        
+        print("Screenshot captured successfully")
+
     except Exception as e:
         print(f"Error in main: {str(e)}")
         raise
+
 
 if __name__ == "__main__":
     main()
