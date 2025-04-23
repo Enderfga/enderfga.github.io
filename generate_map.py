@@ -24,9 +24,12 @@ def setup_proxy():
         
     # 尝试方法2：使用系统代理（如果配置了环境变量）
     logger.info("Trying system proxy...")
-    if pg.Use_IP_Pool(file_path=None):
-        scholarly.use_proxy(pg)
-        return True
+    try:
+        if pg.Use_IP_Pool(file_path=None):
+            scholarly.use_proxy(pg)
+            return True
+    except:
+        logger.warning("System proxy method failed")
         
     logger.warning("All proxy methods failed")
     return False
@@ -34,15 +37,14 @@ def setup_proxy():
 def generate_citation_map_with_retry(scholar_id, max_attempts=3):
     """带重试机制的引用图生成"""
     # 设置请求间的随机延迟（3-7秒）
-    scholarly.set_timeout(random.uniform(3, 7))
+    try:
+        # 尝试设置超时，如果方法存在的话
+        if hasattr(scholarly, 'set_timeout'):
+            scholarly.set_timeout(random.uniform(3, 7))
+    except Exception as e:
+        logger.warning(f"Could not set timeout: {str(e)}")
     
-    # 设置用户代理头，模拟不同的浏览器
-    user_agents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
-    ]
-    scholarly.set_user_agent(random.choice(user_agents))
+    # 移除设置用户代理的代码，因为该方法不存在
     
     for attempt in range(1, max_attempts + 1):
         try:
