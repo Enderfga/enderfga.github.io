@@ -5,7 +5,7 @@ import os
 import random
 from scholarly import ProxyGenerator, scholarly
 import logging
-from tenacity import retry, stop_after_attempt, wait_random_exponential
+import sys
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, 
@@ -22,16 +22,7 @@ def setup_proxy():
         scholarly.use_proxy(pg)
         return True
         
-    # 尝试方法2：Tor代理（如果可用）
-    logger.info("Free proxies failed, trying Tor...")
-    try:
-        if pg.Tor_External(tor_sock_port=9050, tor_control_port=9051):
-            scholarly.use_proxy(pg)
-            return True
-    except Exception as e:
-        logger.warning(f"Tor proxy failed: {e}")
-    
-    # 尝试方法3：使用系统代理（如果配置了环境变量）
+    # 尝试方法2：使用系统代理（如果配置了环境变量）
     logger.info("Trying system proxy...")
     if pg.Use_IP_Pool(file_path=None):
         scholarly.use_proxy(pg)
@@ -40,8 +31,7 @@ def setup_proxy():
     logger.warning("All proxy methods failed")
     return False
 
-@retry(stop=stop_after_attempt(3), wait=wait_random_exponential(multiplier=1, min=4, max=10))
-def generate_citation_map_with_retry(scholar_id):
+def generate_citation_map_with_retry(scholar_id, max_attempts=3):
     """带重试机制的引用图生成"""
     # 设置请求间的随机延迟（3-7秒）
     scholarly.set_timeout(random.uniform(3, 7))
@@ -54,8 +44,22 @@ def generate_citation_map_with_retry(scholar_id):
     ]
     scholarly.set_user_agent(random.choice(user_agents))
     
-    logger.info(f"Generating citation map for scholar ID: {scholar_id}")
-    return generate_citation_map(scholar_id)
+    for attempt in range(1, max_attempts + 1):
+        try:
+            logger.info(f"Attempt {attempt}/{max_attempts}: Generating citation map for scholar ID: {scholar_id}")
+            result = generate_citation_map(scholar_id)
+            logger.info("Citation map generation successful")
+            return result
+        except Exception as e:
+            logger.warning(f"Attempt {attempt} failed: {str(e)}")
+            if attempt < max_attempts:
+                # 在重试之前等待的时间随着尝试次数增加而增加
+                wait_time = random.uniform(4, 10) * attempt
+                logger.info(f"Waiting {wait_time:.2f} seconds before next attempt...")
+                time.sleep(wait_time)
+            else:
+                logger.error("All attempts failed")
+                raise
 
 def capture_citation_map():
     """使用Playwright捕获引用图的截图"""
@@ -78,9 +82,8 @@ def capture_citation_map():
             # 加载本地HTML文件
             page.goto(file_url)
             
-            # 等待可视化完全加载（动态等待）
+            # 等待可视化完全加载
             logger.info("Waiting for visualization to load...")
-            # 添加适当的等待条件，如果HTML有特定元素可以等待
             page.wait_for_timeout(8000)  # 等待8秒以确保加载完成
             
             # 确保输出目录存在
@@ -117,7 +120,7 @@ def main():
         
     except Exception as e:
         logger.error(f"Error in main process: {str(e)}")
-        raise
+        sys.exit(1)  # 确保在出错时脚本返回非零退出码
 
 if __name__ == "__main__":
     main()
