@@ -55,11 +55,11 @@
                 <p class="name">Guian Fang</p>
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl">Prof. Mike Zheng Shou</a>.</p>
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://scholar.google.com/citations?view_op=search_authors&mauthors=xiaodan+liang&hl=zh-CN&oi=ao">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/">Shengcai Liao</a>.</p>
-                <p>Additionally, I was a research scientist at <strong><a href="https://www.cybever.ai/">Cybever AI</a></strong> in Sunnyvale, where I cooperated with a small team that mostly works on 3D computer vision and Large language model.</p>
+                <p>Additionally, I was a research scientist at <strong><a href="https://www.cybever.ai/">Cybever AI</a></strong> in Sunnyvale, where I cooperated with a small team that mostly works on AI filmmaking and vision language model.</p>
             </div>
             <div class="profile-image" onmouseover="guian_start()" onmouseout="guian_stop()" style="position: relative; display: inline-block;">
                 <div class="image-container" id="guian_image" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                  <img src="images/guian.gif" alt="profile photo" style="width: 100%; height: 100%; object-fit: cover;">
+                  <img src="images/guian.PNG" alt="profile photo" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <a href="images/guian.jpg">
                   <img src="images/guian.jpg" alt="profile photo" style="max-width: 100%; height: auto; display: block;">
@@ -113,7 +113,7 @@
                     <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner">Dataset page</a> /
                     <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf">Paper</a>
                     <p>
-                      In this project, we introduce AbHuman, the first large-scale benchmark focused on anatomical anomalies. The benchmark consists of 56K synthesized human images, each annotated with 147K human anomalies in 18 different categories. Based on this, we developed HumanRefiner, a novel plug-and-play method for coarse-to-fine refinement of human anomalies.
+                      A new large-scale benchmark (AbHuman) for anatomical anomalies in humans, and a plug-and-play method (HumanRefiner) for refining abnormal human generations with pose-reversible guidance.
                     </p>
                   </td>
                 </tr>
@@ -136,7 +136,7 @@
                     <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA">Dataset page</a> /
                     <a href="https://aclanthology.org/2024.lrec-main.273/">Paper</a>
                     <p>
-                      In this project, we address the challenges of chart summarization through our development of ChartThinker, an innovative method that leverages natural language processing to enhance visual-language matching and reasoning capabilities. Our approach involves a large-scale dataset featuring diverse chart-caption pairs and detailed fine-tuning instructions, significantly improving training data effectiveness. ChartThinker employs thought chains and context retrieval strategies to produce logically coherent and accurate summaries. Demonstrating superior performance, our model outperforms eight state-of-the-art models across seven evaluation metrics.
+                      ChartThinker leverages chain-of-thought reasoning and context retrieval to generate accurate and coherent chart summaries, outperforming previous methods on a diverse benchmark.
                     </p>
                   </td>
                 </tr>
@@ -159,7 +159,33 @@
                     <a href="https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory">Checkpoint page</a> /
                     <a href="https://llama2-accessory.readthedocs.io/en/latest/">Document</a>
                     <p>
-                        LLaMA2-Accessory is an open-source toolkit for pretraining, finetuning and deployment of Large Language Models (LLMs) and multimodal LLMs. This repo is mainly inherited from <a href="https://github.com/OpenGVLab/LLaMA-Adapter">LLaMA-Adapter</a> with more advanced features.</p>
+                        An open-source toolkit supporting pretraining, finetuning, and deployment of large language and multimodal models, making LLM development more accessible and efficient.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <table style="width:100%;">
+                <tr>
+                  <td style="padding:10px;vertical-align:middle">
+                    <img src='images/RealignDiff.png' style="width:100%; margin:auto; display:block;">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:15px;vertical-align:middle">
+                    <a href="https://github.com/Notonion/ChartThinker">
+                      <span class="papertitle">RealignDiff: Boosting Text-to-Image Diffusion Model with Coarse-to-fine Semantic Re-alignment</span>
+                    </a>
+                    <br>
+                    <strong>Guian Fang</strong>*, Zutao Jiang*, Jianhua Han, Guansong Lu, Hang Xu, Shengcai Liao, Xiaojun Chang, Xiaodan Liang
+                    <br>
+                    <em>TNNLS</em>, 2023
+                    <br>
+                    <!-- <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA">Dataset page</a> / -->
+                    <a href="https://arxiv.org/abs/2305.19599">Paper</a>
+                    <p>
+                        RealignDiff introduces a two-stage semantic re-alignment strategy to significantly improve the consistency between generated images and text prompts in diffusion models.
+                    </p>
                   </td>
                 </tr>
               </table>
