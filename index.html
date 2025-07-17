@@ -1,324 +1,611 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guian Fang - Ph.D. student at Show Lab, National University of Singapore, specializing in computer vision, deep learning, generative AI, and AI alignment.">
+    <meta name="keywords" content="Guian Fang, computer vision, deep learning, generative AI, AI alignment, video understanding, NUS, Show Lab">
+    <meta name="author" content="Guian Fang">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Guian Fang (方桂安)">
+    <meta property="og:description" content="Ph.D. student at Show Lab, National University of Singapore, specializing in computer vision, deep learning, generative AI, and AI alignment.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://enderfga.github.io/">
+    <meta property="og:image" content="https://enderfga.github.io/images/guian.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Enderfga">
+    <meta name="twitter:title" content="Guian Fang (方桂安)">
+    <meta name="twitter:description" content="Ph.D. student at Show Lab, National University of Singapore, specializing in computer vision, deep learning, generative AI, and AI alignment.">
+    <meta name="twitter:image" content="https://enderfga.github.io/images/guian.jpg">
+    
     <title>Guian Fang (方桂安)</title>
-    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://enderfga.github.io/">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="stylesheet.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="stylesheet.css">
-    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/feather-icons" defer></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Guian Fang",
+        "alternateName": "方桂安",
+        "url": "https://enderfga.github.io/",
+        "image": "https://enderfga.github.io/images/guian.jpg",
+        "sameAs": [
+            "https://scholar.google.com/citations?user=2z4sraUAAAAJ",
+            "https://www.linkedin.com/in/enderfga",
+            "https://twitter.com/Enderfga",
+            "https://github.com/Enderfga"
+        ],
+        "jobTitle": "Ph.D. Student",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "National University of Singapore",
+            "url": "https://www.nus.edu.sg/"
+        },
+        "alumniOf": {
+            "@type": "Organization", 
+            "name": "Sun Yat-sen University",
+            "url": "https://ise.sysu.edu.cn/"
+        },
+        "knowsAbout": [
+            "Computer Vision",
+            "Deep Learning", 
+            "Generative AI",
+            "AI Alignment",
+            "Video Understanding"
+        ],
+        "email": "guianfang@u.nus.edu"
+    }
+    </script>
 </head>
 <body>
- <!-- 地图部分 -->
-<!-- 左侧地图 -->
-<a href='https://clustrmaps.com/site/1c0ri' title='Visit tracker' style="position: fixed; top: 0; left: 2vw; z-index: 999;">
-    <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' alt='ClustrMaps Tracker' style="width: 10vw; min-width: 120px; max-width: 180px;"/>
-</a>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Analytics Maps Section -->
+    <aside class="analytics-maps" aria-label="Analytics and visitor tracking">
+        <!-- 左侧地图 -->
+        <a href='https://clustrmaps.com/site/1c0ri' 
+           title='Visit tracker' 
+           class="cluster-map-link"
+           aria-label="View visitor statistics on ClustrMaps">
+            <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' 
+                 alt='ClustrMaps visitor tracking visualization' 
+                 loading="lazy"
+                 class="tracker-image"/>
+        </a>
 
-<!-- 右侧citation map -->
-<a href="citation_map.html" style="position: fixed; top: 0; right: 2vw; z-index: 999;">
-    <img src="citation_map.png" alt="Citation Map" style="width: 10vw; min-width: 120px; max-width: 180px;"/>
-</a>
+        <!-- 右侧citation map -->
+        <a href="citation_map.html" 
+           class="citation-map-link"
+           aria-label="View citation network visualization">
+            <img src="citation_map.png" 
+                 alt="Citation network visualization showing research connections" 
+                 loading="lazy"
+                 class="citation-image"/>
+        </a>
+    </aside>
 
-<!-- 导航栏部分 -->
-<nav style="padding: 2 0vw;"> <!-- 使用vw单位使padding随视窗宽度变化 -->
-    <ul>
-        <li><a href="#research" id="nav-research">🔍 Research</a></li>
-        <li><a href="#honors" id="nav-honors">🏆 Honors & Awards</a></li>
-        <li><a href="#activities" id="nav-activities">🌟 Activities & Services</a></li>
-        <li><a href="#acknowledgements" id="nav-acknowledgements">📜 Acknowledgements</a></li>
-    </ul>
-    <a href="#top" class="to-top" style="display:none;">⬆️</a>
-    <div class="social-icons">
-        <a href="mailto:guianfang@u.nus.edu"><i class="fas fa-envelope"></i></a>
-        <a href="data/cv.pdf"><i class="fas fa-file-alt"></i></a>
-        <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"><i class="fas fa-graduation-cap"></i></a>
-        <a href="https://www.linkedin.com/in/enderfga" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://twitter.com/Enderfga" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://github.com/Enderfga" target="_blank"><i class="fab fa-github"></i></a>
-        <div class="theme-switcher">
-            <span><i data-feather="sun"></i></span>
-            <div class="three-way-radio">
-                <input type="radio" name="ui-mode" id="footer-ui-mode-left" class="left" value="left" data-action="ui-mode-light">
-                <input type="radio" name="ui-mode" id="footer-ui-mode-center" class="center" value="center" data-action="ui-mode-system">
-                <input type="radio" name="ui-mode" id="footer-ui-mode-right" class="right" value="right" data-action="ui-mode-dark">
-                <div class="indicator"></div>
+    <!-- Navigation Section -->
+    <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+        <ul class="nav-list" role="menubar">
+            <li role="none"><a href="#research" id="nav-research" role="menuitem" aria-label="Go to Research section"><span aria-hidden="true">🔍</span> Research</a></li>
+            <li role="none"><a href="#honors" id="nav-honors" role="menuitem" aria-label="Go to Honors and Awards section"><span aria-hidden="true">🏆</span> Honors &amp; Awards</a></li>
+            <li role="none"><a href="#activities" id="nav-activities" role="menuitem" aria-label="Go to Activities and Services section"><span aria-hidden="true">🌟</span> Activities &amp; Services</a></li>
+            <li role="none"><a href="#acknowledgements" id="nav-acknowledgements" role="menuitem" aria-label="Go to Acknowledgements section"><span aria-hidden="true">📜</span> Acknowledgements</a></li>
+        </ul>
+        
+        <button class="to-top" 
+                style="display:none;" 
+                aria-label="Return to top of page"
+                type="button">
+            <span aria-hidden="true">⬆️</span>
+            <span class="sr-only">Back to top</span>
+        </button>
+        
+        <div class="social-icons" role="complementary" aria-label="Social media and contact links">
+            <a href="mailto:guianfang@u.nus.edu" 
+               aria-label="Send email to Guian Fang">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <span class="sr-only">Email</span>
+            </a>
+            <a href="data/cv.pdf" 
+               aria-label="Download CV (PDF)" 
+               target="_blank" 
+               rel="noopener">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                <span class="sr-only">CV</span>
+            </a>
+            <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ" 
+               aria-label="View Google Scholar profile" 
+               target="_blank" 
+               rel="noopener">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span class="sr-only">Google Scholar</span>
+            </a>
+            <a href="https://www.linkedin.com/in/enderfga" 
+               aria-label="View LinkedIn profile" 
+               target="_blank" 
+               rel="noopener">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                <span class="sr-only">LinkedIn</span>
+            </a>
+            <a href="https://twitter.com/Enderfga" 
+               aria-label="View Twitter profile" 
+               target="_blank" 
+               rel="noopener">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+                <span class="sr-only">Twitter</span>
+            </a>
+            <a href="https://github.com/Enderfga" 
+               aria-label="View GitHub profile" 
+               target="_blank" 
+               rel="noopener">
+                <i class="fab fa-github" aria-hidden="true"></i>
+                <span class="sr-only">GitHub</span>
+            </a>
+            
+            <div class="theme-switcher" role="group" aria-label="Theme selection">
+                <button type="button" 
+                        class="theme-icon" 
+                        aria-label="Switch to light mode">
+                    <i data-feather="sun" aria-hidden="true"></i>
+                </button>
+                <div class="three-way-radio" role="radiogroup" aria-label="Choose theme preference">
+                    <input type="radio" 
+                           name="ui-mode" 
+                           id="footer-ui-mode-left" 
+                           class="left" 
+                           value="light" 
+                           aria-label="Light mode">
+                    <input type="radio" 
+                           name="ui-mode" 
+                           id="footer-ui-mode-center" 
+                           class="center" 
+                           value="system" 
+                           aria-label="System default mode">
+                    <input type="radio" 
+                           name="ui-mode" 
+                           id="footer-ui-mode-right" 
+                           class="right" 
+                           value="dark" 
+                           aria-label="Dark mode">
+                    <div class="indicator" aria-hidden="true"></div>
+                </div>
+                <button type="button" 
+                        class="theme-icon" 
+                        aria-label="Switch to dark mode">
+                    <i data-feather="moon" aria-hidden="true"></i>
+                </button>
             </div>
-            <span><i data-feather="moon"></i></span>
         </div>
-    </div>
-</nav>
-    <div id="content">
+    </nav>
+    <main id="main-content">
         <section class="profile-section">
             <div class="profile-text">
-                <p class="name">Guian Fang</p>
-                <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl">Prof. Mike Zheng Shou</a>.</p>
-                <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://scholar.google.com/citations?view_op=search_authors&mauthors=xiaodan+liang&hl=zh-CN&oi=ao">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/">Shengcai Liao</a>.</p>
-                <p>Additionally, I was a research scientist at <strong><a href="https://www.cybever.ai/">Cybever AI</a></strong> in Sunnyvale, where I cooperated with a small team that mostly works on AI filmmaking and vision language model.</p>
+                <h1 class="name">Guian Fang</h1>
+                <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
+                <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://scholar.google.com/citations?view_op=search_authors&mauthors=xiaodan+liang&hl=zh-CN&oi=ao" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
+                <p>Additionally, I was a research scientist at <strong><a href="https://www.cybever.ai/" target="_blank" rel="noopener">Cybever AI</a></strong> in Sunnyvale, where I cooperated with a small team that mostly works on AI filmmaking and vision language model.</p>
             </div>
-            <div class="profile-image" onmouseover="guian_start()" onmouseout="guian_stop()" style="position: relative; display: inline-block;">
-                <div class="image-container" id="guian_image" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                  <img src="images/guian.PNG" alt="profile photo" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="profile-image" 
+                 onmouseover="guian_start()" 
+                 onmouseout="guian_stop()" 
+                 role="img" 
+                 aria-label="Profile photo of Guian Fang">
+                <div class="image-container" 
+                     id="guian_image" 
+                     aria-hidden="true">
+                    <img src="images/guian.PNG" 
+                         alt="Alternative profile photo of Guian Fang" 
+                         loading="lazy">
                 </div>
-                <a href="images/guian.jpg">
-                  <img src="images/guian.jpg" alt="profile photo" style="max-width: 100%; height: auto; display: block;">
+                <a href="images/guian.jpg" 
+                   aria-label="View full size profile photo">
+                    <img src="images/guian.jpg" 
+                         alt="Profile photo of Guian Fang" 
+                         loading="eager">
                 </a>
-              </div>
+            </div>
         </section>
 
 
         <section id="research">
             <h2>Research</h2>
             <p>I'm interested in computer vision, deep learning, generative AI, and AI alignment. Most of my research will be about video understanding and generation. Representative papers are <span class="highlight">highlighted</span>.</p>
-            <table style="width:100%;">
-                <tr>
-                    <td style="padding:10px;vertical-align:middle">
-                        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
-                            <iframe title="vimeo-player" src="https://player.vimeo.com/video/985036345?h=c1f9f7c34b" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" frameborder="0"    allowfullscreen></iframe>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding:15px;vertical-align:middle">
-                        <a href="https://www.cybever.ai/">
-                            <span class="papertitle">Generate 3D Worlds in Production with AI</span>
-                        </a>
-                        <br>
-                        Cybever*, <strong>Guian Fang</strong>*
-                        <br>
-                        <p>
-                            Image-to-3D: Let AI do the heavy lifting so 3D Professionals can do the storytelling    
-                        </p>
-                    </td>
-                </tr>
-            </table>
             
-            <table bgcolor="#ffffd0" style="width:100%;">
-                <tr>
-                  <td style="padding:10px;vertical-align:middle">
-                    <img src='images/humanrefiner.jpg' style="width:100%; margin:auto; display:block;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:15px;vertical-align:middle">
-                    <a href="https://github.com/Enderfga/HumanRefiner">
-                      <span class="papertitle">HumanRefiner: Benchmarking Abnormal Human Generation and Refining with Coarse-to-fine Pose-Reversible Guidance</span>
-                    </a>
-                    <br>
-                    <strong>Guian Fang</strong>*, Wenbiao Yan*, Yuanfan Guo*, Jianhua Han, Zutao Jiang, Hang Xu, Shengcai Liao, Xiaodan Liang
-                    <br>
-                    <em>ECCV</em>, 2024
-                    <br>
-                    <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner">Dataset page</a> /
-                    <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf">Paper</a>
-                    <p>
-                      A new large-scale benchmark (AbHuman) for anatomical anomalies in humans, and a plug-and-play method (HumanRefiner) for refining abnormal human generations with pose-reversible guidance.
+            <div class="research-content">
+                <article class="research-paper">
+                <div class="paper-media">
+                    <div class="video-container">
+                        <iframe title="Cybever AI 3D World Generation Demo" 
+                                src="https://player.vimeo.com/video/985036345?h=c1f9f7c34b" 
+                                frameborder="0" 
+                                allowfullscreen
+                                loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <h3 class="paper-title">
+                        <a href="https://www.cybever.ai/" target="_blank" rel="noopener">
+                            Generate 3D Worlds in Production with AI
+                        </a>
+                    </h3>
+                    <p class="paper-authors">
+                        Cybever*, <strong>Guian Fang</strong>*
                     </p>
-                  </td>
-                </tr>
-              </table>
+                    <p class="paper-description">
+                        Image-to-3D: Let AI do the heavy lifting so 3D Professionals can do the storytelling    
+                    </p>
+                </div>
+            </article>
+            
+            <article class="research-paper highlight">
+                <div class="paper-media">
+                    <img src='images/humanrefiner.jpg' 
+                         alt="HumanRefiner research visualization showing human pose refinement" 
+                         loading="lazy">
+                </div>
+                <div class="paper-content">
+                    <h3 class="paper-title">
+                        <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">
+                            HumanRefiner:<br>Benchmarking Abnormal Human Generation and Refining with Coarse-to-fine Pose-Reversible Guidance
+                        </a>
+                    </h3>
+                    <p class="paper-authors">
+                        <strong>Guian Fang</strong>*, Wenbiao Yan*, Yuanfan Guo*, Jianhua Han, Zutao Jiang, Hang Xu, Shengcai Liao, Xiaodan Liang
+                    </p>
+                    <p class="paper-venue"><em>ECCV</em>, 2024</p>
+                    <div class="paper-links">
+                        <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner" target="_blank" rel="noopener">Dataset page</a>
+                        <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf" target="_blank" rel="noopener">Paper</a>
+                    </div>
+                    <p class="paper-description">
+                        A new large-scale benchmark (AbHuman) for anatomical anomalies in humans, and a plug-and-play method (HumanRefiner) for refining abnormal human generations with pose-reversible guidance.
+                    </p>
+                </div>
+            </article>
               
-            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                <tr>
-                  <td style="width:25%; padding:20px; vertical-align:middle">
-                    <img src='images/ChartThinker.png' width="330">
-                  </td>
-                  <td style="width:75%; padding:20px; vertical-align:middle">
-                    <a href="https://github.com/Notonion/ChartThinker">
-                      <span class="papertitle">ChartThinker: A Contextual Chain-of-Thought Approach to Optimized Chart Summarization</span>
-                    </a>
-                    <br>
-                    Mengsha Liu, Daoyuan Chen, Yaliang Li, <strong>Guian Fang</strong>, Ying Shen
-                    <br>
-                    <em>LREC-Coling</em>, 2024
-                    <br>
-                    <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA">Dataset page</a> /
-                    <a href="https://aclanthology.org/2024.lrec-main.273/">Paper</a>
-                    <p>
-                      ChartThinker leverages chain-of-thought reasoning and context retrieval to generate accurate and coherent chart summaries, outperforming previous methods on a diverse benchmark.
+            <article class="research-paper">
+                <div class="paper-media">
+                    <img src='images/ChartThinker.png' 
+                         alt="ChartThinker framework diagram showing contextual chain-of-thought approach" 
+                         loading="lazy">
+                </div>
+                <div class="paper-content">
+                    <h3 class="paper-title">
+                        <a href="https://github.com/Notonion/ChartThinker" target="_blank" rel="noopener">
+                            ChartThinker:<br>A Contextual Chain-of-Thought Approach to Optimized Chart Summarization
+                        </a>
+                    </h3>
+                    <p class="paper-authors">
+                        Mengsha Liu, Daoyuan Chen, Yaliang Li, <strong>Guian Fang</strong>, Ying Shen
                     </p>
-                  </td>
-                </tr>
-              </table>
+                    <p class="paper-venue"><em>LREC-Coling</em>, 2024</p>
+                    <div class="paper-links">
+                        <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA" target="_blank" rel="noopener">Dataset page</a>
+                        <a href="https://aclanthology.org/2024.lrec-main.273/" target="_blank" rel="noopener">Paper</a>
+                    </div>
+                    <p class="paper-description">
+                        ChartThinker leverages chain-of-thought reasoning and context retrieval to generate accurate and coherent chart summaries, outperforming previous methods on a diverse benchmark.
+                    </p>
+                </div>
+            </article>
 
-              <table bgcolor="#ffffd0" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                <tr>
-                  <td style="width:25%; padding:20px; vertical-align:middle">
-                    <img src='images/llama2.png' width="330">
-                  </td>
-                  <td style="width:75%; padding:20px; vertical-align:middle">
-                    <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory">
-                      <span class="papertitle">LLaMA2-Accessory: An Open-source Toolkit for LLM Development</span>
-                    </a>
-                    <br>
-                    Chris Liu, Ziyi Lin, <strong>Guian Fang</strong>, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang
-                    <br>
-                    <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&amp;label=Star" alt="Star">
-                    <br>
-                    <a href="https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory">Checkpoint page</a> /
-                    <a href="https://llama2-accessory.readthedocs.io/en/latest/">Document</a>
-                    <p>
+            <article class="research-paper highlight">
+                <div class="paper-media">
+                    <img src='images/llama2.png' 
+                         alt="LLaMA2-Accessory toolkit architecture diagram" 
+                         loading="lazy">
+                </div>
+                <div class="paper-content">
+                    <h3 class="paper-title">
+                        <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">
+                            LLaMA2-Accessory:<br>An Open-source Toolkit for LLM Development
+                        </a>
+                    </h3>
+                    <p class="paper-authors">
+                        Chris Liu, Ziyi Lin, <strong>Guian Fang</strong>, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang
+                    </p>
+                    <div class="paper-stats">
+                        <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&label=Star" alt="GitHub stars count" loading="lazy">
+                    </div>
+                    <div class="paper-links">
+                        <a href="https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">Checkpoint page</a>
+                        <a href="https://llama2-accessory.readthedocs.io/en/latest/" target="_blank" rel="noopener">Documentation</a>
+                    </div>
+                    <p class="paper-description">
                         An open-source toolkit supporting pretraining, finetuning, and deployment of large language and multimodal models, making LLM development more accessible and efficient.
                     </p>
-                  </td>
-                </tr>
-              </table>
+                </div>
+            </article>
 
-              <table style="width:100%;">
-                <tr>
-                  <td style="padding:10px;vertical-align:middle">
-                    <img src='images/RealignDiff.png' style="width:100%; margin:auto; display:block;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:15px;vertical-align:middle">
-                    <a href="https://github.com/Enderfga/RealignDiff">
-                      <span class="papertitle">RealignDiff: Boosting Text-to-Image Diffusion Model with Coarse-to-fine Semantic Re-alignment</span>
-                    </a>
-                    <br>
-                    <strong>Guian Fang</strong>*, Zutao Jiang*, Jianhua Han, Guansong Lu, Hang Xu, Shengcai Liao, Xiaojun Chang, Xiaodan Liang
-                    <br>
-                    <em>TNNLS</em>, 2023
-                    <br>
-                    <!-- <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA">Dataset page</a> / -->
-                    <a href="https://arxiv.org/abs/2305.19599">Paper</a>
-                    <p>
+            <article class="research-paper">
+                <div class="paper-media">
+                    <img src='images/RealignDiff.png' 
+                         alt="RealignDiff framework showing coarse-to-fine semantic re-alignment process" 
+                         loading="lazy">
+                </div>
+                <div class="paper-content">
+                    <h3 class="paper-title">
+                        <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">
+                            RealignDiff:<br>Boosting Text-to-Image Diffusion Model with Coarse-to-fine Semantic Re-alignment
+                        </a>
+                    </h3>
+                    <p class="paper-authors">
+                        <strong>Guian Fang</strong>*, Zutao Jiang*, Jianhua Han, Guansong Lu, Hang Xu, Shengcai Liao, Xiaojun Chang, Xiaodan Liang
+                    </p>
+                    <p class="paper-venue"><em>TNNLS</em>, 2023</p>
+                    <div class="paper-links">
+                        <a href="https://arxiv.org/abs/2305.19599" target="_blank" rel="noopener">Paper</a>
+                    </div>
+                    <p class="paper-description">
                         RealignDiff introduces a two-stage semantic re-alignment strategy to significantly improve the consistency between generated images and text prompts in diffusion models.
                     </p>
-                  </td>
-                </tr>
-              </table>
-              
+                </div>
+            </article>
+            </div>
         </section>
+        
         <section id="honors">
-            <h2>Honors & Awards</h2>
-            <ul>
-                <li>2nd Place, Asia and Pacific Mathematical Contest in Modeling (2022)</li>
-                <li>Silver Medal, China Collegiate Algorithm Design & Programming Challenge Contest (2022)</li>
-                <li>2nd Place, Social Computing Innovation Competition (2022)</li>
-                <li>1st Place, National College Computer Ability Challenge (2023)</li>
-                <li>Recipient, Huawei Intelligent Foundation Scholarship (2022)</li>
-                <li>Recipient, National Encouragement scholarship (2022)</li>
-                <li>1st Place, SYSU Outstanding Student Scholarship (2023)</li>
-                <li>Recipient, National Scholarship (2023)</li>
-                <li>Recipient, Li Xuerou Foundation Scholarship (2023)</li>
+            <h2>Honors &amp; Awards</h2>
+            <ul class="honors-list">
+                <li><strong>2nd Place</strong>, Asia and Pacific Mathematical Contest in Modeling (2022)</li>
+                <li><strong>Silver Medal</strong>, China Collegiate Algorithm Design &amp; Programming Challenge Contest (2022)</li>
+                <li><strong>2nd Place</strong>, Social Computing Innovation Competition (2022)</li>
+                <li><strong>1st Place</strong>, National College Computer Ability Challenge (2023)</li>
+                <li><strong>Recipient</strong>, Huawei Intelligent Foundation Scholarship (2022)</li>
+                <li><strong>Recipient</strong>, National Encouragement Scholarship (2022)</li>
+                <li><strong>1st Place</strong>, SYSU Outstanding Student Scholarship (2023)</li>
+                <li><strong>Recipient</strong>, National Scholarship (2023)</li>
+                <li><strong>Recipient</strong>, Li Xuerou Foundation Scholarship (2023)</li>
             </ul>
         </section>
+        
         <section id="activities">
-            <h2>Activities & Services</h2>
-            <ul>
-                <li>Reviewer for ECCV</li>
-                <li>Reviewer for NeurIPS</li>
-		<li>Reviewer for ICLR</li>
-		<li>Reviewer for ICML</li>    
-		<li>Reviewer for AISTATS</li>
-		<li>Reviewer for ACL Rolling Review (ARR), serving conferences including ACL, EMNLP, NAACL, and EACL</li>
-                <li>Core organizer of <a href="https://sites.google.com/view/loveucvpr24/home">LOVEU: LOng-form VidEo Understanding Towards Multimodal AI Assistant and Copilot Workshop @ CVPR'24</a>
-                </li>
-            </ul>
+            <h2>Activities &amp; Services</h2>
+            <div class="activities-content">
+                <h3>Conference Reviews</h3>
+                <ul class="reviewer-list">
+                    <li>Reviewer for <abbr title="European Conference on Computer Vision">ECCV</abbr></li>
+                    <li>Reviewer for <abbr title="Conference on Neural Information Processing Systems">NeurIPS</abbr></li>
+                    <li>Reviewer for <abbr title="International Conference on Learning Representations">ICLR</abbr></li>
+                    <li>Reviewer for <abbr title="International Conference on Machine Learning">ICML</abbr></li>    
+                    <li>Reviewer for <abbr title="International Conference on Artificial Intelligence and Statistics">AISTATS</abbr></li>
+                    <li>Reviewer for <abbr title="ACL Rolling Review">ACL Rolling Review (ARR)</abbr>, serving conferences including ACL, EMNLP, NAACL, and EACL</li>
+                </ul>
+                
+                <h3>Workshop Organization</h3>
+                <ul class="organization-list">
+                    <li>Core organizer of <a href="https://sites.google.com/view/loveucvpr24/home" target="_blank" rel="noopener">LOVEU: LOng-form VidEo Understanding Towards Multimodal AI Assistant and Copilot Workshop @ CVPR'24</a></li>
+                </ul>
+            </div>
         </section>
         <section id="acknowledgements">
             <h2>Acknowledgements</h2>
-           <p>I feel incredibly fortunate to have collaborated with such remarkable individuals who have generously offered me their mentorship.</p>
-		
-        	<table style="width:100%; border:0; border-spacing:0; border-collapse:separate; margin-right:auto; margin-left:auto;">
-    <tbody>
-        <tr>
-            <td style="padding:1%; width:33%; vertical-align:top; text-align:center;">
-                <img style="height:100px;" src="images/cybever_logo.jpeg" class="hoverZoomLink" alt="Cybever Logo">
-                <p>
-                    <a href="https://www.cybever.ai/">@ Cybever Inc.</a>
-                </p>
-                <p>
-                    <a href="https://www.linkedin.com/in/cnjieyang/">CTO, Jie Yang</a>
-                </p>
-            </td>
-            <td style="padding:1%; width:33%; vertical-align:top; text-align:center;">
-                <img style="height:100px;" src="images/gvlab.jpeg" class="hoverZoomLink" alt="GVLab Logo">
-                <p>
-                    <a href="https://alpha-vllm.github.io/">@ OpenGVLab, Shanghai AI Lab</a>
-                </p>
-                <p>
-                    <a href="https://gaopengcuhk.github.io/">Dr. Peng Gao</a>
-                </p>
-            </td>
-            <td style="padding:1%; width:33%; vertical-align:top; text-align:center;">
-                <img style="height:100px;" src="images/huawei.jpg" class="hoverZoomLink" alt="Huawei Logo">
-                <p>
-                    <a href="http://dev3.noahlab.com.hk/index.html">@ Noah's Ark Lab, Huawei</a>
-                </p>
-                <p>
-                    <a href="https://xuhangcn.github.io/">Dr. Hang Xu</a>
-                </p>
-            </td>
-        </tr>
-    </tbody>
-</table>
-        <footer>
-            <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
+            <p>I feel incredibly fortunate to have collaborated with such remarkable individuals who have generously offered me their mentorship.</p>
+            
+            <div class="collaborations-grid">
+                <div class="collaboration-item">
+                    <img src="images/cybever_logo.jpeg" 
+                         alt="Cybever Inc. logo" 
+                         loading="lazy"
+                         class="organization-logo">
+                    <h3><a href="https://www.cybever.ai/" target="_blank" rel="noopener">Cybever Inc.</a></h3>
+                    <p><a href="https://www.linkedin.com/in/cnjieyang/" target="_blank" rel="noopener">CTO, Jie Yang</a></p>
+                </div>
+                
+                <div class="collaboration-item">
+                    <img src="images/gvlab.jpeg" 
+                         alt="OpenGVLab, Shanghai AI Lab logo" 
+                         loading="lazy"
+                         class="organization-logo">
+                    <h3><a href="https://alpha-vllm.github.io/" target="_blank" rel="noopener">OpenGVLab, Shanghai AI Lab</a></h3>
+                    <p><a href="https://gaopengcuhk.github.io/" target="_blank" rel="noopener">Dr. Peng Gao</a></p>
+                </div>
+                
+                <div class="collaboration-item">
+                    <img src="images/huawei.jpg" 
+                         alt="Noah's Ark Lab, Huawei logo" 
+                         loading="lazy"
+                         class="organization-logo">
+                    <h3><a href="http://dev3.noahlab.com.hk/index.html" target="_blank" rel="noopener">Noah's Ark Lab, Huawei</a></h3>
+                    <p><a href="https://xuhangcn.github.io/" target="_blank" rel="noopener">Dr. Hang Xu</a></p>
+                </div>
+            </div>
+        </section>
+        
+        <footer role="contentinfo">
+            <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
         </footer>
-    </div>
+    </main>
     <script>
-        // 突出显示当前导航项
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelectorAll('nav a').forEach(nav => nav.style.textDecoration = 'none');
-                this.style.textDecoration = 'underline';
-            });
-        });
+        'use strict';
+        
+        // Website functionality module
+        const Website = {
+            // Navigation functionality
+            navigation: {
+                init() {
+                    const navLinks = document.querySelectorAll('.nav-list a[href^="#"]');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', this.handleNavClick.bind(this));
+                    });
+                },
+                
+                handleNavClick(event) {
+                    const navLinks = document.querySelectorAll('.nav-list a');
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    event.currentTarget.classList.add('active');
+                    
+                    // Smooth scroll to section
+                    const targetId = event.currentTarget.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            },
 
-        // 显示或隐藏回到顶部按钮
-        window.onscroll = function() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.querySelector('.to-top').style.display = "block";
-            } else {
-                document.querySelector('.to-top').style.display = "none";
+            // Back to top functionality
+            backToTop: {
+                init() {
+                    this.button = document.querySelector('.to-top');
+                    if (this.button) {
+                        this.button.addEventListener('click', this.scrollToTop);
+                        window.addEventListener('scroll', this.toggleVisibility.bind(this));
+                    }
+                },
+                
+                toggleVisibility() {
+                    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                    if (this.button) {
+                        this.button.style.display = scrollTop > 100 ? 'block' : 'none';
+                    }
+                },
+                
+                scrollToTop(event) {
+                    event.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            },
+
+            // Theme switcher functionality
+            theme: {
+                init() {
+                    this.body = document.body;
+                    this.radios = document.querySelectorAll('.three-way-radio input');
+                    this.themeIcons = document.querySelectorAll('.theme-icon');
+                    
+                    this.bindEvents();
+                    this.initializeTheme();
+                },
+                
+                bindEvents() {
+                    this.radios.forEach(radio => {
+                        radio.addEventListener('change', this.handleThemeChange.bind(this));
+                    });
+                    
+                    // Theme icon click handlers
+                    this.themeIcons.forEach((icon, index) => {
+                        icon.addEventListener('click', () => {
+                            if (index === 0) { // Sun icon - light mode
+                                this.setTheme('light');
+                            } else { // Moon icon - dark mode
+                                this.setTheme('dark');
+                            }
+                        });
+                    });
+                },
+                
+                handleThemeChange(event) {
+                    const theme = event.target.value;
+                    this.applyTheme(theme);
+                    this.saveTheme(theme);
+                },
+                
+                setTheme(theme) {
+                    const radioToCheck = document.querySelector(`input[value="${theme}"]`);
+                    if (radioToCheck) {
+                        radioToCheck.checked = true;
+                        this.applyTheme(theme);
+                        this.saveTheme(theme);
+                    }
+                },
+                
+                applyTheme(theme) {
+                    switch(theme) {
+                        case 'light':
+                            this.body.classList.remove('dark-mode');
+                            break;
+                        case 'dark':
+                            this.body.classList.add('dark-mode');
+                            break;
+                        case 'system':
+                            // Implement system preference detection
+                            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                            this.body.classList.toggle('dark-mode', prefersDark);
+                            break;
+                    }
+                },
+                
+                saveTheme(theme) {
+                    try {
+                        localStorage.setItem('preferred-theme', theme);
+                    } catch (e) {
+                        // Handle localStorage not available
+                        console.warn('Unable to save theme preference');
+                    }
+                },
+                
+                initializeTheme() {
+                    let theme = 'light'; // Default theme
+                    try {
+                        theme = localStorage.getItem('preferred-theme') || 'light';
+                    } catch (e) {
+                        console.warn('Unable to load theme preference');
+                    }
+                    this.setTheme(theme);
+                }
+            },
+
+            // Profile image hover effect
+            profileImage: {
+                init() {
+                    this.container = document.querySelector('.profile-image');
+                    this.hoverImage = document.getElementById('guian_image');
+                    
+                    if (this.container && this.hoverImage) {
+                        this.container.addEventListener('mouseenter', this.show.bind(this));
+                        this.container.addEventListener('mouseleave', this.hide.bind(this));
+                        this.hide(); // Initialize as hidden
+                    }
+                },
+                
+                show() {
+                    if (this.hoverImage) {
+                        this.hoverImage.style.opacity = '1';
+                    }
+                },
+                
+                hide() {
+                    if (this.hoverImage) {
+                        this.hoverImage.style.opacity = '0';
+                    }
+                }
+            },
+
+            // Initialize all modules
+            init() {
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Initialize Feather icons
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                    }
+                    
+                    // Initialize all modules
+                    this.navigation.init();
+                    this.backToTop.init();
+                    this.theme.init();
+                    this.profileImage.init();
+                });
             }
         };
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            feather.replace();
-
-            const body = document.body;
-            const radios = document.querySelectorAll('.three-way-radio input');
-
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (radio.classList.contains('left')) {
-                        body.classList.remove('dark-mode');
-                    } else if (radio.classList.contains('right')) {
-                        body.classList.add('dark-mode');
-                    } else {
-                        // Implement system default mode logic here
-                    }
-                });
-            });
-
-            // Click the icons to change mode
-            document.querySelector('.theme-switcher span:first-child').addEventListener('click', () => {
-                document.getElementById('footer-ui-mode-left').checked = true;
-                body.classList.remove('dark-mode');
-            });
-
-            document.querySelector('.theme-switcher span:last-child').addEventListener('click', () => {
-                document.getElementById('footer-ui-mode-right').checked = true;
-                body.classList.add('dark-mode');
-            });
-
-            // Initialize to light mode by default
-            document.getElementById('footer-ui-mode-left').checked = true;
-        });
+        // Initialize website functionality
+        Website.init();
     </script>
-    <script type="text/javascript">
-        function guian_start() {
-          document.getElementById('guian_image').style.opacity = "1";
-        }
-      
-        function guian_stop() {
-          document.getElementById('guian_image').style.opacity = "0";
-        }
-        guian_stop();
-      </script>
 </body>
 </html>

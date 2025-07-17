@@ -248,7 +248,7 @@ span.highlight {
     #footer-ui-mode-right:checked ~ .indicator {
         transform: translateX(25px); /* 调整为合适的位置 */
     }
-    #content {
+    #main-content {
         padding-top: 70px;
         width: 100%;
         max-width: 800px;
@@ -276,16 +276,23 @@ span.highlight {
     .profile-image {
         width: 38%;
         max-width: 38%;
+        position: relative;
     }
     .profile-image img {
         width: 100%;
+        border-radius: 50%;
+    }
+    .profile-image a img {
+        max-width: 100%;
+        height: auto;
+        display: block;
         border-radius: 50%;
     }
     .dark-mode {
         background-color: #121212;
         color: #ffffff;
     }
-    nav a.to-top {
+    .to-top {
     position: fixed;
     right: 20px;
     bottom: 20px;
@@ -294,4 +301,599 @@ span.highlight {
     padding: 10px;
     border-radius: 5px;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .to-top:hover {
+    background: #555;
+}
+
+/* ========================================
+   ACCESSIBILITY AND UX IMPROVEMENTS
+   ======================================== */
+
+/* Skip link for screen readers */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #007cba;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 0;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========================================
+   ENHANCED NAVIGATION
+   ======================================== */
+
+/* 恢复原来的导航栏样式，但保持语义化的class名称 */
+.main-navigation {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.nav-list li {
+    margin: 0 10px;
+}
+
+.nav-list a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 10px;
+}
+
+.nav-list a:hover {
+    color: #ccc;
+}
+
+.nav-list a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* 社交图标和主题切换样式 */
+.social-icons {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.social-icons a:hover {
+    color: #ccc;
+}
+
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
+.theme-icon {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.theme-icon:hover {
+    color: #ccc;
+}
+
+.three-way-radio {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    width: 45px;
+    height: 20px;
+    background-color: #666;
+    border-radius: 10px;
+}
+
+.three-way-radio input {
+    display: none;
+}
+
+.three-way-radio .indicator {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+/* 指示器位置 */
+.three-way-radio input:checked.left ~ .indicator {
+    transform: translateX(0);
+}
+
+.three-way-radio input:checked.center ~ .indicator {
+    transform: translateX(12px);
+}
+
+.three-way-radio input:checked.right ~ .indicator {
+    transform: translateX(25px);
+}
+
+/* ========================================
+   ANALYTICS MAPS POSITIONING
+   ======================================== */
+
+.analytics-maps {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.cluster-map-link,
+.citation-map-link {
+    position: absolute;
+    top: 0;
+    pointer-events: auto;
+}
+
+.cluster-map-link {
+    left: 2vw;
+}
+
+.citation-map-link {
+    right: 2vw;
+}
+
+.tracker-image,
+.citation-image {
+    width: 10vw;
+    min-width: 120px;
+    max-width: 180px;
+    height: auto;
+}
+
+/* ========================================
+   RESEARCH PAPERS LAYOUT
+   ======================================== */
+
+#research {
+    /* 研究部分标题保持与其他部分一致 */
+    padding: 20px 0;
+}
+
+#research h2,
+#research > p {
+    /* 标题和介绍段落使用标准布局 */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#research > p {
+    margin-bottom: 2rem;
+}
+
+.research-content {
+    /* 只有内容部分使用宽布局 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 40px);
+}
+
+.research-paper {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.research-paper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.research-paper.highlight {
+    background: #ffffd0;
+    border-color: #f0c040;
+}
+
+.paper-media {
+    flex: 0 0 420px;
+    min-width: 380px;
+}
+
+.paper-media img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.paper-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 650px;
+}
+
+.paper-title {
+    margin: 0 0 0.8rem 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.paper-title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.paper-title a:hover {
+    color: #007cba;
+    text-decoration: underline;
+}
+
+.paper-authors {
+    margin: 0.4rem 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.paper-venue {
+    margin: 0.4rem 0;
+    font-style: italic;
+    color: #0066cc;
+    font-size: 0.9rem;
+}
+
+.paper-links {
+    margin: 0.6rem 0;
+}
+
+.paper-links a {
+    display: inline-block;
+    margin-right: 0.8rem;
+    margin-bottom: 0.3rem;
+    color: #007cba;
+    text-decoration: none;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.paper-links a:hover {
+    text-decoration: underline;
+}
+
+.paper-stats {
+    margin: 0.4rem 0;
+}
+
+.paper-description {
+    margin: 0.8rem 0 0 0;
+    line-height: 1.5;
+    color: #444;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+/* ========================================
+   ENHANCED LISTS
+   ======================================== */
+
+.honors-list,
+.reviewer-list,
+.organization-list {
+    line-height: 1.6;
+    padding-left: 1.5rem;
+}
+
+.honors-list li {
+    margin-bottom: 0.5rem;
+}
+
+.activities-content h3 {
+    color: #333;
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.activities-content h3:first-child {
+    margin-top: 0;
+}
+
+/* ========================================
+   COLLABORATIONS GRID
+   ======================================== */
+
+.collaborations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.collaboration-item {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.collaboration-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.organization-logo {
+    height: 100px;
+    width: auto;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.collaboration-item h3 {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.collaboration-item p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+/* ========================================
+   PROFILE IMAGE ENHANCEMENTS
+   ======================================== */
+
+.image-container {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN IMPROVEMENTS
+   ======================================== */
+
+@media (max-width: 768px) {
+    .research-content {
+        width: calc(100vw - 20px);
+        padding: 10px;
+    }
+    
+    .research-paper {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .paper-media {
+        flex: none;
+        max-width: 100%;
+        min-width: auto;
+    }
+    
+    .paper-content {
+        max-width: 100%;
+    }
+    
+    .main-navigation {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .nav-list {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .nav-list li {
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .collaborations-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .tracker-image,
+    .citation-image {
+        width: 15vw;
+        min-width: 80px;
+        max-width: 120px;
+    }
+    
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-text,
+    .profile-image {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .profile-image {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .research-content {
+        width: calc(100vw - 10px);
+        padding: 5px;
+    }
+    
+    .research-paper {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .paper-title {
+        font-size: 1rem;
+    }
+    
+    .analytics-maps {
+        display: none;
+    }
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+
+.dark-mode .research-paper {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+.dark-mode .research-paper.highlight {
+    background: #3a3a00;
+    border-color: #666600;
+}
+
+.dark-mode .collaboration-item {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+.dark-mode .paper-authors {
+    color: #aaa;
+}
+
+.dark-mode .paper-description {
+    color: #ccc;
+}
+
+.dark-mode .collaboration-item p {
+    color: #aaa;
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Focus indicators for accessibility */
+a:focus,
+button:focus,
+input:focus {
+    outline: 2px solid #007cba;
+    outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
