@@ -249,7 +249,7 @@ span.highlight {
         transform: translateX(25px); /* 调整为合适的位置 */
     }
     #main-content {
-        padding-top: 70px;
+        padding-top: 80px;
         width: 100%;
         max-width: 800px;
         margin: 0 auto;
@@ -352,8 +352,6 @@ span.highlight {
 /* 恢复原来的导航栏样式，但保持语义化的class名称 */
 .main-navigation {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
     background: #333;
     position: fixed;
     top: 0;
@@ -476,38 +474,54 @@ span.highlight {
 }
 
 /* ========================================
-   ANALYTICS MAPS POSITIONING
+   FOOTER ANALYTICS MAPS
    ======================================== */
 
-.analytics-maps {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    pointer-events: none;
+.footer-analytics {
+    margin: 2rem 0;
+    padding: 2rem 0;
+    border-top: 1px solid #e0e0e0;
 }
 
-.cluster-map-link,
-.citation-map-link {
-    position: absolute;
-    top: 0;
-    pointer-events: auto;
+.analytics-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.cluster-map-link {
-    left: 2vw;
+.analytics-item {
+    text-align: center;
+    flex: 1;
 }
 
-.citation-map-link {
-    right: 2vw;
+.analytics-item h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.dark-mode .analytics-item h4 {
+    color: #e0e0e0;
+}
+
+.dark-mode .footer-analytics {
+    border-top-color: #444;
 }
 
 .tracker-image,
 .citation-image {
-    width: 150px;
-    height: 120px;
+    width: 200px;
+    height: 160px;
     object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.cluster-map-link:hover .tracker-image,
+.citation-map-link:hover .citation-image {
+    transform: scale(1.05);
 }
 
 /* ========================================
@@ -755,6 +769,10 @@ span.highlight {
    ======================================== */
 
 @media (max-width: 768px) {
+    #main-content {
+        padding-top: 120px;
+    }
+    
     .research-content {
         width: calc(100vw - 20px);
         padding: 10px;
@@ -797,10 +815,15 @@ span.highlight {
         gap: 1rem;
     }
     
+    .analytics-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
     .tracker-image,
     .citation-image {
-        width: 100px;
-        height: 80px;
+        width: 150px;
+        height: 120px;
         object-fit: contain;
     }
     
@@ -835,8 +858,10 @@ span.highlight {
         font-size: 1rem;
     }
     
-    .analytics-maps {
-        display: none;
+    .tracker-image,
+    .citation-image {
+        width: 120px;
+        height: 96px;
     }
 }
 

@@ -74,29 +74,6 @@
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <!-- Analytics Maps Section -->
-    <aside class="analytics-maps" aria-label="Analytics and visitor tracking">
-        <!-- 左侧地图 -->
-        <a href='https://clustrmaps.com/site/1c0ri' 
-           title='Visit tracker' 
-           class="cluster-map-link"
-           aria-label="View visitor statistics on ClustrMaps">
-            <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' 
-                 alt='ClustrMaps visitor tracking visualization' 
-                 loading="lazy"
-                 class="tracker-image"/>
-        </a>
-
-        <!-- 右侧citation map -->
-        <a href="citation_map.html" 
-           class="citation-map-link"
-           aria-label="View citation network visualization">
-            <img src="citation_map.png" 
-                 alt="Citation network visualization showing research connections" 
-                 loading="lazy"
-                 class="citation-image"/>
-        </a>
-    </aside>
 
     <!-- Navigation Section -->
     <nav class="main-navigation" role="navigation" aria-label="Main navigation">
@@ -460,6 +437,38 @@
         </section>
         
         <footer role="contentinfo">
+            <!-- Analytics Maps Section moved to footer -->
+            <div class="footer-analytics" aria-label="Analytics and visitor tracking">
+                <div class="analytics-container">
+                    <!-- 访问者地图 -->
+                    <div class="analytics-item">
+                        <h4>Visitor Locations</h4>
+                        <a href='https://clustrmaps.com/site/1c0ri' 
+                           title='Visit tracker' 
+                           class="cluster-map-link"
+                           aria-label="View visitor statistics on ClustrMaps">
+                            <img src='//clustrmaps.com/map_v2.png?cl=080808&w=a&t=tt&d=OQrAUhFj6mJpqpj_tmlLF3TJxCsBZJ1Y9W4766QT7XU&co=ffffff&ct=808080' 
+                                 alt='ClustrMaps visitor tracking visualization' 
+                                 loading="lazy"
+                                 class="tracker-image"/>
+                        </a>
+                    </div>
+
+                    <!-- 引用网络地图 -->
+                    <div class="analytics-item">
+                        <h4>Citation Network</h4>
+                        <a href="citation_map.html" 
+                           class="citation-map-link"
+                           aria-label="View citation network visualization">
+                            <img src="citation_map.png" 
+                                 alt="Citation network visualization showing research connections" 
+                                 loading="lazy"
+                                 class="citation-image"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
         </footer>
     </main>
