@@ -43,12 +43,6 @@ def capture_citation_map():
 
 def main():
     try:
-        # 设置免费代理
-        from scholarly import ProxyGenerator, scholarly
-        pg = ProxyGenerator()
-        pg.FreeProxies()
-        scholarly.use_proxy(pg)
-
         # 生成引用图
         scholar_id = '2z4sraUAAAAJ'
         generate_citation_map(scholar_id)
