@@ -13,10 +13,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+    - name: Use system Python
+      run: |
+        python3 --version
 
     - name: Install dependencies
       run: |
