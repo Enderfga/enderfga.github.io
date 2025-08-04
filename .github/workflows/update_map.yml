@@ -13,9 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Use system Python
+    - name: Activate conda base
       run: |
-        python3 --version
+        source /Users/fanggan/miniconda3/bin/activate base
+        conda info --envs
+        python --version
 
     - name: Install dependencies
       run: |
