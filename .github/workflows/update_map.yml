@@ -13,21 +13,30 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Activate conda base
+    - name: Setup conda base
+      shell: zsh {0}
       run: |
-        source /Users/fanggan/miniconda3/bin/activate base
+        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
+        conda activate base
         conda info --envs
+        which python
         python --version
 
     - name: Install dependencies
+      shell: zsh {0}
       run: |
+        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
+        conda activate base
         python -m pip install --upgrade pip
         python -m pip install scholarly citation_map httpx==0.23.3 playwright
         python -m playwright install chromium
   
     - name: Measure execution time and generate citation map
       id: run_script
+      shell: zsh {0}
       run: |
+        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
+        conda activate base
         start_time=$(date +%s)
         python generate_map.py
         end_time=$(date +%s)
@@ -39,6 +48,7 @@ jobs:
       if: env.elapsed_time >= 150
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      shell: zsh {0}
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
