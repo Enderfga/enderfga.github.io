@@ -83,15 +83,7 @@
             <li role="none"><a href="#activities" id="nav-activities" role="menuitem" aria-label="Go to Activities and Services section"><span aria-hidden="true">🌟</span> Activities &amp; Services</a></li>
             <li role="none"><a href="#acknowledgements" id="nav-acknowledgements" role="menuitem" aria-label="Go to Acknowledgements section"><span aria-hidden="true">📜</span> Acknowledgements</a></li>
         </ul>
-        
-        <button class="to-top" 
-                style="display:none;" 
-                aria-label="Return to top of page"
-                type="button">
-            <span aria-hidden="true">⬆️</span>
-            <span class="sr-only">Back to top</span>
-        </button>
-        
+
         <div class="social-icons" role="complementary" aria-label="Social media and contact links">
             <a href="mailto:guianfang@u.nus.edu" 
                aria-label="Send email to Guian Fang">
@@ -169,6 +161,16 @@
             </div>
         </div>
     </nav>
+
+    <!-- Back to Top Button -->
+    <button class="to-top"
+            style="display:none;"
+            aria-label="Return to top of page"
+            type="button">
+        <span aria-hidden="true">⬆️</span>
+        <span class="sr-only">Back to top</span>
+    </button>
+
     <main id="main-content">
         <section class="profile-section">
             <div class="profile-text">
@@ -484,23 +486,34 @@
     </main>
     <script>
         'use strict';
-        
+
         // Website functionality module
         const Website = {
             // Navigation functionality
             navigation: {
                 init() {
+                    const nav = document.querySelector('nav');
                     const navLinks = document.querySelectorAll('.nav-list a[href^="#"]');
+
                     navLinks.forEach(link => {
                         link.addEventListener('click', this.handleNavClick.bind(this));
                     });
+
+                    // Add scroll effect to navbar
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 50) {
+                            nav.classList.add('scrolled');
+                        } else {
+                            nav.classList.remove('scrolled');
+                        }
+                    });
                 },
-                
+
                 handleNavClick(event) {
                     const navLinks = document.querySelectorAll('.nav-list a');
                     navLinks.forEach(nav => nav.classList.remove('active'));
                     event.currentTarget.classList.add('active');
-                    
+
                     // Smooth scroll to section
                     const targetId = event.currentTarget.getAttribute('href');
                     const targetSection = document.querySelector(targetId);
@@ -519,17 +532,52 @@
                         window.addEventListener('scroll', this.toggleVisibility.bind(this));
                     }
                 },
-                
+
                 toggleVisibility() {
                     const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
                     if (this.button) {
-                        this.button.style.display = scrollTop > 100 ? 'block' : 'none';
+                        this.button.style.display = scrollTop > 100 ? 'flex' : 'none';
                     }
                 },
-                
+
                 scrollToTop(event) {
                     event.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            },
+
+            // Intersection Observer for scroll animations
+            scrollAnimations: {
+                init() {
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry, index) => {
+                            if (entry.isIntersecting) {
+                                setTimeout(() => {
+                                    entry.target.style.opacity = '1';
+                                    entry.target.style.transform = 'translateY(0)';
+                                }, index * 100);
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+
+                    // Observe all research papers
+                    document.querySelectorAll('.research-paper').forEach(paper => {
+                        observer.observe(paper);
+                    });
+
+                    // Observe collaboration items
+                    document.querySelectorAll('.collaboration-item').forEach(item => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(30px)';
+                        item.style.transition = 'all 0.6s ease';
+                        observer.observe(item);
+                    });
                 }
             },
 
@@ -645,18 +693,54 @@
                     if (typeof feather !== 'undefined') {
                         feather.replace();
                     }
-                    
+
                     // Initialize all modules
                     this.navigation.init();
                     this.backToTop.init();
                     this.theme.init();
                     this.profileImage.init();
+                    this.scrollAnimations.init();
+
+                    // Add loading animation complete
+                    document.body.classList.add('loaded');
                 });
+
+                // Performance optimization: Passive event listeners
+                if ('addEventListener' in window) {
+                    window.addEventListener('scroll', () => {}, { passive: true });
+                }
             }
         };
 
         // Initialize website functionality
         Website.init();
+
+        // Global functions for profile image hover (called from HTML)
+        window.guian_start = function() {
+            const hoverImage = document.getElementById('guian_image');
+            if (hoverImage) {
+                hoverImage.style.opacity = '1';
+            }
+        };
+
+        window.guian_stop = function() {
+            const hoverImage = document.getElementById('guian_image');
+            if (hoverImage) {
+                hoverImage.style.opacity = '0';
+            }
+        };
+
+        // Add performance monitoring (optional)
+        if ('PerformanceObserver' in window) {
+            const perfObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        console.log('LCP:', entry.renderTime || entry.loadTime);
+                    }
+                }
+            });
+            perfObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+        }
     </script>
 </body>
 </html>
