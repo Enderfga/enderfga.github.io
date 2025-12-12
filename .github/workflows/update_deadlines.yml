@@ -55,12 +55,10 @@ jobs:
                                 if days >= 0:
                                     # 中文格式更易读
                                     date_str = date.strftime("%Y年%m月%d日")
-                                    lines.append(
-f"🎯 {name} {year}\n🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n📍 举办地：{place}\n"
+                                    lines.append(f"🎯 {name} {year}\n🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n📍 举办地：{place}\n"
                                     )
                             except Exception:
-                                lines.append(
-f"🎯 {name} {year}\n🗓️ 截稿日期：{ddl}\n📍 举办地：{place}\n"
+                                lines.append(f"🎯 {name} {year}\n🗓️ 截稿日期：{ddl}\n📍 举办地：{place}\n"
                                 )
 
         for path in sorted(glob.glob("data/*.yml")):
