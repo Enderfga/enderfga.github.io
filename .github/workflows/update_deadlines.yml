@@ -7,7 +7,7 @@ on:
 
 jobs:
   send-deadlines:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Download target conference YAMLs
@@ -31,13 +31,12 @@ jobs:
         import yaml, datetime, glob
 
         today = datetime.date.today()
-        lines = [f"📅 Weekly Conference Deadlines Update ({today})", ""]
+        lines = [f"📅 每周会议截稿提醒（Weekly Conference Deadlines Update）", f"📆 更新日期：{today}", ""]
 
         def parse_conf(path):
             with open(path) as f:
                 data = yaml.safe_load(f)
 
-            # 如果文件顶层是 list，则展开
             items = data if isinstance(data, list) else [data]
 
             for item in items:
@@ -49,15 +48,20 @@ jobs:
                     for tl in c.get("timeline", []):
                         ddl = tl.get("deadline")
                         abs_ddl = tl.get("abstract_deadline")
-                        # 只取 full paper DDL
                         if ddl and (not abs_ddl or abs_ddl != ddl):
                             try:
                                 date = datetime.datetime.fromisoformat(ddl.split()[0]).date()
                                 days = (date - today).days
                                 if days >= 0:
-                                    lines.append(f"• {name} {year}: {ddl} ({days} days left) 📍 {place}")
+                                    # 中文格式更易读
+                                    date_str = date.strftime("%Y年%m月%d日")
+                                    lines.append(
+f"🎯 {name} {year}\n🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n📍 举办地：{place}\n"
+                                    )
                             except Exception:
-                                lines.append(f"• {name} {year}: {ddl} 📍 {place}")
+                                lines.append(
+f"🎯 {name} {year}\n🗓️ 截稿日期：{ddl}\n📍 举办地：{place}\n"
+                                )
 
         for path in sorted(glob.glob("data/*.yml")):
             parse_conf(path)
@@ -68,6 +72,7 @@ jobs:
         with open("body.txt", "w") as f:
             f.write(body)
         PYCODE
+
 
 
     - name: Send email
