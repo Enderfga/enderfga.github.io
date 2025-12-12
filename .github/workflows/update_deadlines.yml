@@ -23,10 +23,18 @@ jobs:
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/eccv.yml -o data/eccv.yml
 
     - name: Install dependencies
-      run: pip install pyyaml
+      shell: zsh {0}
+      run: |
+        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
+        conda activate base
+        python -m pip install --upgrade pip
+        python -m pip install pyyaml
 
     - name: Generate and send email
+      shell: zsh {0}
       run: |
+        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
+        conda activate base
         python <<'PYCODE'
         import yaml, datetime, glob
 
