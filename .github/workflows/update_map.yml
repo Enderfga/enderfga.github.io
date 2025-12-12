@@ -1,57 +1,78 @@
-name: Update Citation Map
+name: Weekly Deadlines Mailer
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天凌晨 0 点
+    - cron: '0 0 * * 1'  # 每周一 UTC 0 点运行（新加坡时间周一早上 8 点）
   workflow_dispatch:
 
 jobs:
-  update:
-    runs-on: self-hosted  # 使用 Mac mini Runner
+  send-deadlines:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Setup conda base
-      shell: zsh {0}
+    - name: Download target conference YAMLs
       run: |
-        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
-        conda activate base
-        conda info --envs
-        which python
-        python --version
+        mkdir -p data
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iclr.yml -o data/iclr.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/nips.yml -o data/nips.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icml.yml -o data/icml.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/ijcai.yml -o data/ijcai.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/aaai.yml -o data/aaai.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/cvpr.yml -o data/cvpr.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iccv.yml -o data/iccv.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/eccv.yml -o data/eccv.yml
 
     - name: Install dependencies
-      shell: zsh {0}
-      run: |
-        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
-        conda activate base
-        python -m pip install --upgrade pip
-        python -m pip install scholarly citation_map httpx==0.23.3 playwright
-        python -m playwright install chromium
-  
-    - name: Measure execution time and generate citation map
-      id: run_script
-      shell: zsh {0}
-      run: |
-        eval "$(/Users/fanggan/miniconda3/bin/conda shell.zsh hook)"
-        conda activate base
-        start_time=$(date +%s)
-        python generate_map.py
-        end_time=$(date +%s)
-        elapsed_time=$(( end_time - start_time ))
-        echo "Execution time: $elapsed_time seconds"
-        echo "elapsed_time=$elapsed_time" >> $GITHUB_ENV
+      run: pip install pyyaml
 
-    - name: Commit and push changes if runtime >= 3 minutes
-      if: env.elapsed_time >= 150
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      shell: zsh {0}
+    - name: Generate and send email
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add .
-        git commit -m 'Update citation map'
-        git push https://github.com/Enderfga/enderfga.github.io.git
+        python <<'PYCODE'
+        import yaml, datetime, glob
+
+        today = datetime.date.today()
+        lines = [f"📅 Weekly Conference Deadlines Update ({today})", ""]
+
+        def parse_conf(path):
+            with open(path) as f:
+                data = yaml.safe_load(f)
+            name = data.get("title", path.split("/")[-1].split(".")[0].upper())
+            confs = data.get("confs", [])
+            for c in confs:
+                year = c.get("year")
+                place = c.get("place", "")
+                for tl in c.get("timeline", []):
+                    # 只取 full paper deadline
+                    ddl = tl.get("deadline")
+                    abs_ddl = tl.get("abstract_deadline")
+                    if ddl and (not abs_ddl or abs_ddl != ddl):  # 排除 abstract-only 行
+                        try:
+                            date = datetime.datetime.fromisoformat(ddl.split()[0]).date()
+                            days = (date - today).days
+                            if days >= 0:
+                                lines.append(f"• {name} {year}: {ddl} ({days} days left) 📍 {place}")
+                        except Exception:
+                            lines.append(f"• {name} {year}: {ddl} 📍 {place}")
+
+        for path in sorted(glob.glob("data/*.yml")):
+            parse_conf(path)
+
+        body = "\n".join(lines)
+        print("=== 邮件内容预览 ===\n" + body + "\n==================")
+
+        with open("body.txt", "w") as f:
+            f.write(body)
+        PYCODE
+
+    - name: Send email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        secure: true
+        username: ${{ secrets.MAIL_USER }}
+        password: ${{ secrets.MAIL_PASS }}
+        subject: "Weekly AI/CV Conference Deadlines"
+        to: ${{ secrets.MAIL_TO }}
+        from: "GitHub Actions <${{ secrets.MAIL_USER }}>"
+        body: file://body.txt
