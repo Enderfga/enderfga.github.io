@@ -1,0 +1,73 @@
+name: Weekly Deadlines Mailer
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 每周一凌晨 0 点
+  workflow_dispatch:
+
+jobs:
+  send-deadlines:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download target conference YAMLs
+      run: |
+        mkdir -p data
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iclr.yml -o data/iclr.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/nips.yml -o data/nips.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icml.yml -o data/icml.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/ijcai.yml -o data/ijcai.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/aaai.yml -o data/aaai.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/cvpr.yml -o data/cvpr.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iccv.yml -o data/iccv.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/eccv.yml -o data/eccv.yml
+
+    - name: Install dependencies
+      run: pip install pyyaml
+
+    - name: Generate and send email
+      run: |
+        python <<'PYCODE'
+        import yaml, datetime, glob
+
+        today = datetime.date.today()
+        lines = [f"📅 Weekly Conference Deadlines Update ({today})", ""]
+
+        for path in sorted(glob.glob("data/*.yml")):
+            with open(path) as f:
+                conf = yaml.safe_load(f)
+
+            # 尝试兼容字段名
+            name = conf.get("title") or conf.get("Conference Name") or path.split("/")[-1].split(".")[0].upper()
+            ddl = conf.get("deadline") or conf.get("Deadline") or conf.get("deadlineTime")
+            note = conf.get("note", "")
+
+            if ddl:
+                try:
+                    date = datetime.datetime.fromisoformat(ddl).date()
+                    days = (date - today).days
+                    lines.append(f"• {name}: {ddl} ({days} days left){' - ' + note if note else ''}")
+                except Exception:
+                    lines.append(f"• {name}: {ddl}{' - ' + note if note else ''}")
+            else:
+                lines.append(f"• {name}: TBD{' - ' + note if note else ''}")
+
+        body = "\n".join(lines)
+        print("=== 邮件内容预览 ===\n" + body + "\n==================")
+
+        with open("body.txt", "w") as f:
+            f.write(body)
+        PYCODE
+
+    - name: Send email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        secure: true
+        username: ${{ secrets.MAIL_USER }}
+        password: ${{ secrets.MAIL_PASS }}
+        subject: "Weekly AI/CV Conference Deadlines"
+        to: ${{ secrets.MAIL_TO }}
+        from: "GitHub Actions <${{ secrets.MAIL_USER }}>"
+        body: file://body.txt
