@@ -21,6 +21,9 @@ jobs:
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/cvpr.yml -o data/cvpr.yml
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iccv.yml -o data/iccv.yml
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/eccv.yml -o data/eccv.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/rss.yml -o data/rss.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icra.yml -o data/icra.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/corl.yml -o data/corl.yml
 
     - name: Install dependencies
       shell: zsh {0}
