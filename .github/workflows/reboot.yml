@@ -1,4 +1,4 @@
-name: force-reboot-runner
+name: emergency-reboot
 
 on:
   workflow_dispatch:
@@ -7,8 +7,8 @@ jobs:
   reboot:
     runs-on: self-hosted
     steps:
-      - name: Force reboot
+      - name: Schedule reboot
         run: |
-          echo "Rebooting in 2s..."
-          sleep 2
-          sudo -n reboot || reboot || shutdown -r now
+          echo "Scheduling reboot in 10 seconds..."
+          nohup sh -c 'sleep 10 && sudo /sbin/reboot' >/tmp/reboot.log 2>&1 &
+          echo "Reboot scheduled. This job will exit normally."
