@@ -1,0 +1,13 @@
+name: force-reboot-runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reboot:
+    runs-on: self-hosted
+    steps:
+      - name: Reboot machine
+        run: |
+          echo "Rebooting..."
+          sudo reboot || reboot
