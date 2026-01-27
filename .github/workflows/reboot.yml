@@ -7,7 +7,8 @@ jobs:
   reboot:
     runs-on: self-hosted
     steps:
-      - name: Reboot machine
+      - name: Force reboot
         run: |
-          echo "Rebooting..."
-          sudo reboot || reboot
+          echo "Rebooting in 2s..."
+          sleep 2
+          sudo -n reboot || reboot || shutdown -r now
