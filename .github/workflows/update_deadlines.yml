@@ -41,8 +41,23 @@ jobs:
         python <<'PYCODE'
         import yaml, datetime, glob
 
-        today = datetime.date.today()
-        lines = [f"📅 每周会议截稿提醒（Weekly Conference Deadlines Update）", f"📆 更新日期：{today}", ""]
+        # AoE 时区 (UTC-12) - 会议 deadline 通常以此为准
+        AoE = datetime.timezone(datetime.timedelta(hours=-12))
+        
+        # 用 AoE 时区计算"今天"
+        now_aoe = datetime.datetime.now(AoE)
+        today_aoe = now_aoe.date()
+        
+        # 同时显示新加坡时间供参考
+        SGT = datetime.timezone(datetime.timedelta(hours=8))
+        now_sgt = datetime.datetime.now(SGT)
+        
+        lines = [
+            f"📅 每周会议截稿提醒（Weekly Conference Deadlines Update）",
+            f"📆 更新时间：{now_sgt.strftime('%Y-%m-%d %H:%M')} SGT",
+            f"⏰ 剩余时间按 AoE 时区计算（UTC-12，比新加坡晚 20 小时）",
+            ""
+        ]
 
         def parse_conf(path):
             with open(path) as f:
@@ -61,15 +76,32 @@ jobs:
                         abs_ddl = tl.get("abstract_deadline")
                         if ddl and (not abs_ddl or abs_ddl != ddl):
                             try:
+                                # 解析 deadline 日期
                                 date = datetime.datetime.fromisoformat(ddl.split()[0]).date()
-                                days = (date - today).days
+                                # 用 AoE 时区计算剩余天数
+                                days = (date - today_aoe).days
                                 if days >= 0:
-                                    # 中文格式更易读
                                     date_str = date.strftime("%Y年%m月%d日")
-                                    lines.append(f"🎯 {name} {year}\n🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n📍 举办地：{place}\n"
+                                    # 添加紧急程度提示
+                                    if days == 0:
+                                        urgency = "🔴 今天截止！"
+                                    elif days <= 3:
+                                        urgency = "🟠 紧急"
+                                    elif days <= 7:
+                                        urgency = "🟡 本周内"
+                                    else:
+                                        urgency = ""
+                                    
+                                    lines.append(
+                                        f"🎯 {name} {year} {urgency}\n"
+                                        f"🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n"
+                                        f"📍 举办地：{place}\n"
                                     )
                             except Exception:
-                                lines.append(f"🎯 {name} {year}\n🗓️ 截稿日期：{ddl}\n📍 举办地：{place}\n"
+                                lines.append(
+                                    f"🎯 {name} {year}\n"
+                                    f"🗓️ 截稿日期：{ddl}\n"
+                                    f"📍 举办地：{place}\n"
                                 )
 
         for path in sorted(glob.glob("data/*.yml")):
