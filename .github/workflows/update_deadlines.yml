@@ -24,6 +24,9 @@ jobs:
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/rss.yml -o data/rss.yml
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icra.yml -o data/icra.yml
         curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/corl.yml -o data/corl.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/emnlp.yml -o data/emnlp.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/acl.yml -o data/acl.yml
+        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/naacl.yml -o data/naacl.yml
 
     - name: Install dependencies
       shell: zsh {0}
@@ -124,7 +127,7 @@ jobs:
         secure: true
         username: ${{ secrets.MAIL_USER }}
         password: ${{ secrets.MAIL_PASS }}
-        subject: "Weekly AI/CV Conference Deadlines"
+        subject: "Weekly AI/CV/NLP Conference Deadlines"
         to: ${{ secrets.MAIL_TO }}
         from: "GitHub Actions <${{ secrets.MAIL_USER }}>"
         body: file://body.txt
