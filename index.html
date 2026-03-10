@@ -705,7 +705,10 @@
                     if (this.container && this.hoverImage) {
                         this.container.addEventListener('mouseenter', this.show.bind(this));
                         this.container.addEventListener('mouseleave', this.hide.bind(this));
-                        this.hide(); // Initialize as hidden
+                        // Don't hide if pokopia mode is already active (from localStorage)
+                        if (!document.body.classList.contains('pokopia-mode')) {
+                            this.hide();
+                        }
                     }
                 },
                 
@@ -716,6 +719,8 @@
                 },
                 
                 hide() {
+                    // In pokopia mode, keep the easter egg image visible
+                    if (document.body.classList.contains('pokopia-mode')) return;
                     if (this.hoverImage) {
                         this.hoverImage.style.opacity = '0';
                     }
