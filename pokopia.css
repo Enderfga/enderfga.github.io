@@ -1,0 +1,610 @@
+/* ========================================
+   🌿 POKOPIA MODE
+   Animal Crossing × Pokémon × Hand-drawn
+   ======================================== */
+
+/* Avatar click indicator */
+.avatar-clickable {
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.avatar-clickable img {
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.avatar-clickable:hover::after {
+    content: '✨';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 20px;
+    animation: pokopia-sparkle 1s ease infinite;
+    z-index: 10;
+}
+
+@keyframes pokopia-sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.3) rotate(15deg); opacity: 0.7; }
+}
+
+/* ========================================
+   TRANSITION OVERLAY
+   ======================================== */
+
+.pokopia-transition-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99999;
+    pointer-events: none;
+    background: radial-gradient(circle at center, #a8e6a3, #87ceeb, #ffd1dc);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.pokopia-transition-overlay.active {
+    opacity: 0.85;
+}
+
+.pokopia-transition-overlay.fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+/* ========================================
+   FLOATING DECORATIONS
+   ======================================== */
+
+#pokopia-decorations {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.pokopia-float {
+    position: absolute;
+    top: -40px;
+    animation: pokopia-drift linear infinite;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes pokopia-drift {
+    0% {
+        transform: translateY(-40px) rotate(0deg) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) translateX(40px);
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   🌿 POKOPIA MODE — GLOBAL STYLES
+   ======================================== */
+
+.pokopia-mode {
+    --pk-bg: #f0f7e8;
+    --pk-bg-alt: #e8f5e0;
+    --pk-card: #fefef5;
+    --pk-text: #3d5a2e;
+    --pk-text-light: #6b8f5b;
+    --pk-green: #7bc96f;
+    --pk-blue: #7ec8e3;
+    --pk-pink: #f8b4c8;
+    --pk-yellow: #ffe066;
+    --pk-amber: #ffb347;
+    --pk-border: #b5d6a7;
+    --pk-wood: #c4956a;
+    --pk-wood-dark: #8b6543;
+    --pk-font: 'Patrick Hand', 'Comic Sans MS', cursive;
+    --pk-shadow: 3px 3px 0px rgba(0,0,0,0.08);
+    --pk-radius: 16px;
+}
+
+/* Body */
+.pokopia-mode {
+    background: var(--pk-bg) !important;
+    color: var(--pk-text) !important;
+    font-family: var(--pk-font) !important;
+    transition: all 0.6s ease;
+}
+
+.pokopia-mode::before {
+    background: linear-gradient(
+        180deg,
+        rgba(123, 201, 111, 0.08) 0%,
+        rgba(126, 200, 227, 0.05) 50%,
+        rgba(240, 247, 232, 0) 100%
+    ) !important;
+}
+
+/* Background pattern — subtle grass dots */
+.pokopia-mode::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        radial-gradient(circle, rgba(123, 201, 111, 0.12) 1px, transparent 1px),
+        radial-gradient(circle, rgba(123, 201, 111, 0.08) 1px, transparent 1px);
+    background-size: 30px 30px, 20px 20px;
+    background-position: 0 0, 10px 10px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+.pokopia-mode body,
+.pokopia-mode td,
+.pokopia-mode th,
+.pokopia-mode tr,
+.pokopia-mode p,
+.pokopia-mode a,
+.pokopia-mode strong,
+.pokopia-mode h1,
+.pokopia-mode h2,
+.pokopia-mode h3,
+.pokopia-mode h4,
+.pokopia-mode li,
+.pokopia-mode span {
+    font-family: var(--pk-font) !important;
+}
+
+.pokopia-mode h1.name {
+    color: var(--pk-text) !important;
+    text-shadow: 2px 2px 0 rgba(123, 201, 111, 0.3);
+    position: relative;
+}
+
+.pokopia-mode h1.name::before {
+    content: '🌿 ';
+}
+
+.pokopia-mode h1.name::after {
+    content: ' 🌿';
+}
+
+.pokopia-mode h2 {
+    color: var(--pk-text) !important;
+    font-size: 1.6rem !important;
+    border-bottom: 3px dashed var(--pk-border) !important;
+    padding-bottom: 8px;
+}
+
+.pokopia-mode h2::after {
+    background: var(--pk-green) !important;
+    height: 4px !important;
+    width: 80px !important;
+    border-radius: 4px !important;
+    bottom: -12px !important;
+}
+
+/* Section headers with doodle icons */
+.pokopia-mode #research h2::before { content: '🎨 '; }
+.pokopia-mode #honors h2::before { content: '🏆 '; }
+.pokopia-mode #activities h2::before { content: '🎪 '; }
+.pokopia-mode #acknowledgements h2::before { content: '🤝 '; }
+
+/* ========================================
+   NAVIGATION — WOODEN BULLETIN BOARD
+   ======================================== */
+
+.pokopia-mode .main-navigation {
+    background: linear-gradient(135deg, var(--pk-wood) 0%, var(--pk-wood-dark) 100%) !important;
+    border-bottom: 4px solid var(--pk-wood-dark) !important;
+    box-shadow: 0 4px 8px rgba(139, 101, 67, 0.3) !important;
+}
+
+.pokopia-mode .nav-list a {
+    color: #fff8e7 !important;
+    font-family: var(--pk-font) !important;
+    font-size: 1em !important;
+    border-radius: 12px !important;
+    border: 2px dashed transparent;
+    transition: all 0.2s ease;
+}
+
+.pokopia-mode .nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px) rotate(-1deg) !important;
+}
+
+.pokopia-mode .social-icons a {
+    color: #fff8e7 !important;
+}
+
+.pokopia-mode .social-icons a:hover {
+    color: var(--pk-yellow) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-3px) rotate(5deg) scale(1.15) !important;
+}
+
+/* ========================================
+   PROFILE SECTION
+   ======================================== */
+
+.pokopia-mode .profile-text p {
+    color: var(--pk-text) !important;
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+}
+
+.pokopia-mode .profile-text a {
+    color: var(--pk-wood-dark) !important;
+    font-weight: 700;
+    text-decoration-style: wavy !important;
+    text-decoration-color: var(--pk-green);
+    text-underline-offset: 3px;
+}
+
+.pokopia-mode .profile-text a:hover {
+    color: var(--pk-green) !important;
+}
+
+/* Avatar in pokopia mode */
+.pokopia-mode .profile-image {
+    position: relative;
+}
+
+.pokopia-mode .avatar-clickable img,
+.pokopia-mode .profile-image a img {
+    border: 4px solid var(--pk-green) !important;
+    box-shadow:
+        var(--pk-shadow),
+        0 0 0 3px var(--pk-yellow),
+        0 0 0 7px var(--pk-green) !important;
+    transition: all 0.3s ease;
+}
+
+.pokopia-mode .profile-image:hover img {
+    transform: scale(1.08) rotate(5deg) !important;
+    box-shadow:
+        4px 4px 0 rgba(0,0,0,0.1),
+        0 0 0 3px var(--pk-pink),
+        0 0 0 7px var(--pk-blue),
+        0 0 20px rgba(123, 201, 111, 0.3) !important;
+}
+
+/* ========================================
+   RESEARCH CARDS — HAND-DRAWN STYLE
+   ======================================== */
+
+.pokopia-mode .research-paper {
+    background: var(--pk-card) !important;
+    border: 3px solid var(--pk-border) !important;
+    border-radius: var(--pk-radius) !important;
+    box-shadow: var(--pk-shadow) !important;
+    position: relative;
+    overflow: visible !important;
+}
+
+.pokopia-mode .research-paper::before {
+    background: linear-gradient(90deg, var(--pk-green), var(--pk-blue), var(--pk-pink)) !important;
+    height: 4px !important;
+    border-radius: 4px 4px 0 0;
+}
+
+.pokopia-mode .research-paper:hover {
+    transform: translateY(-6px) rotate(-0.5deg) !important;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.1) !important;
+    border-color: var(--pk-green) !important;
+}
+
+/* Pushpin decoration on cards */
+.pokopia-mode .research-paper::after {
+    content: '📌' !important;
+    font-family: initial !important;
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    font-size: 1.4rem !important;
+    opacity: 0.8 !important;
+    color: initial !important;
+    transform: rotate(15deg);
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.2));
+}
+
+.pokopia-mode .research-paper.highlight::after {
+    content: '⭐' !important;
+    font-size: 1.5rem !important;
+    top: -12px;
+    animation: pokopia-star-bob 2s ease-in-out infinite;
+}
+
+@keyframes pokopia-star-bob {
+    0%, 100% { transform: rotate(15deg) translateY(0); }
+    50% { transform: rotate(15deg) translateY(-4px); }
+}
+
+.pokopia-mode .research-paper.highlight {
+    background: linear-gradient(135deg, #fefef0, #fff8dc) !important;
+    border-color: var(--pk-yellow) !important;
+}
+
+.pokopia-mode .paper-title a {
+    color: var(--pk-text) !important;
+    font-weight: 700;
+}
+
+.pokopia-mode .paper-title a:hover {
+    color: var(--pk-green) !important;
+}
+
+.pokopia-mode .paper-authors {
+    color: var(--pk-text-light) !important;
+}
+
+.pokopia-mode .paper-description {
+    color: var(--pk-text) !important;
+}
+
+.pokopia-mode .paper-venue {
+    color: var(--pk-wood-dark) !important;
+    background: var(--pk-yellow);
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+.pokopia-mode .paper-links a {
+    color: var(--pk-wood-dark) !important;
+    background: rgba(123, 201, 111, 0.15);
+    padding: 3px 10px;
+    border-radius: 10px;
+    border: 1px dashed var(--pk-border);
+    transition: all 0.2s ease;
+}
+
+.pokopia-mode .paper-links a:hover {
+    background: var(--pk-green) !important;
+    color: #fff !important;
+    border-style: solid;
+    transform: scale(1.05);
+}
+
+.pokopia-mode .video-container {
+    border: 3px solid var(--pk-border) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--pk-shadow) !important;
+}
+
+.pokopia-mode .paper-media img {
+    border: 3px solid var(--pk-border) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--pk-shadow) !important;
+}
+
+/* ========================================
+   HONORS — CHECKLIST STYLE
+   ======================================== */
+
+.pokopia-mode .honors-list li {
+    position: relative;
+    padding-left: 8px;
+    color: var(--pk-text) !important;
+}
+
+.pokopia-mode .honors-list li::marker {
+    content: '🎖️ ';
+}
+
+.pokopia-mode .honors-list li strong {
+    color: var(--pk-wood-dark) !important;
+    background: linear-gradient(to top, var(--pk-yellow) 40%, transparent 40%);
+    padding: 0 2px;
+}
+
+/* ========================================
+   ACTIVITIES
+   ======================================== */
+
+.pokopia-mode .activities-content h3 {
+    color: var(--pk-text) !important;
+    position: relative;
+    display: inline-block;
+}
+
+.pokopia-mode .activities-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--pk-green);
+    border-radius: 2px;
+}
+
+.pokopia-mode .reviewer-list li::marker,
+.pokopia-mode .pc-list li::marker { content: '📝 '; }
+.pokopia-mode .organization-list li::marker { content: '🎯 '; }
+.pokopia-mode .ta-list li::marker { content: '📚 '; }
+
+.pokopia-mode .reviewer-list li,
+.pokopia-mode .pc-list li,
+.pokopia-mode .organization-list li,
+.pokopia-mode .ta-list li {
+    color: var(--pk-text) !important;
+}
+
+/* ========================================
+   COLLABORATIONS — TRADING CARDS
+   ======================================== */
+
+.pokopia-mode .collaboration-item {
+    background: var(--pk-card) !important;
+    border: 3px solid var(--pk-border) !important;
+    border-radius: var(--pk-radius) !important;
+    box-shadow: var(--pk-shadow) !important;
+    position: relative;
+}
+
+.pokopia-mode .collaboration-item::before {
+    background: radial-gradient(circle, rgba(123, 201, 111, 0.15), transparent) !important;
+}
+
+.pokopia-mode .collaboration-item:hover {
+    transform: translateY(-8px) rotate(2deg) scale(1.03) !important;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.1) !important;
+    border-color: var(--pk-green) !important;
+}
+
+.pokopia-mode .collaboration-item h3 a {
+    color: var(--pk-text) !important;
+}
+
+.pokopia-mode .collaboration-item p {
+    color: var(--pk-text-light) !important;
+}
+
+.pokopia-mode .collaboration-item p a {
+    color: var(--pk-wood-dark) !important;
+}
+
+.pokopia-mode .organization-logo {
+    filter: none !important;
+    border: 2px solid var(--pk-border);
+    border-radius: 12px !important;
+    padding: 4px;
+    background: #fff;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.pokopia-mode footer > p {
+    color: var(--pk-text-light) !important;
+}
+
+.pokopia-mode .footer-analytics {
+    border-top-color: var(--pk-border) !important;
+}
+
+.pokopia-mode .analytics-item h4 {
+    color: var(--pk-text) !important;
+}
+
+/* ========================================
+   BACK TO TOP — CUTE BUTTON
+   ======================================== */
+
+.pokopia-mode .to-top {
+    background: var(--pk-green) !important;
+    border: 3px solid var(--pk-bg) !important;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.15) !important;
+    font-size: 18px !important;
+}
+
+.pokopia-mode .to-top:hover {
+    background: var(--pk-amber) !important;
+    transform: translateY(-4px) rotate(10deg) scale(1.15) !important;
+}
+
+/* ========================================
+   SCROLLBAR — CUSTOM GREEN
+   ======================================== */
+
+.pokopia-mode::-webkit-scrollbar-track {
+    background: var(--pk-bg) !important;
+}
+
+.pokopia-mode::-webkit-scrollbar-thumb {
+    background: var(--pk-green) !important;
+    border-radius: 10px !important;
+    border: 2px solid var(--pk-bg) !important;
+}
+
+.pokopia-mode::-webkit-scrollbar-thumb:hover {
+    background: var(--pk-wood) !important;
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+
+.pokopia-mode ::selection {
+    background: rgba(123, 201, 111, 0.3) !important;
+    color: var(--pk-text) !important;
+}
+
+/* ========================================
+   HIGHLIGHT SPANS
+   ======================================== */
+
+.pokopia-mode span.highlight {
+    background-color: rgba(255, 224, 102, 0.5) !important;
+    border-radius: 4px;
+    padding: 0 4px;
+}
+
+/* ========================================
+   DARK MODE + POKOPIA COMBO
+   ======================================== */
+
+.pokopia-mode.dark-mode {
+    --pk-bg: #1a2e14;
+    --pk-bg-alt: #223d1a;
+    --pk-card: #2a3e22;
+    --pk-text: #c8e6b8;
+    --pk-text-light: #8bb87a;
+    --pk-border: #4a7a3a;
+}
+
+.pokopia-mode.dark-mode::after {
+    background-image:
+        radial-gradient(circle, rgba(123, 201, 111, 0.06) 1px, transparent 1px),
+        radial-gradient(circle, rgba(123, 201, 111, 0.04) 1px, transparent 1px) !important;
+}
+
+.pokopia-mode.dark-mode .main-navigation {
+    background: linear-gradient(135deg, #5a3d28 0%, #3d2a1a 100%) !important;
+}
+
+.pokopia-mode.dark-mode .research-paper.highlight {
+    background: linear-gradient(135deg, #3a3a18, #2e3a18) !important;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+@media (max-width: 768px) {
+    .pokopia-mode .research-paper::after {
+        font-size: 1.1rem !important;
+        top: -8px;
+        right: 12px;
+    }
+
+    .pokopia-float {
+        font-size: 12px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pokopia-float {
+        display: none !important;
+    }
+
+    .pokopia-transition-overlay {
+        display: none !important;
+    }
+}

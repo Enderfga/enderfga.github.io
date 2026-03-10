@@ -30,7 +30,11 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="pokopia.css">
     <script src="https://unpkg.com/feather-icons" defer></script>
     
     <!-- Structured Data -->
@@ -191,12 +195,16 @@
                          alt="Alternative profile photo of Guian Fang" 
                          loading="lazy">
                 </div>
-                <a href="images/guian.jpg" 
-                   aria-label="View full size profile photo">
+                <div class="avatar-clickable" 
+                     onclick="togglePokopia()" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="Toggle Pokopia mode"
+                     title="✨ Click me!">
                     <img src="images/guian.jpg" 
                          alt="Profile photo of Guian Fang" 
                          loading="eager">
-                </a>
+                </div>
             </div>
         </section>
 
@@ -752,11 +760,89 @@
         };
 
         window.guian_stop = function() {
+            // In pokopia mode, keep the easter egg image visible
+            if (document.body.classList.contains('pokopia-mode')) return;
             const hoverImage = document.getElementById('guian_image');
             if (hoverImage) {
                 hoverImage.style.opacity = '0';
             }
         };
+
+        // Pokopia Mode Toggle
+        window.togglePokopia = function() {
+            const body = document.body;
+            const isPokopia = body.classList.toggle('pokopia-mode');
+            
+            // Lock avatar to easter egg image in pokopia mode
+            const hoverImage = document.getElementById('guian_image');
+            if (hoverImage) {
+                hoverImage.style.opacity = isPokopia ? '1' : '0';
+            }
+            
+            // Create transition overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'pokopia-transition-overlay';
+            body.appendChild(overlay);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                overlay.classList.add('active');
+                setTimeout(() => {
+                    overlay.classList.add('fade-out');
+                    setTimeout(() => overlay.remove(), 600);
+                }, 400);
+            });
+            
+            // Spawn floating decorations in pokopia mode
+            if (isPokopia) {
+                spawnPokopiaDecorations();
+            } else {
+                clearPokopiaDecorations();
+            }
+            
+            try {
+                localStorage.setItem('pokopia-mode', isPokopia ? 'on' : 'off');
+            } catch(e) {}
+        };
+        
+        function spawnPokopiaDecorations() {
+            clearPokopiaDecorations();
+            const container = document.createElement('div');
+            container.id = 'pokopia-decorations';
+            container.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(container);
+            
+            const emojis = ['🌿', '⭐', '🌸', '☁️', '🍃', '🌻', '✨', '🦋', '🐝', '🍄', '🌈'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('span');
+                el.className = 'pokopia-float';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (8 + Math.random() * 12) + 's';
+                el.style.animationDelay = (Math.random() * 10) + 's';
+                el.style.fontSize = (14 + Math.random() * 20) + 'px';
+                el.style.opacity = 0.4 + Math.random() * 0.4;
+                container.appendChild(el);
+            }
+        }
+        
+        function clearPokopiaDecorations() {
+            const existing = document.getElementById('pokopia-decorations');
+            if (existing) existing.remove();
+        }
+        
+        // Restore pokopia mode on load
+        try {
+            if (localStorage.getItem('pokopia-mode') === 'on') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.body.classList.add('pokopia-mode');
+                    spawnPokopiaDecorations();
+                    // Lock avatar to easter egg
+                    const hoverImage = document.getElementById('guian_image');
+                    if (hoverImage) hoverImage.style.opacity = '1';
+                });
+            }
+        } catch(e) {}
 
         // Add performance monitoring (optional)
         if ('PerformanceObserver' in window) {
