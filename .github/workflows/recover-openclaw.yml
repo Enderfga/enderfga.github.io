@@ -36,8 +36,14 @@ jobs:
         run: |
           UID_NUM=$(id -u)
 
+          # macOS 没有 timeout 命令，用 perl 实现
+          run_with_timeout() {
+            local secs="$1"; shift
+            perl -e 'alarm shift; exec @ARGV' "$secs" "$@"
+          }
+
           echo "--- Watchdog ---"
-          timeout 5 curl -sf http://127.0.0.1:18795/sasha-doctor/watchdog/status 2>&1 || echo "unreachable"
+          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/watchdog/status 2>&1 || echo "unreachable"
           echo ""
 
           echo "--- LaunchD ---"
@@ -47,10 +53,10 @@ jobs:
           done
 
           echo "--- Gateway ---"
-          timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
+          run_with_timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
 
           echo "--- Tunnel ---"
-          timeout 10 curl -sf -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health 2>&1 || echo "unreachable"
+          curl -sf --max-time 10 -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health 2>&1 || echo "unreachable"
           echo ""
 
       - name: 2. 执行修复
@@ -62,12 +68,18 @@ jobs:
           UID_NUM=$(id -u)
           echo "=== Recovery: ${ACTION} ==="
 
+          # macOS 没有 timeout 命令，用 perl 实现
+          run_with_timeout() {
+            local secs="$1"; shift
+            perl -e 'alarm shift; exec @ARGV' "$secs" "$@"
+          }
+
           restart_service() {
             local label="$1"
             local plist="$2"
             echo "  [$label] attempting restart..."
 
-            if timeout 10 launchctl kickstart -k "gui/${UID_NUM}/${label}" 2>/dev/null; then
+            if launchctl kickstart -k "gui/${UID_NUM}/${label}" 2>/dev/null; then
               echo "  [$label] ok via kickstart"
               return 0
             fi
@@ -89,7 +101,7 @@ jobs:
             echo "--- Force restart all ---"
 
             echo "[gateway]"
-            timeout 15 openclaw gateway restart 2>&1 || {
+            run_with_timeout 15 openclaw gateway restart 2>&1 || {
               echo "  CLI failed/timeout, trying launchctl..."
               restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
             }
@@ -108,7 +120,7 @@ jobs:
           else
             echo "--- Smart restart ---"
 
-            RESPONSE=$(timeout 30 curl -sf -X POST \
+            RESPONSE=$(curl -sf --max-time 30 -X POST \
               -H "Content-Type: application/json" \
               -w "\nHTTP:%{http_code}" \
               http://127.0.0.1:18795/sasha-doctor/restart-smart 2>&1) || true
@@ -120,10 +132,10 @@ jobs:
             else
               echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), CLI fallback..."
 
-              timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
+              run_with_timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
               sleep 2
 
-              timeout 15 openclaw gateway restart 2>&1 || {
+              run_with_timeout 15 openclaw gateway restart 2>&1 || {
                 echo "CLI restart failed/timeout, trying launchctl..."
                 restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
               }
@@ -145,7 +157,7 @@ jobs:
 
           check() {
             local name="$1" url="$2" t="${3:-5}"
-            if timeout "$t" curl -sf "$url" > /dev/null 2>&1; then
+            if curl -sf --max-time "$t" "$url" > /dev/null 2>&1; then
               echo "PASS $name"
               PASS=$((PASS+1))
             else
