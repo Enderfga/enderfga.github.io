@@ -16,6 +16,7 @@ on:
 jobs:
   recover:
     runs-on: self-hosted
+    timeout-minutes: 5
     env:
       PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       HOME: "/Users/fanggan"
@@ -24,9 +25,6 @@ jobs:
         shell: bash --noprofile --norc {0}
         run: |
           echo "=== Environment ==="
-          echo "PATH=$PATH"
-          echo "whoami=$(whoami)"
-          echo "hostname=$(hostname)"
           echo "date=$(date '+%Y-%m-%d %H:%M:%S %z')"
           echo "uid=$(id -u)"
           which openclaw || echo "openclaw NOT in PATH"
@@ -34,33 +32,23 @@ jobs:
       - name: 1. 当前状态诊断
         shell: bash --noprofile --norc {0}
         run: |
-          echo "=== Service Status ==="
-
-          # Watchdog endpoint
-          echo "--- Watchdog ---"
-          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/watchdog/status 2>&1 || echo "watchdog unreachable"
-          echo ""
-
-          # Service list
-          echo "--- Services ---"
-          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/services 2>&1 || echo "sasha-doctor unreachable"
-          echo ""
-
-          # LaunchD state
-          echo "--- LaunchD ---"
           UID_NUM=$(id -u)
-          for svc in ai.openclaw.gateway com.sasha.doctor com.cloudflare.cloudflared com.webchat.nextjs com.claude-code.proxy; do
-            state=$(launchctl print "gui/${UID_NUM}/${svc}" 2>&1 | grep -E "state|pid" | head -2 | tr '\n' ' ')
-            echo "$svc: $state"
+
+          echo "--- Watchdog ---"
+          timeout 5 curl -sf http://127.0.0.1:18795/sasha-doctor/watchdog/status 2>&1 || echo "unreachable"
+          echo ""
+
+          echo "--- LaunchD ---"
+          for svc in ai.openclaw.gateway com.sasha.doctor com.cloudflare.cloudflared com.webchat.nextjs; do
+            info=$(launchctl print "gui/${UID_NUM}/${svc}" 2>&1 | grep -E "state|pid" | head -2 | tr '\n' ' ')
+            echo "$svc: ${info:-not loaded}"
           done
 
-          # Gateway health
           echo "--- Gateway ---"
-          openclaw gateway status --no-color 2>&1 || echo "gateway status failed"
+          timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
 
-          # Tunnel check
           echo "--- Tunnel ---"
-          curl -sf --max-time 10 -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health 2>&1 || echo "tunnel unreachable"
+          timeout 10 curl -sf -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health 2>&1 || echo "unreachable"
           echo ""
 
       - name: 2. 执行修复
@@ -69,147 +57,123 @@ jobs:
         run: |
           ACTION="${{ github.event.inputs.action }}"
           UID_NUM=$(id -u)
-          echo "=== Recovery Action: ${ACTION} ==="
+          echo "=== Recovery: ${ACTION} ==="
 
-          # Helper: safe restart a launchd service
-          # Uses bootout+bootstrap instead of kickstart -k (more reliable)
-          safe_restart() {
+          # 核心函数：后台重启，不阻塞 runner
+          restart_service() {
             local label="$1"
             local plist="$2"
-            echo "  Restarting ${label}..."
+            echo "  [$label] attempting restart..."
 
-            # Try kickstart first (faster if service is loaded)
-            if launchctl kickstart -k "gui/${UID_NUM}/${label}" 2>/dev/null; then
-              echo "  ✓ ${label} restarted via kickstart"
+            # 先试 kickstart（快，service 已 loaded 时有效）
+            if timeout 10 launchctl kickstart -k "gui/${UID_NUM}/${label}" 2>/dev/null; then
+              echo "  [$label] ✓ kickstart ok"
               return 0
             fi
 
-            # Fallback: bootout + bootstrap (handles "not loaded" case)
-            echo "  kickstart failed, trying bootout+bootstrap..."
+            # fallback: bootout + bootstrap
+            echo "  [$label] kickstart failed, bootout+bootstrap..."
             launchctl bootout "gui/${UID_NUM}/${label}" 2>/dev/null || true
             sleep 1
-            if [ -f "${plist}" ]; then
-              launchctl bootstrap "gui/${UID_NUM}" "${plist}" 2>/dev/null
-              echo "  ✓ ${label} bootstrapped"
+            if [ -f "$HOME/Library/LaunchAgents/${plist}" ]; then
+              launchctl bootstrap "gui/${UID_NUM}" "$HOME/Library/LaunchAgents/${plist}" 2>/dev/null
+              echo "  [$label] ✓ bootstrapped"
               return 0
             else
-              echo "  ✗ plist not found: ${plist}"
+              echo "  [$label] ✗ plist not found: ${plist}"
               return 1
             fi
           }
 
           if [ "${ACTION}" = "force-restart" ]; then
-            echo "--- Force restarting all services ---"
+            echo "--- Force restart all ---"
 
-            # Gateway: prefer CLI, fallback to launchctl
-            echo "Restarting gateway..."
-            if openclaw gateway restart 2>&1; then
-              echo "  ✓ gateway restarted via CLI"
-            else
-              safe_restart "ai.openclaw.gateway" \
-                "$HOME/Library/LaunchAgents/ai.openclaw.gateway.plist"
-            fi
+            # Gateway: 用 timeout 包住，防止 CLI 卡死
+            echo "[gateway]"
+            timeout 15 openclaw gateway restart 2>&1 || {
+              echo "  CLI failed/timeout, trying launchctl..."
+              restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
+            }
 
-            sleep 3
+            sleep 2
 
-            # Sasha-doctor
-            safe_restart "com.sasha.doctor" \
-              "$HOME/Library/LaunchAgents/com.sasha.doctor.plist"
+            echo "[sasha-doctor]"
+            restart_service "com.sasha.doctor" "com.sasha.doctor.plist"
 
-            # Cloudflared
-            safe_restart "com.cloudflare.cloudflared" \
-              "$HOME/Library/LaunchAgents/com.cloudflare.cloudflared.plist"
+            echo "[cloudflared]"
+            restart_service "com.cloudflare.cloudflared" "com.cloudflare.cloudflared.plist"
 
-            # Webchat
-            safe_restart "com.webchat.nextjs" \
-              "$HOME/Library/LaunchAgents/com.webchat.nextjs.plist"
+            echo "[webchat]"
+            restart_service "com.webchat.nextjs" "com.webchat.nextjs.plist"
 
           else
-            # smart-restart: sasha-doctor API first, then fallback
-            echo "--- Smart restart via sasha-doctor ---"
+            echo "--- Smart restart ---"
 
-            RESPONSE=$(curl -sf --max-time 30 -X POST \
+            # 先试 sasha-doctor API（有超时）
+            RESPONSE=$(timeout 30 curl -sf -X POST \
               -H "Content-Type: application/json" \
-              -w "\nHTTP_CODE:%{http_code}" \
+              -w "\nHTTP:%{http_code}" \
               http://127.0.0.1:18795/sasha-doctor/restart-smart 2>&1) || true
 
-            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | sed 's/HTTP_CODE://')
+            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP:" | sed 's/HTTP://')
 
             if [ "$HTTP_CODE" = "200" ]; then
-              echo "✓ Smart restart succeeded"
-              echo "$RESPONSE" | grep -v "HTTP_CODE:"
+              echo "✓ smart restart via sasha-doctor succeeded"
             else
-              echo "Smart restart failed (HTTP ${HTTP_CODE}), falling back..."
+              echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), CLI fallback..."
 
-              # Try doctor --fix
-              openclaw doctor --fix --no-color 2>&1 || true
+              # doctor --fix 有 timeout
+              timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
               sleep 2
 
-              # Then restart gateway
-              if openclaw gateway restart 2>&1; then
-                echo "✓ gateway restarted via CLI"
-              else
-                safe_restart "ai.openclaw.gateway" \
-                  "$HOME/Library/LaunchAgents/ai.openclaw.gateway.plist"
-              fi
+              # gateway restart 有 timeout
+              timeout 15 openclaw gateway restart 2>&1 || {
+                echo "CLI restart failed/timeout, trying launchctl..."
+                restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
+              }
             fi
           fi
 
-          echo "Waiting 15s for services to stabilize..."
+          echo "Waiting 15s for stabilization..."
           sleep 15
-          echo "=== Recovery actions complete ==="
+          echo "=== Done ==="
 
       - name: 3. 修复后验证
         if: ${{ github.event.inputs.action != 'status-only' }}
         shell: bash --noprofile --norc {0}
         run: |
-          echo "=== Post-Recovery Verification ==="
+          echo "=== Verification ==="
           PASS=0
           FAIL=0
 
-          check_service() {
-            local name="$1"
-            local url="$2"
-            local timeout="${3:-5}"
-            if curl -sf --max-time "${timeout}" "${url}" > /dev/null 2>&1; then
-              echo "✅ ${name}: UP"
+          check() {
+            local name="$1" url="$2" t="${3:-5}"
+            if timeout "$t" curl -sf "$url" > /dev/null 2>&1; then
+              echo "✅ $name"
               PASS=$((PASS+1))
             else
-              echo "❌ ${name}: DOWN"
+              echo "❌ $name"
               FAIL=$((FAIL+1))
             fi
           }
 
-          check_service "Gateway (18789)" "http://127.0.0.1:18789/"
-          check_service "Sasha-Doctor (18795)" "http://127.0.0.1:18795/sasha-doctor/health"
-          check_service "Webchat (3000)" "http://127.0.0.1:3000/"
-          check_service "CF Tunnel" "https://claw.enderfga.cn/sasha-doctor/health" 10
+          check "Gateway" "http://127.0.0.1:18789/"
+          check "Sasha-Doctor" "http://127.0.0.1:18795/sasha-doctor/health"
+          check "Webchat" "http://127.0.0.1:3000/"
+          check "CF Tunnel" "https://claw.enderfga.cn/sasha-doctor/health" 10
 
           echo ""
-          echo "Result: ${PASS} passed, ${FAIL} failed"
+          echo "Result: ${PASS}/4 passed"
 
-          # Only fail if 2+ critical services are down
-          if [ "$FAIL" -gt 1 ]; then
-            echo "::error::Multiple services still down after recovery"
-            exit 1
-          fi
+          [ "$FAIL" -gt 1 ] && exit 1
           exit 0
 
       - name: 4. 导出日志
         if: always()
         shell: bash --noprofile --norc {0}
         run: |
-          echo "=== Gateway Logs (last 200 lines) ===" > crash_report.log
-          openclaw logs --no-color 2>/dev/null | tail -200 >> crash_report.log 2>&1 || true
-          echo "" >> crash_report.log
-          echo "=== Sasha-Doctor Logs (last 100 lines) ===" >> crash_report.log
-          tail -100 ~/.openclaw/logs/sasha-doctor.log >> crash_report.log 2>&1 || true
-
-      - name: 5. 上传结果
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: openclaw-recovery-${{ github.run_number }}
-          retention-days: 3
-          path: |
-            crash_report.log
+          echo "=== Gateway Logs (last 100 lines) ==="
+          tail -100 /tmp/openclaw/openclaw-$(date +%Y-%m-%d).log 2>/dev/null || echo "no log file"
+          echo ""
+          echo "=== Sasha-Doctor Logs (last 50 lines) ==="
+          tail -50 ~/.openclaw/logs/sasha-doctor.log 2>/dev/null || echo "no log file"
