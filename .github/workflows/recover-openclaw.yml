@@ -1,50 +1,193 @@
-name: emergency-recover-openclaw
+name: recover-openclaw
 
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: '操作类型'
+        required: true
+        default: 'smart-restart'
+        type: choice
+        options:
+          - smart-restart    # 诊断 + 重启
+          - force-restart    # 强制重启所有服务
+          - status-only      # 只看状态不动
 
 jobs:
   recover:
     runs-on: self-hosted
     env:
-      # 保持注入正确的环境变量
-      PATH: "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      HOME: "/Users/fanggan"
     steps:
-      - name: 1. Run Doctor Fix (执行自动修复)
+      - name: 0. 环境检查
         run: |
-          echo "=== 正在执行 Doctor 自动修复 ===" > fix_report.log
-          # 尝试让 OpenClaw 自己清理损坏的配置或端口占用状态
-          openclaw doctor --fix --no-color >> fix_report.log 2>&1 || true
-          cat fix_report.log
+          echo "=== Environment ===" | tee env.log
+          echo "PATH=$PATH" >> env.log
+          echo "HOME=$HOME" >> env.log
+          echo "whoami=$(whoami)" >> env.log
+          echo "hostname=$(hostname)" >> env.log
+          echo "date=$(date '+%Y-%m-%d %H:%M:%S %z')" >> env.log
+          which openclaw >> env.log 2>&1 || echo "openclaw NOT in PATH" >> env.log
+          which launchctl >> env.log 2>&1
+          cat env.log
 
-      - name: 2. Force Restart OpenClaw (执行强行拉起)
+      - name: 1. 当前状态诊断
         run: |
-          echo "=== 正在重启 OpenClaw 服务 ==="
+          echo "=== Service Status ===" > status.log
           
-          # 优先尝试重启 daemon，失败则重启独立 gateway
-          openclaw daemon restart || openclaw gateway restart
+          # Watchdog endpoint (internal, no auth needed)
+          echo "--- Watchdog ---" >> status.log
+          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/watchdog/status >> status.log 2>&1 || echo "watchdog unreachable" >> status.log
+          echo "" >> status.log
           
-          # 给它充分的时间完成启动和健康检查
-          echo "等待 10 秒以确认端口是否成功绑定..."
-          sleep 10
+          # Service list
+          echo "--- Services ---" >> status.log
+          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/services >> status.log 2>&1 || echo "sasha-doctor unreachable" >> status.log
+          echo "" >> status.log
           
-          # 验证存活状态
-          openclaw gateway status --no-color > status_report.log 2>&1 || true
-          cat status_report.log
+          # LaunchD state for each critical service
+          echo "--- LaunchD ---" >> status.log
+          for svc in ai.openclaw.gateway com.sasha.doctor com.cloudflare.cloudflared com.webchat.nextjs com.claude-code.proxy; do
+            state=$(launchctl print gui/$(id -u)/$svc 2>&1 | grep "state = " | head -1 | tr -d '[:space:]')
+            pid=$(launchctl print gui/$(id -u)/$svc 2>&1 | grep "pid = " | head -1 | tr -d '[:space:]')
+            echo "$svc: $state $pid" >> status.log
+          done
+          
+          # Gateway health
+          echo "--- Gateway ---" >> status.log
+          openclaw gateway status --no-color >> status.log 2>&1 || echo "gateway status failed" >> status.log
+          
+          # External tunnel check
+          echo "--- Tunnel ---" >> status.log
+          curl -sf --max-time 10 -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health >> status.log 2>&1 || echo "tunnel unreachable" >> status.log
+          
+          cat status.log
 
-      - name: 3. Export Logs (导出日志以防万一)
+      - name: 2. 执行修复
+        if: ${{ github.event.inputs.action != 'status-only' }}
+        run: |
+          echo "=== Recovery Action: ${{ github.event.inputs.action }} ===" | tee fix.log
+          
+          if [ "${{ github.event.inputs.action }}" = "force-restart" ]; then
+            echo "--- Force restarting all services ---" >> fix.log
+            
+            # Restart gateway
+            echo "Restarting gateway..." >> fix.log
+            openclaw gateway restart >> fix.log 2>&1 || {
+              echo "openclaw restart failed, trying launchctl..." >> fix.log
+              launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway >> fix.log 2>&1
+            }
+            
+            # Restart sasha-doctor
+            echo "Restarting sasha-doctor..." >> fix.log
+            launchctl kickstart -k gui/$(id -u)/com.sasha.doctor >> fix.log 2>&1
+            
+            # Restart cloudflared
+            echo "Restarting cloudflared..." >> fix.log
+            launchctl kickstart -k gui/$(id -u)/com.cloudflare.cloudflared >> fix.log 2>&1
+            
+            # Restart webchat
+            echo "Restarting webchat..." >> fix.log
+            launchctl kickstart -k gui/$(id -u)/com.webchat.nextjs >> fix.log 2>&1
+            
+          else
+            # smart-restart: try sasha-doctor endpoint first, fallback to CLI
+            echo "--- Smart restart via sasha-doctor ---" >> fix.log
+            
+            HTTP_CODE=$(curl -sf --max-time 30 -X POST \
+              -H "Content-Type: application/json" \
+              -w "\n%{http_code}" \
+              http://127.0.0.1:18795/sasha-doctor/restart-smart 2>&1)
+            
+            if echo "$HTTP_CODE" | tail -1 | grep -q "200"; then
+              echo "Smart restart succeeded" >> fix.log
+              echo "$HTTP_CODE" >> fix.log
+            else
+              echo "Smart restart failed ($HTTP_CODE), falling back to CLI..." >> fix.log
+              openclaw doctor --fix --no-color >> fix.log 2>&1 || true
+              openclaw gateway restart >> fix.log 2>&1 || {
+                echo "CLI restart failed, trying launchctl..." >> fix.log
+                launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway >> fix.log 2>&1
+              }
+            fi
+          fi
+          
+          echo "Waiting 15s for services to stabilize..." >> fix.log
+          sleep 15
+          cat fix.log
+
+      - name: 3. 修复后验证
+        if: ${{ github.event.inputs.action != 'status-only' }}
+        run: |
+          echo "=== Post-Recovery Verification ===" > verify.log
+          PASS=0
+          FAIL=0
+          
+          # Check gateway
+          if curl -sf --max-time 5 http://127.0.0.1:18789/ > /dev/null 2>&1; then
+            echo "✅ Gateway (18789): UP" >> verify.log
+            PASS=$((PASS+1))
+          else
+            echo "❌ Gateway (18789): DOWN" >> verify.log
+            FAIL=$((FAIL+1))
+          fi
+          
+          # Check sasha-doctor
+          if curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/health > /dev/null 2>&1; then
+            echo "✅ Sasha-Doctor (18795): UP" >> verify.log
+            PASS=$((PASS+1))
+          else
+            echo "❌ Sasha-Doctor (18795): DOWN" >> verify.log
+            FAIL=$((FAIL+1))
+          fi
+          
+          # Check webchat
+          if curl -sf --max-time 5 http://127.0.0.1:3000/ > /dev/null 2>&1; then
+            echo "✅ Webchat (3000): UP" >> verify.log
+            PASS=$((PASS+1))
+          else
+            echo "❌ Webchat (3000): DOWN" >> verify.log
+            FAIL=$((FAIL+1))
+          fi
+          
+          # Check tunnel
+          if curl -sf --max-time 10 https://claw.enderfga.cn/sasha-doctor/health > /dev/null 2>&1; then
+            echo "✅ CF Tunnel: UP" >> verify.log
+            PASS=$((PASS+1))
+          else
+            echo "❌ CF Tunnel: DOWN" >> verify.log
+            FAIL=$((FAIL+1))
+          fi
+          
+          echo "" >> verify.log
+          echo "Result: ${PASS} passed, ${FAIL} failed" >> verify.log
+          cat verify.log
+          
+          # Fail the job if critical services are still down
+          if [ $FAIL -gt 1 ]; then
+            echo "::error::Multiple services still down after recovery"
+            exit 1
+          fi
+
+      - name: 4. 导出日志
         if: always()
         run: |
-          echo "=== 提取核心运行日志 ===" > crash_report.log
-          openclaw logs --no-color | tail -n 500 >> crash_report.log 2>&1 || true
+          echo "=== Gateway Logs (last 200 lines) ===" > crash_report.log
+          openclaw logs --no-color 2>/dev/null | tail -200 >> crash_report.log 2>&1 || true
+          echo "" >> crash_report.log
+          echo "=== Sasha-Doctor Logs (last 100 lines) ===" >> crash_report.log
+          tail -100 ~/.openclaw/logs/sasha-doctor.log >> crash_report.log 2>&1 || true
 
-      - name: 4. Upload Artifacts (打包结果)
+      - name: 5. 上传结果
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: openclaw-recovery-result
+          name: openclaw-recovery-${{ github.run_number }}
           retention-days: 3
           path: |
-            fix_report.log
-            status_report.log
+            env.log
+            status.log
+            fix.log
+            verify.log
             crash_report.log
