@@ -6,19 +6,45 @@ on:
 jobs:
   recover:
     runs-on: self-hosted
-    # 核心修复：强行把 Homebrew 的路径塞进系统变量，让它能找到 node 和 openclaw
     env:
+      # 保持注入正确的环境变量
       PATH: "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     steps:
-      - name: Force Restart OpenClaw (强制复活)
+      - name: 1. Run Doctor Fix (执行自动修复)
         run: |
-          echo "=== 正在执行强行重启指令 ==="
+          echo "=== 正在执行 Doctor 自动修复 ===" > fix_report.log
+          # 尝试让 OpenClaw 自己清理损坏的配置或端口占用状态
+          openclaw doctor --fix --no-color >> fix_report.log 2>&1 || true
+          cat fix_report.log
+
+      - name: 2. Force Restart OpenClaw (执行强行拉起)
+        run: |
+          echo "=== 正在重启 OpenClaw 服务 ==="
           
-          # 优先尝试重启 daemon 守护进程，如果失败则尝试重启独立 gateway
+          # 优先尝试重启 daemon，失败则重启独立 gateway
           openclaw daemon restart || openclaw gateway restart
           
-          echo "等待 5 秒检查状态..."
-          sleep 5
+          # 给它充分的时间完成启动和健康检查
+          echo "等待 10 秒以确认端口是否成功绑定..."
+          sleep 10
           
-          # 确认是否存活
-          openclaw gateway status --no-color
+          # 验证存活状态
+          openclaw gateway status --no-color > status_report.log 2>&1 || true
+          cat status_report.log
+
+      - name: 3. Export Logs (导出日志以防万一)
+        if: always()
+        run: |
+          echo "=== 提取核心运行日志 ===" > crash_report.log
+          openclaw logs --no-color | tail -n 500 >> crash_report.log 2>&1 || true
+
+      - name: 4. Upload Artifacts (打包结果)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-recovery-result
+          retention-days: 3
+          path: |
+            fix_report.log
+            status_report.log
+            crash_report.log
