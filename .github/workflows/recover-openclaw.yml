@@ -16,12 +16,13 @@ on:
 jobs:
   recover:
     runs-on: self-hosted
-    timeout-minutes: 5
+    timeout-minutes: 4
     env:
       PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       HOME: "/Users/fanggan"
     steps:
       - name: 0. 环境检查
+        timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
           echo "=== Environment ==="
@@ -30,6 +31,7 @@ jobs:
           which openclaw || echo "openclaw NOT in PATH"
 
       - name: 1. 当前状态诊断
+        timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
           UID_NUM=$(id -u)
@@ -53,34 +55,32 @@ jobs:
 
       - name: 2. 执行修复
         if: ${{ github.event.inputs.action != 'status-only' }}
+        timeout-minutes: 2
         shell: bash --noprofile --norc {0}
         run: |
           ACTION="${{ github.event.inputs.action }}"
           UID_NUM=$(id -u)
           echo "=== Recovery: ${ACTION} ==="
 
-          # 核心函数：后台重启，不阻塞 runner
           restart_service() {
             local label="$1"
             local plist="$2"
             echo "  [$label] attempting restart..."
 
-            # 先试 kickstart（快，service 已 loaded 时有效）
             if timeout 10 launchctl kickstart -k "gui/${UID_NUM}/${label}" 2>/dev/null; then
-              echo "  [$label] ✓ kickstart ok"
+              echo "  [$label] ok via kickstart"
               return 0
             fi
 
-            # fallback: bootout + bootstrap
             echo "  [$label] kickstart failed, bootout+bootstrap..."
             launchctl bootout "gui/${UID_NUM}/${label}" 2>/dev/null || true
             sleep 1
             if [ -f "$HOME/Library/LaunchAgents/${plist}" ]; then
               launchctl bootstrap "gui/${UID_NUM}" "$HOME/Library/LaunchAgents/${plist}" 2>/dev/null
-              echo "  [$label] ✓ bootstrapped"
+              echo "  [$label] bootstrapped"
               return 0
             else
-              echo "  [$label] ✗ plist not found: ${plist}"
+              echo "  [$label] plist not found: ${plist}"
               return 1
             fi
           }
@@ -88,7 +88,6 @@ jobs:
           if [ "${ACTION}" = "force-restart" ]; then
             echo "--- Force restart all ---"
 
-            # Gateway: 用 timeout 包住，防止 CLI 卡死
             echo "[gateway]"
             timeout 15 openclaw gateway restart 2>&1 || {
               echo "  CLI failed/timeout, trying launchctl..."
@@ -109,7 +108,6 @@ jobs:
           else
             echo "--- Smart restart ---"
 
-            # 先试 sasha-doctor API（有超时）
             RESPONSE=$(timeout 30 curl -sf -X POST \
               -H "Content-Type: application/json" \
               -w "\nHTTP:%{http_code}" \
@@ -118,15 +116,13 @@ jobs:
             HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP:" | sed 's/HTTP://')
 
             if [ "$HTTP_CODE" = "200" ]; then
-              echo "✓ smart restart via sasha-doctor succeeded"
+              echo "smart restart via sasha-doctor succeeded"
             else
               echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), CLI fallback..."
 
-              # doctor --fix 有 timeout
               timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
               sleep 2
 
-              # gateway restart 有 timeout
               timeout 15 openclaw gateway restart 2>&1 || {
                 echo "CLI restart failed/timeout, trying launchctl..."
                 restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
@@ -134,12 +130,13 @@ jobs:
             fi
           fi
 
-          echo "Waiting 15s for stabilization..."
-          sleep 15
+          echo "Waiting 10s for stabilization..."
+          sleep 10
           echo "=== Done ==="
 
       - name: 3. 修复后验证
         if: ${{ github.event.inputs.action != 'status-only' }}
+        timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
           echo "=== Verification ==="
@@ -149,10 +146,10 @@ jobs:
           check() {
             local name="$1" url="$2" t="${3:-5}"
             if timeout "$t" curl -sf "$url" > /dev/null 2>&1; then
-              echo "✅ $name"
+              echo "PASS $name"
               PASS=$((PASS+1))
             else
-              echo "❌ $name"
+              echo "FAIL $name"
               FAIL=$((FAIL+1))
             fi
           }
@@ -170,6 +167,7 @@ jobs:
 
       - name: 4. 导出日志
         if: always()
+        timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
           echo "=== Gateway Logs (last 100 lines) ==="
