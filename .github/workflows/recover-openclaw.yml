@@ -6,68 +6,19 @@ on:
 jobs:
   recover:
     runs-on: self-hosted
+    # 核心修复：强行把 Homebrew 的路径塞进系统变量，让它能找到 node 和 openclaw
+    env:
+      PATH: "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     steps:
-      - name: 0. Find OpenClaw Path (全自动寻路)
-        id: find_cmd
+      - name: Force Restart OpenClaw (强制复活)
         run: |
-          echo "=== 开始寻找 openclaw 执行路径 ==="
+          echo "=== 正在执行强行重启指令 ==="
           
-          # 1. 尝试加载你的 zsh 环境变量来找
-          CMD_PATH=$(zsh -lc 'which openclaw' 2>/dev/null | grep -v "not found" || true)
+          # 优先尝试重启 daemon 守护进程，如果失败则尝试重启独立 gateway
+          openclaw daemon restart || openclaw gateway restart
           
-          # 2. 如果没找到，去 Mac 常见的安装目录暴力搜索
-          if [ -z "$CMD_PATH" ]; then
-            echo "环境变量中未找到，开始扫描常见目录..."
-            CMD_PATH=$(find /opt/homebrew/bin /usr/local/bin $HOME/.local/bin $HOME/.npm-global/bin $HOME/.cargo/bin -name "openclaw" -type f -executable 2>/dev/null | head -n 1)
-          fi
-          
-          # 3. 如果还是没找到，直接报错停止
-          if [ -z "$CMD_PATH" ]; then
-            echo "❌ 彻底找不到 openclaw！请确认它是否被意外删除了。"
-            exit 1
-          fi
-          
-          echo "✅ 成功找到 openclaw，路径为: $CMD_PATH"
-          
-          # 将找到的路径写入 GitHub Actions 的全局环境变量中
-          echo "OC_CMD=$CMD_PATH" >> $GITHUB_ENV
-
-      - name: 1. Check Native Status (检查原生状态)
-        run: |
-          echo "=== Daemon Status ===" > status.log
-          ${{ env.OC_CMD }} daemon status --no-color >> status.log 2>&1 || true
-          echo "=== Gateway Status ===" >> status.log
-          ${{ env.OC_CMD }} gateway status --no-color >> status.log 2>&1 || true
-
-      - name: 2. Collect Official Logs (提取原生日志)
-        run: |
-          echo "=== Exporting OpenClaw Logs ===" > crash_report.log
-          ${{ env.OC_CMD }} logs --no-color | tail -n 500 >> crash_report.log 2>&1 || true
-          ${{ env.OC_CMD }} daemon logs --no-color | tail -n 500 >> crash_report.log 2>&1 || true
-
-      - name: 3. Run Official Diagnostics (运行官方诊断)
-        run: |
-          echo "=== Running OpenClaw Doctor & Health Check ===" > diagnostic.log
-          ${{ env.OC_CMD }} doctor --no-color >> diagnostic.log 2>&1 || true
-          ${{ env.OC_CMD }} health --no-color >> diagnostic.log 2>&1 || true
-
-      - name: 4. Safe Restart (原生命令安全重启)
-        run: |
-          echo "=== Restarting OpenClaw Service ==="
-          # 优先尝试重启 daemon，失败则重启 gateway
-          ${{ env.OC_CMD }} daemon restart || ${{ env.OC_CMD }} gateway restart
-          
-          echo "等待 5 秒检查重启后状态..."
+          echo "等待 5 秒检查状态..."
           sleep 5
-          ${{ env.OC_CMD }} gateway status --no-color
-
-      - name: 5. Upload Logs for Analysis (打包上传日志)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: openclaw-crash-logs
-          retention-days: 3
-          path: |
-            status.log
-            crash_report.log
-            diagnostic.log
+          
+          # 确认是否存活
+          openclaw gateway status --no-color
