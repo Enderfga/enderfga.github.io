@@ -16,12 +16,14 @@ on:
 jobs:
   recover:
     runs-on: self-hosted
-    timeout-minutes: 4
+    timeout-minutes: 5
     env:
       PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       HOME: "/Users/fanggan"
+      SASHA_URL: "http://127.0.0.1:18795/sasha-doctor"
+      SASHA_TOKEN: "enderfga927"
     steps:
-      - name: 0. 环境检查
+      - name: 0. 环境 + Config 有效性
         timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
@@ -29,35 +31,87 @@ jobs:
           echo "date=$(date '+%Y-%m-%d %H:%M:%S %z')"
           echo "uid=$(id -u)"
           which openclaw || echo "openclaw NOT in PATH"
+          echo ""
 
-      - name: 1. 当前状态诊断
+          echo "=== Config Validation ==="
+          if timeout 10 openclaw config validate --json 2>/dev/null | grep -q '"valid":true'; then
+            echo "PASS: config valid"
+          else
+            echo "FAIL: config invalid — JSON 可能有语法错误，gateway 无法启动！"
+          fi
+
+      - name: 1. 全面状态诊断
         timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
           UID_NUM=$(id -u)
 
-          # macOS 没有 timeout 命令，用 perl 实现
-          run_with_timeout() {
-            local secs="$1"; shift
-            perl -e 'alarm shift; exec @ARGV' "$secs" "$@"
-          }
-
-          echo "--- Watchdog ---"
-          curl -sf --max-time 5 http://127.0.0.1:18795/sasha-doctor/watchdog/status 2>&1 || echo "unreachable"
+          echo "=== Auth Profiles ==="
+          AUTH_FILE="$HOME/.openclaw/agents/main/agent/auth-profiles.json"
+          if [ -f "$AUTH_FILE" ]; then
+            python3 -c "
+          import json, time
+          with open('$AUTH_FILE') as f:
+              data = json.load(f)
+          profiles = data.get('profiles', {})
+          stats = data.get('usageStats', {})
+          now_ms = int(time.time() * 1000)
+          active = {k: v for k, v in profiles.items() if k.startswith('anthropic:') and not k.startswith('_disabled')}
+          print(f'Active Anthropic profiles: {len(active)}')
+          for k, v in active.items():
+              ptype = v.get('type', 'unknown')
+              cd = stats.get(k, {}).get('cooldownUntil', 0)
+              status = 'COOLDOWN' if cd > now_ms else 'OK'
+              print(f'  {k}: type={ptype} status={status}')
+          if not active:
+              print('⚠️  NO ACTIVE ANTHROPIC AUTH — agent will not respond!')
+          " 2>/dev/null || echo "Failed to parse auth-profiles.json"
+          else
+            echo "auth-profiles.json not found"
+          fi
           echo ""
 
-          echo "--- LaunchD ---"
-          for svc in ai.openclaw.gateway com.sasha.doctor com.cloudflare.cloudflared com.webchat.nextjs; do
+          echo "=== DNS ==="
+          if timeout 3 host api.anthropic.com > /dev/null 2>&1; then
+            echo "PASS: DNS resolution OK"
+          else
+            echo "FAIL: DNS resolution failed for api.anthropic.com"
+          fi
+          echo ""
+
+          echo "=== Services ==="
+          for svc in ai.openclaw.gateway com.sasha.doctor com.cloudflare.cloudflared com.webchat.nextjs com.openclaw.healthcheck; do
             info=$(launchctl print "gui/${UID_NUM}/${svc}" 2>&1 | grep -E "state|pid" | head -2 | tr '\n' ' ')
             echo "$svc: ${info:-not loaded}"
           done
-
-          echo "--- Gateway ---"
-          run_with_timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
-
-          echo "--- Tunnel ---"
-          curl -sf --max-time 10 -o /dev/null -w "HTTP %{http_code}" https://claw.enderfga.cn/sasha-doctor/health 2>&1 || echo "unreachable"
           echo ""
+
+          echo "=== Health Endpoints ==="
+          check() {
+            local name="$1" url="$2" t="${3:-5}"
+            code=$(curl -sf -o /dev/null -w "%{http_code}" --max-time "$t" "$url" 2>/dev/null || echo "000")
+            if [ "$code" = "200" ]; then echo "PASS $name"; else echo "FAIL $name (HTTP $code)"; fi
+          }
+          check "Gateway"       "http://127.0.0.1:18789/"
+          check "Sasha-Doctor"  "$SASHA_URL/health"
+          check "Webchat"       "http://127.0.0.1:3000/api/health"
+          check "CF Tunnel"     "https://claw.enderfga.cn/sasha-doctor/health" 10
+          echo ""
+
+          echo "=== Sasha-Doctor Socket Health ==="
+          SASHA_PID=$(pgrep -f "sasha-doctor/server.js" | head -1)
+          if [ -n "$SASHA_PID" ]; then
+            CLOSED=$(lsof -p "$SASHA_PID" 2>/dev/null | grep -c "CLOSE_WAIT\|CLOSED" || echo 0)
+            ESTABLISHED=$(lsof -p "$SASHA_PID" 2>/dev/null | grep -c "ESTABLISHED" || echo 0)
+            echo "PID=$SASHA_PID  ESTABLISHED=$ESTABLISHED  CLOSED/CLOSE_WAIT=$CLOSED"
+            [ "$CLOSED" -gt 50 ] && echo "⚠️  Socket leak detected (>50 stale connections)"
+          else
+            echo "sasha-doctor not running"
+          fi
+          echo ""
+
+          echo "=== Gateway Status ==="
+          timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
 
       - name: 2. 执行修复
         if: ${{ github.event.inputs.action != 'status-only' }}
@@ -67,12 +121,6 @@ jobs:
           ACTION="${{ github.event.inputs.action }}"
           UID_NUM=$(id -u)
           echo "=== Recovery: ${ACTION} ==="
-
-          # macOS 没有 timeout 命令，用 perl 实现
-          run_with_timeout() {
-            local secs="$1"; shift
-            perl -e 'alarm shift; exec @ARGV' "$secs" "$@"
-          }
 
           restart_service() {
             local label="$1"
@@ -101,11 +149,10 @@ jobs:
             echo "--- Force restart all ---"
 
             echo "[gateway]"
-            run_with_timeout 15 openclaw gateway restart 2>&1 || {
+            timeout 15 openclaw gateway restart 2>&1 || {
               echo "  CLI failed/timeout, trying launchctl..."
               restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
             }
-
             sleep 2
 
             echo "[sasha-doctor]"
@@ -121,9 +168,10 @@ jobs:
             echo "--- Smart restart ---"
 
             RESPONSE=$(curl -sf --max-time 30 -X POST \
+              -H "Authorization: Bearer $SASHA_TOKEN" \
               -H "Content-Type: application/json" \
               -w "\nHTTP:%{http_code}" \
-              http://127.0.0.1:18795/sasha-doctor/restart-smart 2>&1) || true
+              "$SASHA_URL/restart-smart" 2>&1) || true
 
             HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP:" | sed 's/HTTP://')
 
@@ -131,11 +179,9 @@ jobs:
               echo "smart restart via sasha-doctor succeeded"
             else
               echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), CLI fallback..."
-
-              run_with_timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
+              timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
               sleep 2
-
-              run_with_timeout 15 openclaw gateway restart 2>&1 || {
+              timeout 15 openclaw gateway restart 2>&1 || {
                 echo "CLI restart failed/timeout, trying launchctl..."
                 restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
               }
@@ -166,10 +212,10 @@ jobs:
             fi
           }
 
-          check "Gateway" "http://127.0.0.1:18789/"
-          check "Sasha-Doctor" "http://127.0.0.1:18795/sasha-doctor/health"
-          check "Webchat" "http://127.0.0.1:3000/"
-          check "CF Tunnel" "https://claw.enderfga.cn/sasha-doctor/health" 10
+          check "Gateway"       "http://127.0.0.1:18789/"
+          check "Sasha-Doctor"  "http://127.0.0.1:18795/sasha-doctor/health"
+          check "Webchat"       "http://127.0.0.1:3000/api/health"
+          check "CF Tunnel"     "https://claw.enderfga.cn/sasha-doctor/health" 10
 
           echo ""
           echo "Result: ${PASS}/4 passed"
@@ -182,8 +228,18 @@ jobs:
         timeout-minutes: 1
         shell: bash --noprofile --norc {0}
         run: |
-          echo "=== Gateway Logs (last 100 lines) ==="
-          tail -100 /tmp/openclaw/openclaw-$(date +%Y-%m-%d).log 2>/dev/null || echo "no log file"
+          echo "=== Healthcheck Log (last 30 lines) ==="
+          tail -30 ~/.openclaw/logs/healthcheck.log 2>/dev/null || echo "no log file"
           echo ""
-          echo "=== Sasha-Doctor Logs (last 50 lines) ==="
+          echo "=== Sasha-Doctor Log (last 50 lines) ==="
           tail -50 ~/.openclaw/logs/sasha-doctor.log 2>/dev/null || echo "no log file"
+          echo ""
+          echo "=== Gateway Log (last 50 lines) ==="
+          # 尝试多个可能的日志路径
+          GLOG=$(ls -t /tmp/openclaw/openclaw-*.log ~/.openclaw/logs/gateway*.log 2>/dev/null | head -1)
+          if [ -n "$GLOG" ]; then
+            echo "Source: $GLOG"
+            tail -50 "$GLOG"
+          else
+            echo "no gateway log found"
+          fi
