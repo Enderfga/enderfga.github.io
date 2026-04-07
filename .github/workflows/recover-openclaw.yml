@@ -33,11 +33,16 @@ jobs:
           which openclaw || echo "openclaw NOT in PATH"
           echo ""
 
-          echo "=== Config Validation ==="
-          if timeout 10 openclaw config validate --json 2>/dev/null | grep -q '"valid":true'; then
-            echo "PASS: config valid"
+          # 2026-04-07 incident: 不再调用 `openclaw config validate`。
+          # 它会启动一个完整的 openclaw CLI 加载所有 plugin，在 plugin loader
+          # 出 bug 时（mem0 死循环）会让 runner 跟着卡死，恰恰是这个 workflow
+          # 想救的灾难本身。改用纯 python JSON 语法校验，零外部依赖。
+          echo "=== Config Validation (local JSON parse) ==="
+          if python3 -c "import json,sys; json.load(open('$HOME/.openclaw/openclaw.json'))" 2>/dev/null; then
+            echo "PASS: openclaw.json 语法 OK"
           else
-            echo "FAIL: config invalid — JSON 可能有语法错误，gateway 无法启动！"
+            echo "FAIL: openclaw.json JSON 语法错误，gateway 无法启动！"
+            python3 -c "import json,sys; json.load(open('$HOME/.openclaw/openclaw.json'))" 2>&1 || true
           fi
 
       - name: 1. 全面状态诊断
@@ -110,8 +115,28 @@ jobs:
           fi
           echo ""
 
-          echo "=== Gateway Status ==="
-          timeout 10 openclaw gateway status --no-color 2>&1 || echo "gateway status failed/timeout"
+          echo "=== Gateway Status (TCP probe + process info) ==="
+          # 不调用 `openclaw gateway status`：它会 spawn 完整的 openclaw CLI
+          # 加载 plugin（2026-04-07 死机根因）。改用直接 TCP 探测端口 + ps 进程信息。
+          if nc -zw2 127.0.0.1 18789 2>/dev/null; then
+            echo "PASS: port 18789 LISTENING"
+          else
+            echo "FAIL: port 18789 not listening"
+          fi
+          GW_PID=$(pgrep -f 'openclaw-gateway' | head -1)
+          if [ -n "$GW_PID" ]; then
+            ps -p "$GW_PID" -o pid,rss,%cpu,etime,command 2>/dev/null
+          else
+            echo "no openclaw-gateway process"
+          fi
+          # 警告: 如果有任何 100% CPU 的 channels/openclaw CLI 子进程,
+          # 这是 plugin loader 死循环的征兆——这正是 2026-04-07 死机的特征
+          BAD=$(ps -eo pid,pcpu,command | awk '/openclaw-(channels|gateway)|openclaw / && $2+0 > 80 && !/awk/ {print $0}')
+          if [ -n "$BAD" ]; then
+            echo ""
+            echo "⚠️  CRITICAL: detected 100% CPU openclaw process(es) — plugin loader dead loop!"
+            echo "$BAD"
+          fi
 
       - name: 2. 执行修复
         if: ${{ github.event.inputs.action != 'status-only' }}
@@ -121,6 +146,21 @@ jobs:
           ACTION="${{ github.event.inputs.action }}"
           UID_NUM=$(id -u)
           echo "=== Recovery: ${ACTION} ==="
+
+          # CRITICAL — 2026-04-07 incident postmortem:
+          # 这个 workflow 之前调用 `openclaw gateway restart` / `openclaw doctor --fix` 等
+          # CLI 命令做 fallback。新版本 openclaw 2026.4.5 的 plugin loader 在 disabled
+          # plugin 上有 regression：每次启动 CLI 都会陷入紧凑同步重试循环，100% CPU
+          # 烧 V8 解释器。这些 child 进程接收不到 SIGTERM，timeout 命令也杀不动它们；
+          # macOS self-hosted runner 因为等这些命令完成而被卡死(这就是用户描述的"runner
+          # 也断网了"的原因)。
+          # 修复:完全不调用 openclaw CLI。所有操作走 launchctl(管理 launchd 服务)+
+          # pkill -9(清理孤儿)+ HTTP(通过 sasha-doctor 触发智能修复)。
+          purge_orphans() {
+            pkill -9 -f openclaw-channels 2>/dev/null || true
+            pkill -9 -f openclaw-gateway 2>/dev/null || true
+            sleep 1
+          }
 
           restart_service() {
             local label="$1"
@@ -148,11 +188,10 @@ jobs:
           if [ "${ACTION}" = "force-restart" ]; then
             echo "--- Force restart all ---"
 
-            echo "[gateway]"
-            timeout 15 openclaw gateway restart 2>&1 || {
-              echo "  CLI failed/timeout, trying launchctl..."
-              restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
-            }
+            echo "[gateway] purging orphans first..."
+            purge_orphans
+            echo "[gateway] kickstarting via launchctl..."
+            restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
             sleep 2
 
             echo "[sasha-doctor]"
@@ -178,13 +217,17 @@ jobs:
             if [ "$HTTP_CODE" = "200" ]; then
               echo "smart restart via sasha-doctor succeeded"
             else
-              echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), CLI fallback..."
-              timeout 30 openclaw doctor --fix --no-color 2>&1 || echo "doctor --fix failed/timeout"
+              echo "sasha-doctor unavailable (HTTP ${HTTP_CODE}), launchctl fallback..."
+              # 不再尝试 `openclaw doctor --fix` 或 `openclaw gateway restart`:
+              # 这些 CLI 命令本身就是 2026-04-07 死机的引爆器。
+              # 直接走 launchctl 路径,纯 launchd 操作零 plugin loader。
+              echo "[gateway] purging orphans..."
+              purge_orphans
+              echo "[gateway] kickstart via launchctl..."
+              restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
               sleep 2
-              timeout 15 openclaw gateway restart 2>&1 || {
-                echo "CLI restart failed/timeout, trying launchctl..."
-                restart_service "ai.openclaw.gateway" "ai.openclaw.gateway.plist"
-              }
+              echo "[sasha-doctor] kickstart..."
+              restart_service "com.sasha.doctor" "com.sasha.doctor.plist"
             fi
           fi
 
