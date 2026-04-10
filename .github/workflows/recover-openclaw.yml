@@ -21,7 +21,7 @@ jobs:
       PATH: "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       HOME: "/Users/fanggan"
       SASHA_URL: "http://127.0.0.1:18795/sasha-doctor"
-      SASHA_TOKEN: "enderfga927"
+      SASHA_TOKEN: ${{ secrets.SASHA_TOKEN }}
     steps:
       - name: 0. 环境 + Config 有效性
         timeout-minutes: 1
