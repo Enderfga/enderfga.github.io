@@ -58,37 +58,37 @@ jobs:
           MODELS_FILE="$HOME/.openclaw/models.json"
           if [ -f "$MODELS_FILE" ]; then
             ACTIVE_PROVIDER=$(python3 -c "
-import json
-with open('$MODELS_FILE') as f:
-    models = json.load(f)
-for m in models:
-    if m.get('active'):
-        print(m.get('provider', 'unknown'))
-        break
-" 2>/dev/null || echo "unknown")
+          import json
+          with open('$MODELS_FILE') as f:
+              models = json.load(f)
+          for m in models:
+              if m.get('active'):
+                  print(m.get('provider', 'unknown'))
+                  break
+          " 2>/dev/null || echo "unknown")
             echo "Active provider: $ACTIVE_PROVIDER"
             
             # 检查 Anthropic profiles（仅作参考）
             AUTH_FILE="$HOME/.openclaw/agents/main/agent/auth-profiles.json"
             if [ -f "$AUTH_FILE" ]; then
               python3 -c "
-import json, time
-with open('$AUTH_FILE') as f:
-    data = json.load(f)
-profiles = data.get('profiles', {})
-stats = data.get('usageStats', {})
-now_ms = int(time.time() * 1000)
-active = {k: v for k, v in profiles.items() if k.startswith('anthropic:') and not k.startswith('_disabled')}
-if active:
-    print(f'Anthropic profiles: {len(active)}')
-    for k, v in active.items():
-        ptype = v.get('type', 'unknown')
-        cd = stats.get(k, {}).get('cooldownUntil', 0)
-        status = 'COOLDOWN' if cd > now_ms else 'OK'
-        print(f'  {k}: type={ptype} status={status}')
-else:
-    print('(No Anthropic profiles - using third-party provider)')
-" 2>/dev/null || echo "Failed to parse auth-profiles.json"
+          import json, time
+          with open('$AUTH_FILE') as f:
+              data = json.load(f)
+          profiles = data.get('profiles', {})
+          stats = data.get('usageStats', {})
+          now_ms = int(time.time() * 1000)
+          active = {k: v for k, v in profiles.items() if k.startswith('anthropic:') and not k.startswith('_disabled')}
+          if active:
+              print(f'Anthropic profiles: {len(active)}')
+              for k, v in active.items():
+                  ptype = v.get('type', 'unknown')
+                  cd = stats.get(k, {}).get('cooldownUntil', 0)
+                  status = 'COOLDOWN' if cd > now_ms else 'OK'
+                  print(f'  {k}: type={ptype} status={status}')
+          else:
+              print('(No Anthropic profiles - using third-party provider)')
+          " 2>/dev/null || echo "Failed to parse auth-profiles.json"
             else
               echo "(auth-profiles.json not found - using API key auth)"
             fi
