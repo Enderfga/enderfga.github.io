@@ -52,32 +52,53 @@ jobs:
           UID_NUM=$(id -u)
 
           echo "=== Auth Profiles ==="
-          AUTH_FILE="$HOME/.openclaw/agents/main/agent/auth-profiles.json"
-          if [ -f "$AUTH_FILE" ]; then
-            python3 -c "
-          import json, time
-          with open('$AUTH_FILE') as f:
-              data = json.load(f)
-          profiles = data.get('profiles', {})
-          stats = data.get('usageStats', {})
-          now_ms = int(time.time() * 1000)
-          active = {k: v for k, v in profiles.items() if k.startswith('anthropic:') and not k.startswith('_disabled')}
-          print(f'Active Anthropic profiles: {len(active)}')
-          for k, v in active.items():
-              ptype = v.get('type', 'unknown')
-              cd = stats.get(k, {}).get('cooldownUntil', 0)
-              status = 'COOLDOWN' if cd > now_ms else 'OK'
-              print(f'  {k}: type={ptype} status={status}')
-          if not active:
-              print('⚠️  NO ACTIVE ANTHROPIC AUTH — agent will not respond!')
-          " 2>/dev/null || echo "Failed to parse auth-profiles.json"
+          # 检查所有 provider auth（不仅是 anthropic）
+          # 从 models.json 获取当前活跃模型的 provider
+          MODELS_FILE="$HOME/.openclaw/models.json"
+          if [ -f "$MODELS_FILE" ]; then
+            ACTIVE_PROVIDER=$(python3 -c "
+import json
+with open('$MODELS_FILE') as f:
+    models = json.load(f)
+for m in models:
+    if m.get('active'):
+        print(m.get('provider', 'unknown'))
+        break
+" 2>/dev/null || echo "unknown")
+            echo "Active provider: $ACTIVE_PROVIDER"
+            
+            # 检查 Anthropic profiles（仅作参考）
+            AUTH_FILE="$HOME/.openclaw/agents/main/agent/auth-profiles.json"
+            if [ -f "$AUTH_FILE" ]; then
+              python3 -c "
+import json, time
+with open('$AUTH_FILE') as f:
+    data = json.load(f)
+profiles = data.get('profiles', {})
+stats = data.get('usageStats', {})
+now_ms = int(time.time() * 1000)
+active = {k: v for k, v in profiles.items() if k.startswith('anthropic:') and not k.startswith('_disabled')}
+if active:
+    print(f'Anthropic profiles: {len(active)}')
+    for k, v in active.items():
+        ptype = v.get('type', 'unknown')
+        cd = stats.get(k, {}).get('cooldownUntil', 0)
+        status = 'COOLDOWN' if cd > now_ms else 'OK'
+        print(f'  {k}: type={ptype} status={status}')
+else:
+    print('(No Anthropic profiles - using third-party provider)')
+" 2>/dev/null || echo "Failed to parse auth-profiles.json"
+            else
+              echo "(auth-profiles.json not found - using API key auth)"
+            fi
           else
-            echo "auth-profiles.json not found"
+            echo "models.json not found"
           fi
           echo ""
 
           echo "=== DNS ==="
-          if timeout 3 host api.anthropic.com > /dev/null 2>&1; then
+          # 使用 dig 替代 host（更可靠，更快）
+          if dig +short +time=2 +tries=1 api.anthropic.com > /dev/null 2>&1; then
             echo "PASS: DNS resolution OK"
           else
             echo "FAIL: DNS resolution failed for api.anthropic.com"
@@ -108,6 +129,9 @@ jobs:
           if [ -n "$SASHA_PID" ]; then
             CLOSED=$(lsof -p "$SASHA_PID" 2>/dev/null | grep -c "CLOSE_WAIT\|CLOSED" || echo 0)
             ESTABLISHED=$(lsof -p "$SASHA_PID" 2>/dev/null | grep -c "ESTABLISHED" || echo 0)
+            # 强制类型转换，避免整数判断错误
+            CLOSED=$((CLOSED + 0))
+            ESTABLISHED=$((ESTABLISHED + 0))
             echo "PID=$SASHA_PID  ESTABLISHED=$ESTABLISHED  CLOSED/CLOSE_WAIT=$CLOSED"
             [ "$CLOSED" -gt 50 ] && echo "⚠️  Socket leak detected (>50 stale connections)"
           else
