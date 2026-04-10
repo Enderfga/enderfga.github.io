@@ -295,7 +295,6 @@ jobs:
           tail -50 ~/.openclaw/logs/sasha-doctor.log 2>/dev/null || echo "no log file"
           echo ""
           echo "=== Gateway Log (last 50 lines) ==="
-          # 尝试多个可能的日志路径
           GLOG=$(ls -t /tmp/openclaw/openclaw-*.log ~/.openclaw/logs/gateway*.log 2>/dev/null | head -1)
           if [ -n "$GLOG" ]; then
             echo "Source: $GLOG"
@@ -303,3 +302,17 @@ jobs:
           else
             echo "no gateway log found"
           fi
+
+      - name: 5. 邮件通知（修复失败时）
+        if: "${{ failure() && github.event.inputs.action != 'status-only' }}"
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: "${{ secrets.MAIL_USER }}"
+          password: "${{ secrets.MAIL_PASS }}"
+          subject: "[Mac mini] recover-openclaw failed"
+          to: "${{ secrets.MAIL_TO }}"
+          from: "GitHub Actions <${{ secrets.MAIL_USER }}>"
+          body: "recover-openclaw workflow failed (${{ github.event.inputs.action }}). Check: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
