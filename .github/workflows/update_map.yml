@@ -55,3 +55,10 @@ jobs:
         git add .
         git commit -m 'Update citation map'
         git push https://github.com/Enderfga/enderfga.github.io.git
+
+    - name: Cleanup orphaned geckodriver/Firefox
+      if: always()
+      shell: zsh {0}
+      run: |
+        pkill -9 -f geckodriver 2>/dev/null || true
+        pkill -9 -f "Firefox.app" 2>/dev/null || true
