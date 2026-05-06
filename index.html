@@ -35,6 +35,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="pokopia.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
+    <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     <script src="https://unpkg.com/feather-icons" defer></script>
     
     <!-- Structured Data -->
@@ -82,6 +84,7 @@
     <!-- Navigation Section -->
     <nav class="main-navigation" role="navigation" aria-label="Main navigation">
         <ul class="nav-list" role="menubar">
+            <li role="none"><a href="#news" id="nav-news" role="menuitem" aria-label="Go to News section"><i class="fas fa-newspaper" aria-hidden="true"></i> News</a></li>
             <li role="none"><a href="#research" id="nav-research" role="menuitem" aria-label="Go to Research and Projects section"><i class="fas fa-flask" aria-hidden="true"></i> Research & Projects</a></li>
             <li role="none"><a href="#honors" id="nav-honors" role="menuitem" aria-label="Go to Honors and Awards section"><i class="fas fa-award" aria-hidden="true"></i> Honors &amp; Awards</a></li>
             <li role="none"><a href="#activities" id="nav-activities" role="menuitem" aria-label="Go to Activities and Services section"><i class="fas fa-users" aria-hidden="true"></i> Activities &amp; Services</a></li>
@@ -181,7 +184,7 @@
                 <h1 class="name">Guian Fang</h1>
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
-                <p>Beyond research, I believe in fostering open communication within the research community. Whether you'd like to chat about academic pursuits, share experiences, or explore collaborative opportunities, I'm always happy to connect.</p>
+                <p>I am currently building agentic visual generation pipelines and runtime infrastructure for coding agents. I am open to collaborations on long-form video generation, video world models, embodied intelligence, and agent orchestration — feel free to reach out.</p>
             </div>
             <div class="profile-image" 
                  onmouseover="guian_start()" 
@@ -208,6 +211,16 @@
             </div>
         </section>
 
+        <section id="news">
+            <h2>News</h2>
+            <ul class="news-list">
+                <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a>, a unified TypeScript runtime for Claude Code, Codex, Gemini, Cursor Agent and custom coding CLIs.</li>
+                <li><span class="news-date">2025.11</span> Joined <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a> at the National University of Singapore as a Ph.D. student under Prof. Mike Zheng Shou.</li>
+                <li><span class="news-date">2025</span> <a href="https://pai.utopai.film/" target="_blank" rel="noopener">PAI</a>, a long-form video generation system for cinematic storytelling, launched at Utopai Studios.</li>
+                <li><span class="news-date">2025.06</span> Released <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a> with MikoAI: in-context controllable animation with zero structural changes.</li>
+                <li><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
+            </ul>
+        </section>
 
         <section id="research">
             <h2>Research & Projects</h2>
@@ -229,6 +242,7 @@
                         <p class="paper-authors">
                             <strong>Guian Fang</strong>
                         </p>
+                        <p class="paper-venue"><em>Open-source</em>, 2026</p>
                         <div class="paper-stats">
                             <img src="https://img.shields.io/github/stars/Enderfga/claw-orchestrator?style=social&label=Star" alt="GitHub stars count" loading="lazy">
                             <img src="https://img.shields.io/npm/v/@enderfga/claw-orchestrator.svg" alt="npm version" loading="lazy">
@@ -245,13 +259,7 @@
 
                 <article class="research-paper highlight">
                     <div class="paper-media">
-                        <div class="video-container">
-                            <iframe title="PAI: The Future of Once Upon a Time"
-                                    src="https://www.youtube.com/embed/bxWaaDiq-Hw"
-                                    frameborder="0"
-                                    allowfullscreen
-                                    loading="lazy"></iframe>
-                        </div>
+                        <lite-youtube videoid="bxWaaDiq-Hw" playlabel="Play: PAI — Long-form Video Generation for Cinematic Storytelling"></lite-youtube>
                     </div>
                     <div class="paper-content">
                         <h3 class="paper-title">
@@ -262,6 +270,7 @@
                         <p class="paper-authors">
                             Utopai Studios*, <strong>Guian Fang</strong>*
                         </p>
+                        <p class="paper-venue"><em>Productized at Utopai Studios</em>, 2025</p>
                         <p class="paper-description">
                             A productized long-form video generation system for minute-level cinematic continuity. PAI maintains characters, tone, and narrative coherence across shots, with creator control from concept to final frame.
                         </p>
@@ -274,13 +283,7 @@
 
                 <article class="research-paper">
                     <div class="paper-media">
-                        <div class="video-container">
-                            <iframe title="MikoAI: Tutorial Animation Demo"
-                                    src="https://www.youtube.com/embed/UX46R72FsVs" 
-                                    frameborder="0" 
-                                    allowfullscreen
-                                    loading="lazy"></iframe>
-                        </div>
+                        <lite-youtube videoid="UX46R72FsVs" playlabel="Play: MikoAI — FramePrompt Animation Demo"></lite-youtube>
                     </div>
                     <div class="paper-content">
                         <h3 class="paper-title">
@@ -291,6 +294,7 @@
                         <p class="paper-authors">
                             MikoAI*, <strong>Guian Fang</strong>*
                         </p>
+                        <p class="paper-venue"><em>arXiv</em>, 2025</p>
                         <p class="paper-description">
                             FramePrompt: In-context Controllable Animation with Zero Structural Changes
                         </p>
@@ -316,8 +320,9 @@
                     <p class="paper-authors">
                         Cybever*, <strong>Guian Fang</strong>*
                     </p>
+                    <p class="paper-venue"><em>Productized at Cybever</em>, 2024</p>
                     <p class="paper-description">
-                        Image-to-3D: Let AI do the heavy lifting so 3D Professionals can do the storytelling    
+                        Image-to-3D: Let AI do the heavy lifting so 3D Professionals can do the storytelling
                     </p>
                 </div>
             </article>
@@ -389,6 +394,7 @@
                     <p class="paper-authors">
                         Chris Liu, Ziyi Lin, <strong>Guian Fang</strong>, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang
                     </p>
+                    <p class="paper-venue"><em>Open-source toolkit, OpenGVLab</em>, 2023</p>
                     <div class="paper-stats">
                         <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&label=Star" alt="GitHub stars count" loading="lazy">
                     </div>
@@ -431,16 +437,20 @@
         
         <section id="honors">
             <h2>Honors &amp; Awards</h2>
+            <h3>Scholarships</h3>
             <ul class="honors-list">
+                <li><strong>National Scholarship</strong> (2023)</li>
+                <li><strong>SYSU Outstanding Student Scholarship — 1st Class</strong> (2023)</li>
+                <li><strong>Li Xuerou Foundation Scholarship</strong> (2023)</li>
+                <li><strong>Huawei Intelligent Foundation Scholarship</strong> (2022)</li>
+                <li><strong>National Encouragement Scholarship</strong> (2022)</li>
+            </ul>
+            <h3>Competitions</h3>
+            <ul class="honors-list">
+                <li><strong>1st Place</strong>, National College Computer Ability Challenge (2023)</li>
                 <li><strong>2nd Place</strong>, Asia and Pacific Mathematical Contest in Modeling (2022)</li>
                 <li><strong>Silver Medal</strong>, China Collegiate Algorithm Design &amp; Programming Challenge Contest (2022)</li>
                 <li><strong>2nd Place</strong>, Social Computing Innovation Competition (2022)</li>
-                <li><strong>1st Place</strong>, National College Computer Ability Challenge (2023)</li>
-                <li><strong>Recipient</strong>, Huawei Intelligent Foundation Scholarship (2022)</li>
-                <li><strong>Recipient</strong>, National Encouragement Scholarship (2022)</li>
-                <li><strong>1st Place</strong>, SYSU Outstanding Student Scholarship (2023)</li>
-                <li><strong>Recipient</strong>, National Scholarship (2023)</li>
-                <li><strong>Recipient</strong>, Li Xuerou Foundation Scholarship (2023)</li>
             </ul>
         </section>
         
@@ -549,346 +559,6 @@
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a>. <strong>Do not</strong> scrape the HTML from this page itself.</p>
         </footer>
     </main>
-    <script>
-        'use strict';
-
-        // Website functionality module
-        const Website = {
-            // Navigation functionality
-            navigation: {
-                init() {
-                    const nav = document.querySelector('nav');
-                    const navLinks = document.querySelectorAll('.nav-list a[href^="#"]');
-
-                    navLinks.forEach(link => {
-                        link.addEventListener('click', this.handleNavClick.bind(this));
-                    });
-
-                    // Add scroll effect to navbar
-                    window.addEventListener('scroll', () => {
-                        if (window.scrollY > 50) {
-                            nav.classList.add('scrolled');
-                        } else {
-                            nav.classList.remove('scrolled');
-                        }
-                    });
-                },
-
-                handleNavClick(event) {
-                    const navLinks = document.querySelectorAll('.nav-list a');
-                    navLinks.forEach(nav => nav.classList.remove('active'));
-                    event.currentTarget.classList.add('active');
-
-                    // Smooth scroll to section
-                    const targetId = event.currentTarget.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            },
-
-            // Back to top functionality
-            backToTop: {
-                init() {
-                    this.button = document.querySelector('.to-top');
-                    if (this.button) {
-                        this.button.addEventListener('click', this.scrollToTop);
-                        window.addEventListener('scroll', this.toggleVisibility.bind(this));
-                    }
-                },
-
-                toggleVisibility() {
-                    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-                    if (this.button) {
-                        this.button.style.display = scrollTop > 100 ? 'flex' : 'none';
-                    }
-                },
-
-                scrollToTop(event) {
-                    event.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            },
-
-            // Intersection Observer for scroll animations
-            scrollAnimations: {
-                init() {
-                    const observerOptions = {
-                        threshold: 0.1,
-                        rootMargin: '0px 0px -50px 0px'
-                    };
-
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach((entry, index) => {
-                            if (entry.isIntersecting) {
-                                setTimeout(() => {
-                                    entry.target.style.opacity = '1';
-                                    entry.target.style.transform = 'translateY(0)';
-                                }, index * 100);
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, observerOptions);
-
-                    // Observe all research papers
-                    document.querySelectorAll('.research-paper').forEach(paper => {
-                        observer.observe(paper);
-                    });
-
-                    // Observe collaboration items
-                    document.querySelectorAll('.collaboration-item').forEach(item => {
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateY(30px)';
-                        item.style.transition = 'all 0.6s ease';
-                        observer.observe(item);
-                    });
-                }
-            },
-
-            // Theme switcher functionality
-            theme: {
-                init() {
-                    this.body = document.body;
-                    this.radios = document.querySelectorAll('.three-way-radio input');
-                    this.themeIcons = document.querySelectorAll('.theme-icon');
-                    
-                    this.bindEvents();
-                    this.initializeTheme();
-                },
-                
-                bindEvents() {
-                    this.radios.forEach(radio => {
-                        radio.addEventListener('change', this.handleThemeChange.bind(this));
-                    });
-                    
-                    // Theme icon click handlers
-                    this.themeIcons.forEach((icon, index) => {
-                        icon.addEventListener('click', () => {
-                            if (index === 0) { // Sun icon - light mode
-                                this.setTheme('light');
-                            } else { // Moon icon - dark mode
-                                this.setTheme('dark');
-                            }
-                        });
-                    });
-                },
-                
-                handleThemeChange(event) {
-                    const theme = event.target.value;
-                    this.applyTheme(theme);
-                    this.saveTheme(theme);
-                },
-                
-                setTheme(theme) {
-                    const radioToCheck = document.querySelector(`input[value="${theme}"]`);
-                    if (radioToCheck) {
-                        radioToCheck.checked = true;
-                        this.applyTheme(theme);
-                        this.saveTheme(theme);
-                    }
-                },
-                
-                applyTheme(theme) {
-                    switch(theme) {
-                        case 'light':
-                            this.body.classList.remove('dark-mode');
-                            break;
-                        case 'dark':
-                            this.body.classList.add('dark-mode');
-                            break;
-                        case 'system':
-                            // Implement system preference detection
-                            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                            this.body.classList.toggle('dark-mode', prefersDark);
-                            break;
-                    }
-                },
-                
-                saveTheme(theme) {
-                    try {
-                        localStorage.setItem('preferred-theme', theme);
-                    } catch (e) {
-                        // Handle localStorage not available
-                        console.warn('Unable to save theme preference');
-                    }
-                },
-                
-                initializeTheme() {
-                    let theme = 'light'; // Default theme
-                    try {
-                        theme = localStorage.getItem('preferred-theme') || 'light';
-                    } catch (e) {
-                        console.warn('Unable to load theme preference');
-                    }
-                    this.setTheme(theme);
-                }
-            },
-
-            // Profile image hover effect
-            profileImage: {
-                init() {
-                    this.container = document.querySelector('.profile-image');
-                    this.hoverImage = document.getElementById('guian_image');
-                    
-                    if (this.container && this.hoverImage) {
-                        this.container.addEventListener('mouseenter', this.show.bind(this));
-                        this.container.addEventListener('mouseleave', this.hide.bind(this));
-                        // Don't hide if pokopia mode is already active (from localStorage)
-                        if (!document.body.classList.contains('pokopia-mode')) {
-                            this.hide();
-                        }
-                    }
-                },
-                
-                show() {
-                    if (this.hoverImage) {
-                        this.hoverImage.style.opacity = '1';
-                    }
-                },
-                
-                hide() {
-                    // In pokopia mode, keep the easter egg image visible
-                    if (document.body.classList.contains('pokopia-mode')) return;
-                    if (this.hoverImage) {
-                        this.hoverImage.style.opacity = '0';
-                    }
-                }
-            },
-
-            // Initialize all modules
-            init() {
-                document.addEventListener('DOMContentLoaded', () => {
-                    // Initialize Feather icons
-                    if (typeof feather !== 'undefined') {
-                        feather.replace();
-                    }
-
-                    // Initialize all modules
-                    this.navigation.init();
-                    this.backToTop.init();
-                    this.theme.init();
-                    this.profileImage.init();
-                    this.scrollAnimations.init();
-
-                    // Add loading animation complete
-                    document.body.classList.add('loaded');
-                });
-
-                // Performance optimization: Passive event listeners
-                if ('addEventListener' in window) {
-                    window.addEventListener('scroll', () => {}, { passive: true });
-                }
-            }
-        };
-
-        // Initialize website functionality
-        Website.init();
-
-        // Global functions for profile image hover (called from HTML)
-        window.guian_start = function() {
-            const hoverImage = document.getElementById('guian_image');
-            if (hoverImage) {
-                hoverImage.style.opacity = '1';
-            }
-        };
-
-        window.guian_stop = function() {
-            // In pokopia mode, keep the easter egg image visible
-            if (document.body.classList.contains('pokopia-mode')) return;
-            const hoverImage = document.getElementById('guian_image');
-            if (hoverImage) {
-                hoverImage.style.opacity = '0';
-            }
-        };
-
-        // Pokopia Mode Toggle
-        window.togglePokopia = function() {
-            const body = document.body;
-            const isPokopia = body.classList.toggle('pokopia-mode');
-            
-            // Lock avatar to easter egg image in pokopia mode
-            const hoverImage = document.getElementById('guian_image');
-            if (hoverImage) {
-                hoverImage.style.opacity = isPokopia ? '1' : '0';
-            }
-            
-            // Create transition overlay
-            const overlay = document.createElement('div');
-            overlay.className = 'pokopia-transition-overlay';
-            body.appendChild(overlay);
-            
-            // Trigger animation
-            requestAnimationFrame(() => {
-                overlay.classList.add('active');
-                setTimeout(() => {
-                    overlay.classList.add('fade-out');
-                    setTimeout(() => overlay.remove(), 600);
-                }, 400);
-            });
-            
-            // Spawn floating decorations in pokopia mode
-            if (isPokopia) {
-                spawnPokopiaDecorations();
-            } else {
-                clearPokopiaDecorations();
-            }
-            
-            try {
-                localStorage.setItem('pokopia-mode', isPokopia ? 'on' : 'off');
-            } catch(e) {}
-        };
-        
-        function spawnPokopiaDecorations() {
-            clearPokopiaDecorations();
-            const container = document.createElement('div');
-            container.id = 'pokopia-decorations';
-            container.setAttribute('aria-hidden', 'true');
-            document.body.appendChild(container);
-            
-            const emojis = ['🌿', '⭐', '🌸', '☁️', '🍃', '🌻', '✨', '🦋', '🐝', '🍄', '🌈'];
-            for (let i = 0; i < 20; i++) {
-                const el = document.createElement('span');
-                el.className = 'pokopia-float';
-                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (8 + Math.random() * 12) + 's';
-                el.style.animationDelay = (Math.random() * 10) + 's';
-                el.style.fontSize = (14 + Math.random() * 20) + 'px';
-                el.style.opacity = 0.4 + Math.random() * 0.4;
-                container.appendChild(el);
-            }
-        }
-        
-        function clearPokopiaDecorations() {
-            const existing = document.getElementById('pokopia-decorations');
-            if (existing) existing.remove();
-        }
-        
-        // Restore pokopia mode on load
-        try {
-            if (localStorage.getItem('pokopia-mode') === 'on') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    document.body.classList.add('pokopia-mode');
-                    spawnPokopiaDecorations();
-                    // Lock avatar to easter egg
-                    const hoverImage = document.getElementById('guian_image');
-                    if (hoverImage) hoverImage.style.opacity = '1';
-                });
-            }
-        } catch(e) {}
-
-        // Add performance monitoring (optional)
-        if ('PerformanceObserver' in window) {
-            const perfObserver = new PerformanceObserver((list) => {
-                for (const entry of list.getEntries()) {
-                    if (entry.entryType === 'largest-contentful-paint') {
-                        console.log('LCP:', entry.renderTime || entry.loadTime);
-                    }
-                }
-            });
-            perfObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-        }
-    </script>
+    <script src="app.js" defer></script>
 </body>
 </html>
