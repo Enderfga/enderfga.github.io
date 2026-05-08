@@ -197,10 +197,6 @@ const Website = {
 
     init() {
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-
             this.navigation.init();
             this.backToTop.init();
             this.theme.init();

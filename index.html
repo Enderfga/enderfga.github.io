@@ -29,7 +29,7 @@
     <link rel="preload" href="stylesheet.css" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -37,7 +37,6 @@
     <link rel="stylesheet" href="pokopia.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
-    <script src="https://unpkg.com/feather-icons" defer></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -134,36 +133,36 @@
             </a>
             
             <div class="theme-switcher" role="group" aria-label="Theme selection">
-                <button type="button" 
-                        class="theme-icon" 
+                <button type="button"
+                        class="theme-icon"
                         aria-label="Switch to light mode">
-                    <i data-feather="sun" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
                 </button>
                 <div class="three-way-radio" role="radiogroup" aria-label="Choose theme preference">
-                    <input type="radio" 
-                           name="ui-mode" 
-                           id="footer-ui-mode-left" 
-                           class="left" 
-                           value="light" 
+                    <input type="radio"
+                           name="ui-mode"
+                           id="footer-ui-mode-left"
+                           class="left"
+                           value="light"
                            aria-label="Light mode">
-                    <input type="radio" 
-                           name="ui-mode" 
-                           id="footer-ui-mode-center" 
-                           class="center" 
-                           value="system" 
+                    <input type="radio"
+                           name="ui-mode"
+                           id="footer-ui-mode-center"
+                           class="center"
+                           value="system"
                            aria-label="System default mode">
-                    <input type="radio" 
-                           name="ui-mode" 
-                           id="footer-ui-mode-right" 
-                           class="right" 
-                           value="dark" 
+                    <input type="radio"
+                           name="ui-mode"
+                           id="footer-ui-mode-right"
+                           class="right"
+                           value="dark"
                            aria-label="Dark mode">
                     <div class="indicator" aria-hidden="true"></div>
                 </div>
-                <button type="button" 
-                        class="theme-icon" 
+                <button type="button"
+                        class="theme-icon"
                         aria-label="Switch to dark mode">
-                    <i data-feather="moon" aria-hidden="true"></i>
+                    <i class="fas fa-moon" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -194,8 +193,8 @@
                 <div class="image-container" 
                      id="guian_image" 
                      aria-hidden="true">
-                    <img src="images/guian_easter.jpg" 
-                         alt="Alternative profile photo of Guian Fang" 
+                    <img src="images/guian_easter.webp"
+                         alt="Alternative profile photo of Guian Fang"
                          loading="lazy">
                 </div>
                 <div class="avatar-clickable" 
@@ -204,8 +203,8 @@
                      tabindex="0"
                      aria-label="Toggle Pokopia mode"
                      title="✨ Click me!">
-                    <img src="images/guian.jpg" 
-                         alt="Profile photo of Guian Fang" 
+                    <img src="images/guian.webp"
+                         alt="Profile photo of Guian Fang"
                          loading="eager">
                 </div>
             </div>
@@ -213,19 +212,26 @@
 
         <section id="news">
             <h2>News</h2>
-            <ul class="news-list">
-                <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
-                <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopai.film/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
-                <li><span class="news-date">2025.06</span> Launched <a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI</a> — an ACG (anime / comic / manga) creation tool, powered by <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a>.</li>
-                <li><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
-                <li><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
-            </ul>
+            <div class="news-scroll" tabindex="0" aria-label="News list, scroll for more">
+                <ul class="news-list">
+                    <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
+                    <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopai.film/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
+                    <li><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
+                    <li><span class="news-date">2025.06</span> Launched <a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI</a> — an ACG (anime / comic / manga) creation tool, powered by <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a>.</li>
+                    <li><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
+                    <li><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
+                    <li><span class="news-date">2024.06</span> Co-organized <a href="https://sites.google.com/view/loveucvpr24/home" target="_blank" rel="noopener">LOVEU</a> workshop at <em>CVPR 2024</em> — long-form video understanding &amp; AI copilots.</li>
+                    <li><span class="news-date">2024.05</span> <a href="https://github.com/Notonion/ChartThinker" target="_blank" rel="noopener">ChartThinker</a> presented at <em>LREC-COLING 2024</em> in Torino.</li>
+                    <li><span class="news-date">2023.07</span> Released <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">LLaMA2-Accessory</a> with OpenGVLab, Shanghai AI Lab — open-source LLM toolkit.</li>
+                </ul>
+            </div>
         </section>
 
         <section id="research">
-            <h2>Research & Projects</h2>
-            <p>My research focuses on Generative Models for Vision, particularly Video World Models for video understanding and generation, as well as Embodied Intelligence. Recently I've been exploring agentic visual generation — building creative pipelines from concept to final frame. Representative works are <span class="highlight">highlighted</span>. * denotes equal contribution.</p>
-            
+            <h2>Research &amp; Projects</h2>
+            <p>My research focuses on Generative Models for Vision — particularly long-form video generation, video diffusion, and Video World Models for video understanding and generation — as well as Embodied Intelligence. Recently I've been exploring agentic visual generation, building creative pipelines from concept to final frame, and runtime infrastructure for coding agents. Representative works are <span class="highlight">highlighted</span>. * denotes equal contribution.</p>
+
+            <h3 class="research-subheading">Products</h3>
             <div class="research-content">
                 <article class="research-paper">
                     <div class="paper-media">
@@ -330,10 +336,13 @@
                     </p>
                 </div>
             </article>
-            
+            </div>
+
+            <h3 class="research-subheading">Publications</h3>
+            <div class="research-content">
             <article class="research-paper highlight">
                 <div class="paper-media">
-                    <img src='images/humanrefiner.jpg' 
+                    <img src='images/humanrefiner.webp'
                          alt="HumanRefiner research visualization showing human pose refinement" 
                          loading="lazy">
                 </div>
@@ -359,7 +368,7 @@
               
             <article class="research-paper">
                 <div class="paper-media">
-                    <img src='images/ChartThinker.png' 
+                    <img src='images/ChartThinker.webp'
                          alt="ChartThinker framework diagram showing contextual chain-of-thought approach" 
                          loading="lazy">
                 </div>
@@ -385,7 +394,7 @@
 
             <article class="research-paper highlight">
                 <div class="paper-media">
-                    <img src='images/llama2.png' 
+                    <img src='images/llama2.webp'
                          alt="LLaMA2-Accessory toolkit architecture diagram" 
                          loading="lazy">
                 </div>
@@ -414,7 +423,7 @@
 
             <article class="research-paper">
                 <div class="paper-media">
-                    <img src='images/RealignDiff.png' 
+                    <img src='images/RealignDiff.webp'
                          alt="RealignDiff framework showing coarse-to-fine semantic re-alignment process" 
                          loading="lazy">
                 </div>
@@ -427,7 +436,7 @@
                     <p class="paper-authors">
                         <strong>Guian Fang</strong>*, Zutao Jiang*, Jianhua Han, Guansong Lu, Hang Xu, Shengcai Liao, Xiaojun Chang, Xiaodan Liang
                     </p>
-                    <p class="paper-venue"><em>TNNLS</em>, 2023</p>
+                    <p class="paper-venue"><em>IEEE TNNLS</em>, 2023</p>
                     <div class="paper-links">
                         <a href="https://ieeexplore.ieee.org/document/11084988" target="_blank" rel="noopener">Paper</a>
                     </div>
@@ -489,7 +498,7 @@
             
             <div class="collaborations-grid">
                 <div class="collaboration-item">
-                    <img src="images/miko.jpeg" 
+                    <img src="images/miko.webp"
                          alt="MikoAI Ltd. logo" 
                          loading="lazy"
                          class="organization-logo">
@@ -498,7 +507,7 @@
                 </div>
                 
                 <div class="collaboration-item">
-                    <img src="images/utopai_logo.png"
+                    <img src="images/utopai_logo.webp"
                          alt="Utopai Studios logo"
                          loading="lazy"
                          class="organization-logo">
@@ -516,7 +525,7 @@
                 </div>
                 
                 <div class="collaboration-item">
-                    <img src="images/huawei.jpg" 
+                    <img src="images/huawei.webp"
                          alt="Noah's Ark Lab, Huawei logo" 
                          loading="lazy"
                          class="organization-logo">
