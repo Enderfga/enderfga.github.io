@@ -1405,20 +1405,6 @@ span.highlight {
     color: #6cb6ff;
 }
 
-.research-subheading {
-    margin: 32px 0 12px 0;
-    font-size: 1.05rem;
-    color: #333;
-    letter-spacing: 0.02em;
-}
-
-.research-subheading:first-of-type {
-    margin-top: 16px;
-}
-
-.dark-mode .research-subheading {
-    color: #e0e0e0;
-}
 
 .dark-mode .collaboration-item p {
     color: #aaa;
