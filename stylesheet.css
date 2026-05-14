@@ -890,8 +890,28 @@ span.highlight {
     height: 100%;
     border: none;
     border-radius: var(--radius-md);
-    object-fit: cover;
     background: #000;
+}
+
+.video-container video {
+    object-fit: cover;
+}
+
+.paper-venue .badge-link {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    line-height: 0;
+}
+
+.paper-venue .badge-link img {
+    height: 20px;
+    vertical-align: middle;
+    transition: transform var(--transition-base);
+}
+
+.paper-venue .badge-link:hover img {
+    transform: scale(1.05);
 }
 
 .paper-media lite-youtube {

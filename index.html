@@ -214,7 +214,7 @@
             <h2>News</h2>
             <div class="news-scroll" tabindex="0" aria-label="News list, scroll for more">
                 <ul class="news-list">
-                    <li><span class="news-date">2026.05</span> <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> released on arXiv — any-step video diffusion via on-policy flow map distillation, with <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener">code</a> open-sourced by NVIDIA.</li>
+                    <li><span class="news-date">2026.05</span> <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> on arXiv — any-step video diffusion via flow map distillation.</li>
                     <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopai.film/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
                     <li><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
@@ -236,10 +236,12 @@
                 <article class="research-paper highlight">
                     <div class="paper-media">
                         <div class="video-container">
-                            <video src="https://github.com/user-attachments/assets/5698cdea-847f-4732-9910-c78f07aa0404"
-                                   controls
+                            <video src="https://nvlabs.github.io/AnyFlow/assets/videos/demo_video.mp4"
+                                   autoplay
+                                   loop
                                    muted
                                    playsinline
+                                   controls
                                    preload="metadata"
                                    aria-label="AnyFlow — any-step video diffusion demo"></video>
                         </div>
@@ -253,14 +255,14 @@
                         <p class="paper-authors">
                             Yuchao Gu, <strong>Guian Fang</strong>, Yuxin Jiang, Weijia Mao, Song Han, Han Cai, Mike Zheng Shou
                         </p>
-                        <p class="paper-venue"><em>arXiv preprint</em>, 2026</p>
-                        <div class="paper-stats">
-                            <img src="https://img.shields.io/github/stars/NVlabs/AnyFlow?style=social&label=Star" alt="GitHub stars count" loading="lazy">
-                        </div>
+                        <p class="paper-venue"><em>arXiv preprint</em>, 2026
+                            <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
+                                <img src="https://img.shields.io/github/stars/NVlabs/AnyFlow?style=social&label=Star" alt="GitHub stars" loading="lazy">
+                            </a>
+                        </p>
                         <div class="paper-links">
                             <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">Paper</a>
                             <a href="https://nvlabs.github.io/AnyFlow/" target="_blank" rel="noopener">Project page</a>
-                            <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener">Code</a>
                             <a href="https://huggingface.co/collections/nvidia/anyflow" target="_blank" rel="noopener">Models</a>
                         </div>
                         <p class="paper-description">
@@ -284,15 +286,14 @@
                         <p class="paper-authors">
                             <strong>Guian Fang</strong>
                         </p>
-                        <p class="paper-venue"><em>Open-source</em>, 2026</p>
-                        <div class="paper-stats">
-                            <img src="https://img.shields.io/github/stars/Enderfga/claw-orchestrator?style=social&label=Star" alt="GitHub stars count" loading="lazy">
-                            <img src="https://img.shields.io/npm/v/@enderfga/claw-orchestrator.svg" alt="npm version" loading="lazy">
-                        </div>
-                        <div class="paper-links">
-                            <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">GitHub</a>
-                            <a href="https://www.npmjs.com/package/@enderfga/claw-orchestrator" target="_blank" rel="noopener">npm</a>
-                        </div>
+                        <p class="paper-venue"><em>Open-source</em>, 2026
+                            <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
+                                <img src="https://img.shields.io/github/stars/Enderfga/claw-orchestrator?style=social&label=Star" alt="GitHub stars" loading="lazy">
+                            </a>
+                            <a href="https://www.npmjs.com/package/@enderfga/claw-orchestrator" target="_blank" rel="noopener" class="badge-link" aria-label="npm package">
+                                <img src="https://img.shields.io/npm/v/@enderfga/claw-orchestrator.svg" alt="npm version" loading="lazy">
+                            </a>
+                        </p>
                         <p class="paper-description">
                             A TypeScript runtime that turns coding CLIs (Claude Code, Codex, Gemini, Cursor Agent, OpenCode, and custom engines) into persistent, programmable agents — with sessions, multi-engine routing, and multi-agent councils behind one API. Runs standalone, with first-class OpenClaw plugin support.
                         </p>
@@ -440,10 +441,11 @@
                     <p class="paper-authors">
                         Chris Liu, Ziyi Lin, <strong>Guian Fang</strong>, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang
                     </p>
-                    <p class="paper-venue"><em>Open-source</em>, 2023</p>
-                    <div class="paper-stats">
-                        <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&label=Star" alt="GitHub stars count" loading="lazy">
-                    </div>
+                    <p class="paper-venue"><em>Open-source</em>, 2023
+                        <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
+                            <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&label=Star" alt="GitHub stars" loading="lazy">
+                        </a>
+                    </p>
                     <div class="paper-links">
                         <a href="https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">Checkpoint page</a>
                         <a href="https://llama2-accessory.readthedocs.io/en/latest/" target="_blank" rel="noopener">Documentation</a>
