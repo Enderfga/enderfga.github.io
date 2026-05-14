@@ -881,8 +881,7 @@ span.highlight {
     transform: scale(1.02);
 }
 
-.video-container iframe,
-.video-container video {
+.video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -890,17 +889,27 @@ span.highlight {
     height: 100%;
     border: none;
     border-radius: var(--radius-md);
-    background: #000;
 }
 
-.video-container video {
-    object-fit: cover;
+.paper-media .paper-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    background: #000;
+    transition: all var(--transition-base);
+}
+
+.paper-media .paper-video:hover {
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.02);
 }
 
 .paper-venue .badge-link {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 8px;
+    margin-left: 14px;
     line-height: 0;
 }
 
