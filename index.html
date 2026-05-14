@@ -214,6 +214,7 @@
             <h2>News</h2>
             <div class="news-scroll" tabindex="0" aria-label="News list, scroll for more">
                 <ul class="news-list">
+                    <li><span class="news-date">2026.05</span> <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> released on arXiv — any-step video diffusion via on-policy flow map distillation, with <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener">code</a> open-sourced by NVIDIA.</li>
                     <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopai.film/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
                     <li><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
@@ -232,6 +233,42 @@
             <p>My research focuses on Generative Models for Vision — particularly long-form video generation, video diffusion, and Video World Models for video understanding and generation — as well as Embodied Intelligence. Recently I've been exploring agentic visual generation, building creative pipelines from concept to final frame, and runtime infrastructure for coding agents. Representative works are <span class="highlight">highlighted</span>. * denotes equal contribution.</p>
 
             <div class="research-content">
+                <article class="research-paper highlight">
+                    <div class="paper-media">
+                        <div class="video-container">
+                            <video src="https://github.com/user-attachments/assets/5698cdea-847f-4732-9910-c78f07aa0404"
+                                   controls
+                                   muted
+                                   playsinline
+                                   preload="metadata"
+                                   aria-label="AnyFlow — any-step video diffusion demo"></video>
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <h3 class="paper-title">
+                            <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">
+                                <i class="fas fa-file-alt"></i> AnyFlow:<br>Any-Step Video Diffusion Model with On-Policy Flow Map Distillation
+                            </a>
+                        </h3>
+                        <p class="paper-authors">
+                            Yuchao Gu, <strong>Guian Fang</strong>, Yuxin Jiang, Weijia Mao, Song Han, Han Cai, Mike Zheng Shou
+                        </p>
+                        <p class="paper-venue"><em>arXiv preprint</em>, 2026</p>
+                        <div class="paper-stats">
+                            <img src="https://img.shields.io/github/stars/NVlabs/AnyFlow?style=social&label=Star" alt="GitHub stars count" loading="lazy">
+                        </div>
+                        <div class="paper-links">
+                            <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">Paper</a>
+                            <a href="https://nvlabs.github.io/AnyFlow/" target="_blank" rel="noopener">Project page</a>
+                            <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener">Code</a>
+                            <a href="https://huggingface.co/collections/nvidia/anyflow" target="_blank" rel="noopener">Models</a>
+                        </div>
+                        <p class="paper-description">
+                            The first any-step video diffusion framework built on flow maps. AnyFlow shifts distillation from endpoint consistency mapping to flow-map transition learning over arbitrary intervals, with Flow Map Backward Simulation for efficient on-policy distillation. One model adapts to arbitrary step budgets across causal and bidirectional architectures, scaling from 1.3B to 14B parameters on T2V, I2V, and V2V.
+                        </p>
+                    </div>
+                </article>
+
                 <article class="research-paper">
                     <div class="paper-media">
                         <img src="https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg"

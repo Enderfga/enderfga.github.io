@@ -881,7 +881,8 @@ span.highlight {
     transform: scale(1.02);
 }
 
-.video-container iframe {
+.video-container iframe,
+.video-container video {
     position: absolute;
     top: 0;
     left: 0;
@@ -889,6 +890,8 @@ span.highlight {
     height: 100%;
     border: none;
     border-radius: var(--radius-md);
+    object-fit: cover;
+    background: #000;
 }
 
 .paper-media lite-youtube {
