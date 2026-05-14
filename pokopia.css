@@ -1,7 +1,11 @@
 /* ========================================
    🌿 POKOPIA MODE
-   Animal Crossing × Pokémon × Hand-drawn
+   Animal Crossing × Pokémon × Island Life
+   Inspired by animal-island-ui design tokens
    ======================================== */
+
+/* Google Fonts — Nunito (round, warm, AC-official feel) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
 /* Avatar click indicator */
 .avatar-clickable {
@@ -97,22 +101,35 @@
    ======================================== */
 
 .pokopia-mode {
-    --pk-bg: #f0f7e8;
-    --pk-bg-alt: #e8f5e0;
-    --pk-card: #fefef5;
-    --pk-text: #3d5a2e;
-    --pk-text-light: #6b8f5b;
-    --pk-green: #7bc96f;
-    --pk-blue: #7ec8e3;
-    --pk-pink: #f8b4c8;
-    --pk-yellow: #ffe066;
+    /* === Animal Crossing official palette (from animal-island-ui) === */
+    --pk-bg: #f8f8f0;              /* warm parchment */
+    --pk-bg-alt: rgb(247, 243, 223); /* card/modal warm cream */
+    --pk-card: rgb(247, 243, 223);
+    --pk-text: #725d42;            /* warm brown body text */
+    --pk-text-heading: #794f27;    /* darker brown headings */
+    --pk-text-light: #9a835a;
+    --pk-green: #7DC395;           /* island green */
+    --pk-switch-green: #86d67a;    /* switch ON */
+    --pk-teal: #19c8b9;            /* mint teal accent */
+    --pk-blue: #889df0;            /* sky blue */
+    --pk-pink: #f8a6b2;            /* pastel pink */
+    --pk-lavender: #b77dee;        /* lavender */
+    --pk-yellow: #ffcc00;          /* game yellow (modal confirm) */
+    --pk-sunshine: #f7cd67;        /* softer yellow */
+    --pk-coral: #e59266;           /* coral */
+    --pk-seafoam: #82d5bb;         /* seafoam */
+    --pk-sage: #8ac68a;            /* sage green */
     --pk-amber: #ffb347;
-    --pk-border: #b5d6a7;
+    --pk-border: #d4c9b4;          /* warm neutral border */
+    --pk-border-accent: #bdaea0;   /* 3D shadow color */
     --pk-wood: #c4956a;
     --pk-wood-dark: #8b6543;
-    --pk-font: 'Patrick Hand', 'Comic Sans MS', cursive;
-    --pk-shadow: 3px 3px 0px rgba(0,0,0,0.08);
-    --pk-radius: 16px;
+    --pk-font: 'Nunito', 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+    --pk-shadow: 0 4px 0 0 #bdaea0; /* 3D bottom shadow like game buttons */
+    --pk-shadow-soft: 0 2px 8px rgba(114, 93, 66, 0.12);
+    --pk-radius: 18px;             /* base rounded */
+    --pk-radius-pill: 50px;        /* pill buttons */
+    --pk-radius-organic: 40px 35px 45px 38px / 38px 45px 35px 40px; /* blob shape */
 }
 
 /* Body */
@@ -120,28 +137,29 @@
     background: var(--pk-bg) !important;
     color: var(--pk-text) !important;
     font-family: var(--pk-font) !important;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     transition: all 0.6s ease;
 }
 
 .pokopia-mode::before {
     background: linear-gradient(
         180deg,
-        rgba(123, 201, 111, 0.08) 0%,
-        rgba(126, 200, 227, 0.05) 50%,
-        rgba(240, 247, 232, 0) 100%
+        rgba(125, 195, 149, 0.06) 0%,
+        rgba(247, 243, 223, 0) 100%
     ) !important;
 }
 
-/* Background pattern — subtle grass dots */
+/* Background pattern — subtle island texture */
 .pokopia-mode::after {
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image:
-        radial-gradient(circle, rgba(123, 201, 111, 0.12) 1px, transparent 1px),
-        radial-gradient(circle, rgba(123, 201, 111, 0.08) 1px, transparent 1px);
-    background-size: 30px 30px, 20px 20px;
-    background-position: 0 0, 10px 10px;
+        radial-gradient(circle, rgba(125, 195, 149, 0.07) 1.5px, transparent 1.5px),
+        radial-gradient(circle, rgba(212, 201, 180, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px, 25px 25px;
+    background-position: 0 0, 12px 12px;
     z-index: -1;
     pointer-events: none;
 }
@@ -167,8 +185,10 @@
 }
 
 .pokopia-mode h1.name {
-    color: var(--pk-text) !important;
-    text-shadow: 2px 2px 0 rgba(123, 201, 111, 0.3);
+    color: var(--pk-text-heading) !important;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: 2px 2px 0 rgba(125, 195, 149, 0.25);
     position: relative;
 }
 
@@ -181,8 +201,10 @@
 }
 
 .pokopia-mode h2 {
-    color: var(--pk-text) !important;
+    color: var(--pk-text-heading) !important;
     font-size: 1.6rem !important;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     border-bottom: 3px dashed var(--pk-border) !important;
     padding-bottom: 8px;
 }
@@ -207,23 +229,31 @@
 
 .pokopia-mode .main-navigation {
     background: linear-gradient(135deg, var(--pk-wood) 0%, var(--pk-wood-dark) 100%) !important;
-    border-bottom: 4px solid var(--pk-wood-dark) !important;
-    box-shadow: 0 4px 8px rgba(139, 101, 67, 0.3) !important;
+    border-bottom: 5px solid var(--pk-wood-dark) !important;
+    box-shadow: 0 5px 0 0 rgba(61, 42, 26, 0.4), 0 8px 16px rgba(139, 101, 67, 0.2) !important;
 }
 
 .pokopia-mode .nav-list a {
     color: #fff8e7 !important;
     font-family: var(--pk-font) !important;
     font-size: 1em !important;
-    border-radius: 12px !important;
-    border: 2px dashed transparent;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    border-radius: var(--pk-radius-pill) !important;
+    padding: 6px 16px !important;
+    border: 2px solid transparent;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pokopia-mode .nav-list a:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px) rotate(-1deg) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 3px 0 0 rgba(0,0,0,0.15);
+}
+
+.pokopia-mode .nav-list a:active {
+    transform: translateY(0) !important;
+    box-shadow: none;
 }
 
 .pokopia-mode .social-icons a {
@@ -232,7 +262,7 @@
 
 .pokopia-mode .social-icons a:hover {
     color: var(--pk-yellow) !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
     transform: translateY(-3px) rotate(5deg) scale(1.15) !important;
 }
 
@@ -247,15 +277,18 @@
 }
 
 .pokopia-mode .profile-text a {
-    color: var(--pk-wood-dark) !important;
-    font-weight: 700;
-    text-decoration-style: wavy !important;
-    text-decoration-color: var(--pk-green);
-    text-underline-offset: 3px;
+    color: var(--pk-text-heading) !important;
+    font-weight: 600;
+    text-decoration: none !important;
+    background: linear-gradient(to top, rgba(125, 195, 149, 0.3) 30%, transparent 30%);
+    padding: 0 3px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
 .pokopia-mode .profile-text a:hover {
-    color: var(--pk-green) !important;
+    background: linear-gradient(to top, rgba(125, 195, 149, 0.5) 45%, transparent 45%);
+    color: var(--pk-text-heading) !important;
 }
 
 /* Avatar in pokopia mode */
@@ -266,20 +299,21 @@
 .pokopia-mode .avatar-clickable img,
 .pokopia-mode .profile-image a img {
     border: 4px solid var(--pk-green) !important;
+    border-radius: 50% !important;
     box-shadow:
-        var(--pk-shadow),
-        0 0 0 3px var(--pk-yellow),
-        0 0 0 7px var(--pk-green) !important;
-    transition: all 0.3s ease;
+        0 5px 0 0 var(--pk-border-accent),
+        0 0 0 4px var(--pk-sunshine),
+        0 0 0 8px var(--pk-green) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pokopia-mode .profile-image:hover img {
-    transform: scale(1.08) rotate(5deg) !important;
+    transform: scale(1.1) rotate(5deg) !important;
     box-shadow:
-        4px 4px 0 rgba(0,0,0,0.1),
-        0 0 0 3px var(--pk-pink),
-        0 0 0 7px var(--pk-blue),
-        0 0 20px rgba(123, 201, 111, 0.3) !important;
+        0 8px 0 0 var(--pk-border-accent),
+        0 0 0 4px var(--pk-pink),
+        0 0 0 8px var(--pk-teal),
+        0 0 24px rgba(25, 200, 185, 0.2) !important;
 }
 
 /* ========================================
@@ -288,23 +322,29 @@
 
 .pokopia-mode .research-paper {
     background: var(--pk-card) !important;
-    border: 3px solid var(--pk-border) !important;
+    border: 2.5px solid var(--pk-border) !important;
     border-radius: var(--pk-radius) !important;
-    box-shadow: var(--pk-shadow) !important;
+    box-shadow: 0 5px 0 0 var(--pk-border-accent), var(--pk-shadow-soft) !important;
     position: relative;
     overflow: visible !important;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pokopia-mode .research-paper::before {
-    background: linear-gradient(90deg, var(--pk-green), var(--pk-blue), var(--pk-pink)) !important;
+    background: linear-gradient(90deg, var(--pk-pink), var(--pk-lavender), var(--pk-blue), var(--pk-seafoam)) !important;
     height: 4px !important;
     border-radius: 4px 4px 0 0;
 }
 
 .pokopia-mode .research-paper:hover {
-    transform: translateY(-6px) rotate(-0.5deg) !important;
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.1) !important;
-    border-color: var(--pk-green) !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 0 0 var(--pk-border-accent), 0 12px 24px rgba(114, 93, 66, 0.15) !important;
+    border-color: var(--pk-teal) !important;
+}
+
+.pokopia-mode .research-paper:active {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 0 0 var(--pk-border-accent) !important;
 }
 
 /* Pushpin decoration on cards */
@@ -356,28 +396,40 @@
 }
 
 .pokopia-mode .paper-venue {
-    color: var(--pk-wood-dark) !important;
+    color: var(--pk-text-heading) !important;
     background: var(--pk-yellow);
     display: inline-block;
-    padding: 2px 10px;
-    border-radius: 10px;
+    padding: 4px 14px;
+    border-radius: var(--pk-radius-pill);
     font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 3px 0 0 #d4a800;
 }
 
 .pokopia-mode .paper-links a {
-    color: var(--pk-wood-dark) !important;
-    background: rgba(123, 201, 111, 0.15);
-    padding: 3px 10px;
-    border-radius: 10px;
-    border: 1px dashed var(--pk-border);
-    transition: all 0.2s ease;
+    color: var(--pk-text-heading) !important;
+    background: var(--pk-bg) !important;
+    padding: 5px 14px;
+    border-radius: var(--pk-radius-pill);
+    border: 2px solid var(--pk-border);
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 3px 0 0 var(--pk-border-accent);
+    transition: all 0.15s ease;
+    display: inline-block;
 }
 
 .pokopia-mode .paper-links a:hover {
-    background: var(--pk-green) !important;
+    background: var(--pk-teal) !important;
     color: #fff !important;
-    border-style: solid;
-    transform: scale(1.05);
+    border-color: var(--pk-teal);
+    box-shadow: 0 3px 0 0 #14a89c;
+    transform: translateY(-2px);
+}
+
+.pokopia-mode .paper-links a:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 0 #14a89c;
 }
 
 .pokopia-mode .video-container {
@@ -451,20 +503,26 @@
 
 .pokopia-mode .collaboration-item {
     background: var(--pk-card) !important;
-    border: 3px solid var(--pk-border) !important;
-    border-radius: var(--pk-radius) !important;
-    box-shadow: var(--pk-shadow) !important;
+    border: 2.5px solid var(--pk-border) !important;
+    border-radius: var(--pk-radius-organic) !important;
+    box-shadow: 0 5px 0 0 var(--pk-border-accent), var(--pk-shadow-soft) !important;
     position: relative;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pokopia-mode .collaboration-item::before {
-    background: radial-gradient(circle, rgba(123, 201, 111, 0.15), transparent) !important;
+    background: radial-gradient(circle, rgba(25, 200, 185, 0.06), transparent) !important;
 }
 
 .pokopia-mode .collaboration-item:hover {
-    transform: translateY(-8px) rotate(2deg) scale(1.03) !important;
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.1) !important;
-    border-color: var(--pk-green) !important;
+    transform: translateY(-5px) scale(1.02) !important;
+    box-shadow: 0 8px 0 0 var(--pk-border-accent), 0 12px 20px rgba(114, 93, 66, 0.12) !important;
+    border-color: var(--pk-teal) !important;
+}
+
+.pokopia-mode .collaboration-item:active {
+    transform: translateY(-1px) scale(1) !important;
+    box-shadow: 0 2px 0 0 var(--pk-border-accent) !important;
 }
 
 .pokopia-mode .collaboration-item h3 a {
@@ -504,19 +562,28 @@
 }
 
 /* ========================================
-   BACK TO TOP — CUTE BUTTON
+   BACK TO TOP — GAME BUTTON
    ======================================== */
 
 .pokopia-mode .to-top {
     background: var(--pk-green) !important;
-    border: 3px solid var(--pk-bg) !important;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.15) !important;
+    border: 2.5px solid #5ba85b !important;
+    border-radius: var(--pk-radius-pill) !important;
+    box-shadow: 0 5px 0 0 #4a8f4a, 0 8px 12px rgba(0,0,0,0.1) !important;
     font-size: 18px !important;
+    transition: all 0.15s ease;
 }
 
 .pokopia-mode .to-top:hover {
-    background: var(--pk-amber) !important;
-    transform: translateY(-4px) rotate(10deg) scale(1.15) !important;
+    background: var(--pk-teal) !important;
+    border-color: #14a89c !important;
+    box-shadow: 0 5px 0 0 #0f8a80, 0 8px 12px rgba(0,0,0,0.1) !important;
+    transform: translateY(-3px) !important;
+}
+
+.pokopia-mode .to-top:active {
+    transform: translateY(2px) !important;
+    box-shadow: 0 1px 0 0 #4a8f4a !important;
 }
 
 /* ========================================
@@ -557,22 +624,26 @@
 }
 
 /* ========================================
-   DARK MODE + POKOPIA COMBO
+   DARK MODE + POKOPIA COMBO (Night on the island 🌙)
    ======================================== */
 
 .pokopia-mode.dark-mode {
-    --pk-bg: #1a2e14;
-    --pk-bg-alt: #223d1a;
-    --pk-card: #2a3e22;
-    --pk-text: #c8e6b8;
-    --pk-text-light: #8bb87a;
-    --pk-border: #4a7a3a;
+    --pk-bg: #1e2a1a;
+    --pk-bg-alt: #263422;
+    --pk-card: #2e3e28;
+    --pk-text: #d4e8c8;
+    --pk-text-heading: #e8f0d8;
+    --pk-text-light: #9ab88a;
+    --pk-border: #4a6a3a;
+    --pk-border-accent: #3a5a2e;
+    --pk-shadow: 0 4px 0 0 #2a4420;
+    --pk-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .pokopia-mode.dark-mode::after {
     background-image:
-        radial-gradient(circle, rgba(123, 201, 111, 0.06) 1px, transparent 1px),
-        radial-gradient(circle, rgba(123, 201, 111, 0.04) 1px, transparent 1px) !important;
+        radial-gradient(circle, rgba(125, 195, 149, 0.04) 1.5px, transparent 1.5px),
+        radial-gradient(circle, rgba(125, 195, 149, 0.03) 1px, transparent 1px) !important;
 }
 
 .pokopia-mode.dark-mode .main-navigation {
