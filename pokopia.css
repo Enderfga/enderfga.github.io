@@ -218,6 +218,7 @@
 }
 
 /* Section headers with doodle icons */
+.pokopia-mode #news h2::before { content: '📬 '; }
 .pokopia-mode #research h2::before { content: '🎨 '; }
 .pokopia-mode #honors h2::before { content: '🏆 '; }
 .pokopia-mode #activities h2::before { content: '🎪 '; }
@@ -495,6 +496,90 @@
 .pokopia-mode .organization-list li,
 .pokopia-mode .ta-list li {
     color: var(--pk-text) !important;
+}
+
+/* ========================================
+   NEWS — ISLAND BULLETIN
+   ======================================== */
+
+.pokopia-mode .news-scroll {
+    background: var(--pk-card);
+    border: 2.5px solid var(--pk-border);
+    border-radius: var(--pk-radius);
+    box-shadow: 0 4px 0 0 var(--pk-border-accent), var(--pk-shadow-soft);
+    padding: 14px 18px 14px 22px;
+    margin-top: 18px;
+}
+
+.pokopia-mode .news-scroll::-webkit-scrollbar-thumb {
+    background: var(--pk-green) !important;
+    border-radius: 10px !important;
+}
+
+.pokopia-mode .news-list {
+    border-left: 3px dashed var(--pk-border) !important;
+    padding-left: 4px;
+}
+
+.pokopia-mode .news-list li {
+    color: var(--pk-text) !important;
+    padding: 10px 0 10px 22px;
+}
+
+.pokopia-mode .news-list li::before {
+    content: '🌿' !important;
+    background: transparent !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    left: -12px !important;
+    top: 8px !important;
+    font-size: 1rem;
+    line-height: 1;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15));
+}
+
+.pokopia-mode .news-list li a {
+    color: var(--pk-wood-dark) !important;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px dotted var(--pk-teal);
+    transition: all 0.15s ease;
+}
+
+.pokopia-mode .news-list li a:hover {
+    color: var(--pk-teal) !important;
+    border-bottom-color: var(--pk-green);
+}
+
+.pokopia-mode .news-list li em {
+    color: var(--pk-text-heading) !important;
+    background: linear-gradient(to top, var(--pk-sunshine) 40%, transparent 40%);
+    padding: 0 3px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.pokopia-mode .news-date {
+    background: var(--pk-green);
+    color: #fff !important;
+    padding: 2px 12px;
+    border-radius: var(--pk-radius-pill);
+    box-shadow: 0 2px 0 0 #5ba85b;
+    font-weight: 700 !important;
+    font-size: 0.82rem !important;
+    margin-right: 14px;
+    letter-spacing: 0.02em;
+}
+
+.pokopia-mode.dark-mode .news-list li::before {
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+}
+
+.pokopia-mode.dark-mode .news-date {
+    background: var(--pk-sage);
+    color: #1e2a1a !important;
+    box-shadow: 0 2px 0 0 #4a8f4a;
 }
 
 /* ========================================
