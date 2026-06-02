@@ -638,14 +638,6 @@
     color: var(--pk-text-light) !important;
 }
 
-.pokopia-mode .footer-analytics {
-    border-top-color: var(--pk-border) !important;
-}
-
-.pokopia-mode .analytics-item h4 {
-    color: var(--pk-text) !important;
-}
-
 /* ========================================
    BACK TO TOP — GAME BUTTON
    ======================================== */

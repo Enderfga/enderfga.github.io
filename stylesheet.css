@@ -705,58 +705,6 @@ span.highlight {
 }
 
 /* ========================================
-   FOOTER ANALYTICS MAPS
-   ======================================== */
-
-.footer-analytics {
-    margin: 32px 0;
-    padding: 32px 0;
-    border-top: 1px solid #e0e0e0;
-}
-
-.analytics-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 48px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.analytics-item {
-    text-align: center;
-    flex: 0 1 auto;
-}
-
-.analytics-item h4 {
-    margin: 0 0 16px 0;
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 600;
-}
-
-.dark-mode .analytics-item h4 {
-    color: #e0e0e0;
-}
-
-.dark-mode .footer-analytics {
-    border-top-color: #444;
-}
-
-.tracker-image,
-.citation-image {
-    width: 200px;
-    height: 160px;
-    object-fit: contain;
-    transition: transform 0.2s ease;
-}
-
-.cluster-map-link:hover .tracker-image,
-.citation-map-link:hover .citation-image {
-    transform: scale(1.05);
-}
-
-/* ========================================
    RESEARCH PAPERS LAYOUT
    ======================================== */
 
@@ -1313,18 +1261,6 @@ span.highlight {
         height: 60px;
     }
 
-    .analytics-container {
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .tracker-image,
-    .citation-image {
-        width: 150px;
-        height: 120px;
-        object-fit: contain;
-    }
-
     .profile-section {
         flex-direction: column;
         text-align: center;
@@ -1378,12 +1314,6 @@ span.highlight {
     .collaborations-grid {
         grid-template-columns: 1fr;
         gap: 10px;
-    }
-
-    .tracker-image,
-    .citation-image {
-        width: 120px;
-        height: 96px;
     }
 
     .to-top {
