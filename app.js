@@ -202,7 +202,7 @@ const Website = {
                 const total = counts.reduce((a, b) => a + b, 0);
                 if (total <= 0) return;
 
-                img.src = `https://img.shields.io/badge/%F0%9F%A4%97%20downloads-${this.humanize(total)}-ffce3a?style=social`;
+                img.src = `https://img.shields.io/badge/%F0%9F%A4%97%20Downloads-${this.humanize(total)}-ffce3a?style=social`;
                 badge.style.display = '';
             } catch (e) {
                 /* leave hidden on failure */
