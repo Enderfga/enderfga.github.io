@@ -166,6 +166,56 @@ const Website = {
         }
     },
 
+    // Hugging Face download totals — sum downloadsAllTime across every model/dataset
+    // in a collection (shields can't sum, so we compute it client-side and inject a
+    // matching static badge). Badge anchors start hidden and only reveal on success,
+    // so a failed fetch or a zero total simply shows nothing instead of a broken badge.
+    hfDownloads: {
+        init() {
+            document.querySelectorAll('a.badge-link[data-hf-collection]')
+                .forEach(badge => this.load(badge));
+        },
+
+        async load(badge) {
+            const slug = badge.getAttribute('data-hf-collection');
+            const img = badge.querySelector('img');
+            if (!slug || !img) return;
+            try {
+                const res = await fetch(`https://huggingface.co/api/collections/${slug}`);
+                if (!res.ok) return;
+                const items = ((await res.json()).items || [])
+                    .filter(i => i.type === 'model' || i.type === 'dataset');
+                if (!items.length) return;
+
+                const counts = await Promise.all(items.map(async item => {
+                    const kind = item.type === 'dataset' ? 'datasets' : 'models';
+                    try {
+                        const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
+                        if (!r.ok) return 0;
+                        const d = await r.json();
+                        return d.downloadsAllTime || d.downloads || 0;
+                    } catch (e) {
+                        return 0;
+                    }
+                }));
+
+                const total = counts.reduce((a, b) => a + b, 0);
+                if (total <= 0) return;
+
+                img.src = `https://img.shields.io/badge/%F0%9F%A4%97%20downloads-${this.humanize(total)}-ffce3a?style=social`;
+                badge.style.display = '';
+            } catch (e) {
+                /* leave hidden on failure */
+            }
+        },
+
+        humanize(n) {
+            if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+            return String(n);
+        }
+    },
+
     // Profile image hover effect
     profileImage: {
         init() {
@@ -202,6 +252,7 @@ const Website = {
             this.theme.init();
             this.profileImage.init();
             this.scrollAnimations.init();
+            this.hfDownloads.init();
 
             document.body.classList.add('loaded');
         });
