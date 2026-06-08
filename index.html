@@ -32,7 +32,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="stylesheet.css">
-    <link rel="stylesheet" href="pokopia.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -81,12 +80,10 @@
     <!-- Navigation Section -->
     <nav class="main-navigation" aria-label="Main navigation">
         <ul class="nav-list">
-            <li><a href="#news" id="nav-news"><i class="fas fa-newspaper" aria-hidden="true"></i> News</a></li>
             <li><a href="#research" id="nav-research"><i class="fas fa-file-alt" aria-hidden="true"></i> Publications</a></li>
             <li><a href="#products" id="nav-products"><i class="fas fa-rocket" aria-hidden="true"></i> Products</a></li>
-            <li><a href="#honors" id="nav-honors"><i class="fas fa-award" aria-hidden="true"></i> Honors &amp; Awards</a></li>
-            <li><a href="#activities" id="nav-activities"><i class="fas fa-users" aria-hidden="true"></i> Activities &amp; Services</a></li>
-            <li><a href="#acknowledgements" id="nav-acknowledgements"><i class="fas fa-handshake" aria-hidden="true"></i> Acknowledgements</a></li>
+            <li><a href="#news" id="nav-news"><i class="fas fa-newspaper" aria-hidden="true"></i> News</a></li>
+            <li><a href="data/cv.pdf" id="nav-cv" target="_blank" rel="noopener"><i class="fas fa-file-alt" aria-hidden="true"></i> CV</a></li>
         </ul>
 
         <div class="social-icons" role="complementary" aria-label="Social media and contact links">
@@ -94,13 +91,6 @@
                aria-label="Send email to Guian Fang">
                 <i class="fas fa-envelope" aria-hidden="true"></i>
                 <span class="sr-only">Email</span>
-            </a>
-            <a href="data/cv.pdf" 
-               aria-label="Download CV (PDF)" 
-               target="_blank" 
-               rel="noopener">
-                <i class="fas fa-file-alt" aria-hidden="true"></i>
-                <span class="sr-only">CV</span>
             </a>
             <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ" 
                aria-label="View Google Scholar profile" 
@@ -180,9 +170,10 @@
         <section class="profile-section">
             <div class="profile-text">
                 <h1 class="name">Guian Fang</h1>
+                <p class="profile-lede">I build generative video models and world-model systems for long-form visual generation, with recent work on video diffusion distillation and embodied intelligence.</p>
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
-                <p>My research centers on generative models for video — long-form video generation, video diffusion distillation, and video world models — alongside embodied AI. Recently I've been extending this to agentic visual-generation pipelines and runtime infrastructure for coding agents. Open to collabs on long-form video, world models, embodied intelligence, and agent orchestration — feel free to reach out.</p>
+                <p>Beyond papers, I work on agentic visual-generation pipelines and runtime infrastructure for coding agents. I am open to collaborations on long-form video, world models, embodied intelligence, and agent orchestration.</p>
             </div>
             <div class="profile-image">
                 <div class="image-container"
@@ -379,7 +370,7 @@
                     <div class="paper-content">
                         <h3 class="paper-title">
                             <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">
-                                <i class="fas fa-rocket"></i>Long-form Video Generation for Cinematic Storytelling
+                                <i class="fas fa-rocket"></i> Long-form Video Generation for Cinematic Storytelling
                             </a>
                         </h3>
                         <p class="paper-venue"><em>Productized at Utopai Studios</em>, 2026

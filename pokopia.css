@@ -7,44 +7,6 @@
 /* Google Fonts — Nunito (round, warm, AC-official feel) */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
-/* Avatar click indicator */
-.avatar-clickable {
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-    border-radius: 50%;
-    /* button reset — render like the original wrapper */
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    color: inherit;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.avatar-clickable img {
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.avatar-clickable:hover::after {
-    content: '✨';
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    font-size: 20px;
-    animation: pokopia-sparkle 1s ease infinite;
-    z-index: 10;
-}
-
-@keyframes pokopia-sparkle {
-    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    50% { transform: scale(1.3) rotate(15deg); opacity: 0.7; }
-}
-
 /* ========================================
    TRANSITION OVERLAY
    ======================================== */
@@ -307,8 +269,7 @@
     position: relative;
 }
 
-.pokopia-mode .avatar-clickable img,
-.pokopia-mode .profile-image a img {
+.pokopia-mode .avatar-clickable img {
     border: 4px solid var(--pk-green) !important;
     border-radius: 50% !important;
     box-shadow:
@@ -441,12 +402,6 @@
 .pokopia-mode .paper-links a:active {
     transform: translateY(1px);
     box-shadow: 0 1px 0 0 #14a89c;
-}
-
-.pokopia-mode .video-container {
-    border: 3px solid var(--pk-border) !important;
-    border-radius: 12px !important;
-    box-shadow: var(--pk-shadow) !important;
 }
 
 .pokopia-mode .paper-media img {

@@ -284,6 +284,30 @@ const Website = {
 
 Website.init();
 
+let pokopiaStylesPromise = null;
+
+function loadPokopiaStyles() {
+    if (pokopiaStylesPromise) return pokopiaStylesPromise;
+
+    const existing = document.querySelector('link[data-pokopia-styles]');
+    if (existing) {
+        pokopiaStylesPromise = Promise.resolve();
+        return pokopiaStylesPromise;
+    }
+
+    pokopiaStylesPromise = new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'pokopia.css';
+        link.dataset.pokopiaStyles = 'true';
+        link.onload = resolve;
+        link.onerror = reject;
+        document.head.appendChild(link);
+    });
+
+    return pokopiaStylesPromise;
+}
+
 window.guian_start = function() {
     const hoverImage = document.getElementById('guian_image');
     if (hoverImage) {
@@ -299,9 +323,19 @@ window.guian_stop = function() {
     }
 };
 
-window.togglePokopia = function() {
+window.togglePokopia = async function() {
     const body = document.body;
-    const isPokopia = body.classList.toggle('pokopia-mode');
+    const enablePokopia = !body.classList.contains('pokopia-mode');
+
+    if (enablePokopia) {
+        try {
+            await loadPokopiaStyles();
+        } catch (e) {
+            console.warn('Unable to load Pokopia styles');
+        }
+    }
+
+    const isPokopia = body.classList.toggle('pokopia-mode', enablePokopia);
 
     const hoverImage = document.getElementById('guian_image');
     if (hoverImage) {
@@ -353,15 +387,4 @@ function spawnPokopiaDecorations() {
 function clearPokopiaDecorations() {
     const existing = document.getElementById('pokopia-decorations');
     if (existing) existing.remove();
-}
-
-if ('PerformanceObserver' in window) {
-    const perfObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-            if (entry.entryType === 'largest-contentful-paint') {
-                console.log('LCP:', entry.renderTime || entry.loadTime);
-            }
-        }
-    });
-    perfObserver.observe({ entryTypes: ['largest-contentful-paint'] });
 }

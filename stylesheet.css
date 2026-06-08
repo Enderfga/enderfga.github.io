@@ -230,12 +230,6 @@ h2::after {
   border-radius: 2px;
 }
 
-.papertitle {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-}
-
 .name {
   padding-top: var(--spacing-lg);
   margin: 0;
@@ -243,27 +237,6 @@ h2::after {
   font-size: var(--font-size-xxl);
   font-weight: 700;
   color: var(--text-primary);
-}
-
-.one {
-  width: 160px;
-  height: 160px;
-  position: relative;
-}
-
-.two {
-  width: 160px;
-  height: 160px;
-  position: absolute;
-  transition: opacity .2s ease-in-out;
-  -moz-transition: opacity .2s ease-in-out;
-  -webkit-transition: opacity .2s ease-in-out;
-}
-
-.fade {
-  transition: opacity .2s ease-in-out;
-  -moz-transition: opacity .2s ease-in-out;
-  -webkit-transition: opacity .2s ease-in-out;
 }
 
 span.highlight {
@@ -319,125 +292,6 @@ span.highlight {
     .dark-mode::before {
         background: linear-gradient(180deg, rgba(23, 114, 208, 0.08) 0%, rgba(18, 18, 18, 0) 100%);
     }
-    nav {
-        width: 100%;
-        background: var(--glass-bg);
-        backdrop-filter: blur(var(--glass-blur));
-        -webkit-backdrop-filter: blur(var(--glass-blur));
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 24px;
-        box-shadow: var(--shadow-md);
-        border-bottom: 1px solid var(--glass-border);
-        transition: all var(--transition-base);
-    }
-
-    nav.scrolled {
-        padding: 8px 24px;
-        box-shadow: var(--shadow-lg);
-    }
-
-    .dark-mode nav {
-        background: var(--glass-bg);
-        border-bottom-color: var(--glass-border);
-    }
-    nav ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        display: flex;
-    }
-    nav ul li {
-        margin: 0 10px;
-    }
-    nav ul li a {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-size: 0.95em;
-        padding: 8px 16px;
-        border-radius: var(--radius-md);
-        transition: all var(--transition-fast);
-        position: relative;
-        font-weight: 500;
-    }
-    nav ul li a:hover {
-        background: var(--glass-border);
-        transform: translateY(-2px);
-    }
-    nav ul li a::after {
-        display: none;
-    }
-    .social-icons {
-        display: flex;
-        align-items: center;
-    }
-    .social-icons a {
-        color: var(--text-primary);
-        margin-left: 12px;
-        font-size: 1.3em;
-        transition: all var(--transition-fast);
-        padding: 8px;
-        border-radius: var(--radius-md);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .social-icons a:hover {
-        background: var(--glass-border);
-        transform: translateY(-3px) scale(1.1);
-        color: var(--primary-color);
-    }
-    .social-icons a::after {
-        display: none;
-    }
-    .theme-switcher {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        font-size: 1.2em;
-        margin-left: 10px;
-    }
-    .three-way-radio {
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin: 0 10px;
-        width: 45px; /* 调整宽度以适应新的位置 */
-        height: 20px;
-        background-color: #666;
-        border-radius: 10px;
-    }
-    .three-way-radio input {
-        display: none;
-    }
-    .three-way-radio label {
-        display: none;
-    }
-    .indicator {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 16px;
-        height: 16px;
-        background-color: #fff;
-        border-radius: 50%;
-        transition: transform 0.3s ease;
-    }
-    #footer-ui-mode-left:checked ~ .indicator {
-        transform: translateX(0);
-    }
-    #footer-ui-mode-center:checked ~ .indicator {
-        transform: translateX(22px); /* 调整为合适的位置 */
-    }
-    #footer-ui-mode-right:checked ~ .indicator {
-        transform: translateX(25px); /* 调整为合适的位置 */
-    }
     #main-content {
         width: 100%;
         max-width: 800px;
@@ -466,6 +320,12 @@ span.highlight {
     .profile-text {
         flex: 1;
     }
+    .profile-lede {
+        color: var(--text-primary);
+        font-size: var(--font-size-lg);
+        font-weight: 700;
+        line-height: 1.65;
+    }
     .profile-text p {
         margin: 0 0 16px 0;
         line-height: 1.7;
@@ -478,6 +338,21 @@ span.highlight {
         max-width: 200px;
         position: relative;
     }
+    .avatar-clickable {
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+        border-radius: var(--radius-full);
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: none;
+        background: none;
+        font: inherit;
+        color: inherit;
+        -webkit-appearance: none;
+        appearance: none;
+    }
     .profile-image img {
         width: 100%;
         height: auto;
@@ -486,15 +361,24 @@ span.highlight {
         box-shadow: var(--shadow-lg);
         transition: all var(--transition-base);
     }
-.profile-image a img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: var(--radius-full);
-    border: 3px solid var(--border-color);
-    position: relative;
-    z-index: 1;
-}
+    .avatar-clickable img {
+        border: 3px solid var(--border-color);
+        position: relative;
+        z-index: 1;
+    }
+    .avatar-clickable:hover::after {
+        content: '✨';
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: 20px;
+        animation: avatar-sparkle 1s ease infinite;
+        z-index: 10;
+    }
+    @keyframes avatar-sparkle {
+        0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        50% { transform: scale(1.3) rotate(15deg); opacity: 0.7; }
+    }
     .profile-image:hover img {
         transform: scale(1.05) rotate(2deg);
         box-shadow: var(--shadow-xl);
@@ -572,7 +456,6 @@ span.highlight {
    ENHANCED NAVIGATION
    ======================================== */
 
-/* 恢复原来的导航栏样式，但保持语义化的class名称 */
 .main-navigation {
     width: 100%;
     background: #333;
@@ -584,8 +467,15 @@ span.highlight {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: padding var(--transition-base), box-shadow var(--transition-base);
+}
+
+.main-navigation.scrolled {
+    padding: 8px 20px;
+    box-shadow: var(--shadow-lg);
 }
 
 .nav-list {
@@ -593,10 +483,12 @@ span.highlight {
     padding: 0;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .nav-list li {
-    margin: 0 4px;
+    margin: 0;
 }
 
 .nav-list a {
@@ -608,7 +500,7 @@ span.highlight {
     align-items: center;
     gap: 6px;
     border-radius: 6px;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .nav-list a i {
@@ -621,14 +513,15 @@ span.highlight {
 }
 
 .nav-list a.active {
-    text-decoration: underline;
-    font-weight: bold;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.14);
+    font-weight: 700;
 }
 
-/* 社交图标和主题切换样式 */
 .social-icons {
     display: flex;
     align-items: center;
+    gap: 8px;
     color: #fff;
     font-size: 1.2em;
 }
@@ -636,12 +529,23 @@ span.highlight {
 .social-icons a {
     color: #fff;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0;
     font-size: 1.2em;
+    padding: 8px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .social-icons a:hover {
     color: #ccc;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.social-icons a::after {
+    display: none;
 }
 
 .theme-switcher {
@@ -649,7 +553,7 @@ span.highlight {
     align-items: center;
     color: #fff;
     font-size: 1.2em;
-    margin-left: 10px;
+    margin-left: 4px;
 }
 
 .theme-icon {
@@ -671,7 +575,7 @@ span.highlight {
     position: relative;
     display: flex;
     align-items: center;
-    margin: 0 10px;
+    margin: 0 4px;
     width: 45px;
     height: 20px;
     background-color: #666;
@@ -693,7 +597,6 @@ span.highlight {
     transition: transform 0.3s ease;
 }
 
-/* 指示器位置 */
 .three-way-radio input:checked.left ~ .indicator {
     transform: translateX(0);
 }
@@ -811,31 +714,6 @@ span.highlight {
 .paper-media img:hover {
     transform: scale(1.03);
     box-shadow: var(--shadow-lg);
-}
-
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
-}
-
-.video-container:hover {
-    box-shadow: var(--shadow-lg);
-    transform: scale(1.02);
-}
-
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: var(--radius-md);
 }
 
 .paper-media .paper-video {
@@ -1227,9 +1105,14 @@ span.highlight {
     }
 
     .main-navigation {
-        flex-direction: column;
-        padding: 12px 16px;
-        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 8px 12px;
+        gap: 6px 12px;
+    }
+
+    .main-navigation.scrolled {
+        padding: 6px 12px;
     }
 
     .nav-list {
@@ -1244,8 +1127,23 @@ span.highlight {
     }
 
     .nav-list a {
-        padding: 8px 10px;
+        padding: 7px 9px;
         font-size: 0.85em;
+    }
+
+    .social-icons {
+        gap: 4px;
+        font-size: 1.05em;
+    }
+
+    .social-icons a,
+    .theme-icon {
+        padding: 6px;
+    }
+
+    .theme-switcher {
+        margin-left: 2px;
+        font-size: 1.05em;
     }
 
     .collaborations-grid {
@@ -1294,7 +1192,7 @@ span.highlight {
 
 @media (max-width: 480px) {
     #main-content {
-        padding: 90px 12px 24px 12px;
+        padding: 108px 12px 24px 12px;
     }
 
     .research-content {
