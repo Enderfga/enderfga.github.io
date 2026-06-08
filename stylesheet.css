@@ -320,12 +320,6 @@ span.highlight {
     .profile-text {
         flex: 1;
     }
-    .profile-lede {
-        color: var(--text-primary);
-        font-size: var(--font-size-lg);
-        font-weight: 700;
-        line-height: 1.65;
-    }
     .profile-text p {
         margin: 0 0 16px 0;
         line-height: 1.7;
