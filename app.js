@@ -245,6 +245,28 @@ const Website = {
         }
     },
 
+    // In-view video playback — play demo videos only when scrolled into view, pause
+    // when out of view, and never auto-play under prefers-reduced-motion. Replaces the
+    // old `autoplay` attributes so the external mp4s aren't fetched + played on load.
+    lazyVideos: {
+        init() {
+            const videos = document.querySelectorAll('video.paper-video');
+            if (!videos.length || !('IntersectionObserver' in window)) return;
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        if (!reduceMotion) video.play().catch(() => {});
+                    } else if (!video.paused) {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.25 });
+            videos.forEach(video => observer.observe(video));
+        }
+    },
+
     init() {
         document.addEventListener('DOMContentLoaded', () => {
             this.navigation.init();
@@ -252,14 +274,11 @@ const Website = {
             this.theme.init();
             this.profileImage.init();
             this.scrollAnimations.init();
+            this.lazyVideos.init();
             this.hfDownloads.init();
 
             document.body.classList.add('loaded');
         });
-
-        if ('addEventListener' in window) {
-            window.addEventListener('scroll', () => {}, { passive: true });
-        }
     }
 };
 
@@ -306,10 +325,8 @@ window.togglePokopia = function() {
     } else {
         clearPokopiaDecorations();
     }
-
-    try {
-        localStorage.setItem('pokopia-mode', isPokopia ? 'on' : 'off');
-    } catch(e) {}
+    // Session-only easter egg: intentionally NOT persisted. Every fresh visit lands
+    // in the sober academic view; the playful mode is always an explicit opt-in.
 };
 
 function spawnPokopiaDecorations() {
@@ -337,17 +354,6 @@ function clearPokopiaDecorations() {
     const existing = document.getElementById('pokopia-decorations');
     if (existing) existing.remove();
 }
-
-try {
-    if (localStorage.getItem('pokopia-mode') === 'on') {
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('pokopia-mode');
-            spawnPokopiaDecorations();
-            const hoverImage = document.getElementById('guian_image');
-            if (hoverImage) hoverImage.style.opacity = '1';
-        });
-    }
-} catch(e) {}
 
 if ('PerformanceObserver' in window) {
     const perfObserver = new PerformanceObserver((list) => {
