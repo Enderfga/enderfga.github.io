@@ -79,7 +79,7 @@
     --pk-card: rgb(247, 243, 223);
     --pk-text: #725d42;            /* warm brown body text */
     --pk-text-heading: #794f27;    /* darker brown headings */
-    --pk-text-light: #9a835a;
+    --pk-text-light: #7a6740;      /* muted olive — darkened to clear WCAG AA (5.1:1) */
     --pk-green: #7DC395;           /* island green */
     --pk-switch-green: #86d67a;    /* switch ON */
     --pk-teal: #19c8b9;            /* mint teal accent */
