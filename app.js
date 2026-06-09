@@ -1,5 +1,12 @@
 'use strict';
 
+// Honor the OS "reduce motion" setting for JS-driven scrolling. The CSS
+// `scroll-behavior: smooth` is already neutralised by the reduced-motion media
+// query, but programmatic scrollIntoView/scrollTo with an explicit behavior
+// bypass CSS, so they need this guard too.
+const prefersReducedMotion = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Website functionality module
 const Website = {
     // Navigation functionality
@@ -12,13 +19,16 @@ const Website = {
                 link.addEventListener('click', this.handleNavClick.bind(this));
             });
 
+            // Only touch the DOM when the scrolled state actually flips, not on
+            // every scroll frame.
+            let scrolled = false;
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
+                const next = window.scrollY > 50;
+                if (next !== scrolled) {
+                    scrolled = next;
+                    nav.classList.toggle('scrolled', next);
                 }
-            });
+            }, { passive: true });
         },
 
         handleNavClick(event) {
@@ -29,7 +39,7 @@ const Website = {
             const targetId = event.currentTarget.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                targetSection.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
             }
         }
     },
@@ -38,22 +48,25 @@ const Website = {
     backToTop: {
         init() {
             this.button = document.querySelector('.to-top');
+            this.visible = false;
             if (this.button) {
                 this.button.addEventListener('click', this.scrollToTop);
-                window.addEventListener('scroll', this.toggleVisibility.bind(this));
+                window.addEventListener('scroll', this.toggleVisibility.bind(this), { passive: true });
             }
         },
 
         toggleVisibility() {
             const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-            if (this.button) {
-                this.button.style.display = scrollTop > 100 ? 'flex' : 'none';
+            const show = scrollTop > 100;
+            if (show !== this.visible) {
+                this.visible = show;
+                this.button.classList.toggle('is-visible', show);
             }
         },
 
         scrollToTop(event) {
             event.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
         }
     },
 
@@ -133,6 +146,15 @@ const Website = {
                     }
                 });
             });
+
+            // While in "system" mode, follow live OS day/night changes.
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                let saved = 'system';
+                try {
+                    saved = localStorage.getItem('preferred-theme') || 'system';
+                } catch (e) { /* ignore */ }
+                if (saved === 'system') this.applyTheme('system');
+            });
         },
 
         handleThemeChange(event) {
@@ -174,9 +196,11 @@ const Website = {
         },
 
         initializeTheme() {
-            let theme = 'light';
+            // Default to following the OS day/night setting on first visit; a saved
+            // explicit choice (light/dark/system) still wins.
+            let theme = 'system';
             try {
-                theme = localStorage.getItem('preferred-theme') || 'light';
+                theme = localStorage.getItem('preferred-theme') || 'system';
             } catch (e) {
                 console.warn('Unable to load theme preference');
             }

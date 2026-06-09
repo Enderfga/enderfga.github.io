@@ -169,7 +169,6 @@
 
     <!-- Back to Top Button -->
     <button class="to-top"
-            style="display:none;"
             aria-label="Return to top of page"
             type="button">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
@@ -200,7 +199,7 @@
                         aria-label="Toggle Pokopia easter-egg mode"
                         title="✨ Click me!">
                     <img src="images/guian.webp"
-                         alt="Profile photo of Guian Fang"
+                         alt="Guian Fang"
                          width="800" height="1213"
                          loading="eager">
                 </button>
@@ -210,7 +209,7 @@
         <section id="news">
             <h2>News</h2>
             <div class="news-list-wrap">
-                <ul class="news-list">
+                <ul class="news-list" id="news-list">
                     <li><span class="news-date">2026.05</span> Open-sourced <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> — any-step video diffusion via flow map distillation.</li>
                     <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
@@ -222,7 +221,7 @@
                     <li class="news-extra" hidden><span class="news-date">2024.05</span> <a href="https://github.com/Notonion/ChartThinker" target="_blank" rel="noopener">ChartThinker</a> presented at <em>LREC-COLING 2024</em> in Torino.</li>
                     <li class="news-extra" hidden><span class="news-date">2023.07</span> Released <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">LLaMA2-Accessory</a> with OpenGVLab, Shanghai AI Lab — open-source LLM toolkit.</li>
                 </ul>
-                <button type="button" class="news-toggle" aria-expanded="false" aria-label="Show more news">Show more <i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                <button type="button" class="news-toggle" aria-expanded="false" aria-controls="news-list" aria-label="Show more news">Show more <i class="fas fa-chevron-down" aria-hidden="true"></i></button>
             </div>
         </section>
 
