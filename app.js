@@ -90,6 +90,24 @@ const Website = {
         }
     },
 
+    // News "Show more" — reveal the folded older items inline (no inner scroll box)
+    news: {
+        init() {
+            const btn = document.querySelector('.news-toggle');
+            if (!btn) return;
+            const extra = document.querySelectorAll('.news-list .news-extra');
+            if (!extra.length) { btn.hidden = true; return; }
+            btn.addEventListener('click', () => {
+                const open = btn.getAttribute('aria-expanded') === 'true';
+                extra.forEach(li => { li.hidden = open; });
+                btn.setAttribute('aria-expanded', String(!open));
+                btn.innerHTML = open
+                    ? 'Show more <i class="fas fa-chevron-down" aria-hidden="true"></i>'
+                    : 'Show less <i class="fas fa-chevron-up" aria-hidden="true"></i>';
+            });
+        }
+    },
+
     // Theme switcher functionality
     theme: {
         init() {
@@ -166,47 +184,116 @@ const Website = {
         }
     },
 
-    // Hugging Face download totals — sum downloadsAllTime across every model/dataset
-    // in a collection (shields can't sum, so we compute it client-side and inject a
-    // matching static badge). Badge anchors start hidden and only reveal on success,
-    // so a failed fetch or a zero total simply shows nothing instead of a broken badge.
-    hfDownloads: {
+    // Live repo/model metrics — we pull the same numbers the old shields badges
+    // showed (GitHub stars, Hugging Face downloads, npm downloads, YouTube views)
+    // straight from each source's public API and render them as our own quiet text
+    // indicators. Every anchor and its parent row start [hidden]; we only reveal on
+    // a successful, positive fetch, so a failure / zero / rate-limit shows nothing
+    // rather than a broken badge.
+    metrics: {
         init() {
-            document.querySelectorAll('a.badge-link[data-hf-collection]')
-                .forEach(badge => this.load(badge));
+            document.querySelectorAll('[data-metric]').forEach(el => this.load(el));
         },
 
-        async load(badge) {
-            const slug = badge.getAttribute('data-hf-collection');
-            const img = badge.querySelector('img');
-            if (!slug || !img) return;
+        async load(el) {
             try {
-                const res = await fetch(`https://huggingface.co/api/collections/${slug}`);
-                if (!res.ok) return;
-                const items = ((await res.json()).items || [])
-                    .filter(i => i.type === 'model' || i.type === 'dataset');
-                if (!items.length) return;
-
-                const counts = await Promise.all(items.map(async item => {
-                    const kind = item.type === 'dataset' ? 'datasets' : 'models';
-                    try {
-                        const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
-                        if (!r.ok) return 0;
-                        const d = await r.json();
-                        return d.downloadsAllTime || d.downloads || 0;
-                    } catch (e) {
-                        return 0;
-                    }
-                }));
-
-                const total = counts.reduce((a, b) => a + b, 0);
-                if (total <= 0) return;
-
-                img.src = `https://img.shields.io/badge/%F0%9F%A4%97%20Downloads-${this.humanize(total)}-ffce3a?style=social`;
-                badge.style.display = '';
+                const value = await this.fetchValue(el);
+                if (value == null || value <= 0) return;
+                const valEl = el.querySelector('.metric-val');
+                if (valEl) valEl.textContent = this.humanize(value);
+                el.hidden = false;
             } catch (e) {
                 /* leave hidden on failure */
             }
+        },
+
+        fetchValue(el) {
+            switch (el.getAttribute('data-metric')) {
+                case 'github-stars': return this.githubStars(el.getAttribute('data-repo'));
+                case 'hf-dataset':   return this.hfDownloads('datasets', el.getAttribute('data-id'));
+                case 'hf-model':     return this.hfDownloads('models', el.getAttribute('data-id'));
+                case 'hf-collection':return this.hfCollection(el.getAttribute('data-slug'));
+                case 'npm':          return this.npmDownloads(el.getAttribute('data-pkg'));
+                case 'youtube-views':return this.youtubeViews(el.getAttribute('data-video'));
+                default:             return Promise.resolve(null);
+            }
+        },
+
+        async githubStars(repo) {
+            if (!repo) return null;
+            const r = await fetch(`https://api.github.com/repos/${repo}`);
+            if (!r.ok) return null;
+            const d = await r.json();
+            return typeof d.stargazers_count === 'number' ? d.stargazers_count : null;
+        },
+
+        async hfDownloads(kind, id) {
+            if (!id) return null;
+            const r = await fetch(`https://huggingface.co/api/${kind}/${id}?expand=downloadsAllTime`);
+            if (!r.ok) return null;
+            const d = await r.json();
+            return d.downloadsAllTime || d.downloads || null;
+        },
+
+        async hfCollection(slug) {
+            if (!slug) return null;
+            const res = await fetch(`https://huggingface.co/api/collections/${slug}`);
+            if (!res.ok) return null;
+            const items = ((await res.json()).items || [])
+                .filter(i => i.type === 'model' || i.type === 'dataset');
+            if (!items.length) return null;
+            const counts = await Promise.all(items.map(async item => {
+                const kind = item.type === 'dataset' ? 'datasets' : 'models';
+                try {
+                    const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
+                    if (!r.ok) return 0;
+                    const d = await r.json();
+                    return d.downloadsAllTime || d.downloads || 0;
+                } catch (e) {
+                    return 0;
+                }
+            }));
+            return counts.reduce((a, b) => a + b, 0);
+        },
+
+        async npmDownloads(pkg) {
+            if (!pkg) return null;
+            // npm's point API only exposes fixed recent windows (last-week/month/year),
+            // so for an all-time total we walk 18-month range segments from npm's
+            // stats epoch (2015-01-10) to today and sum the daily counts.
+            const today = new Date();
+            const segments = [];
+            for (let cursor = new Date('2015-01-10'); cursor < today;) {
+                const segStart = new Date(cursor);
+                const segEnd = new Date(cursor);
+                segEnd.setMonth(segEnd.getMonth() + 18);
+                const end = segEnd > today ? today : segEnd;
+                segments.push([segStart.toISOString().slice(0, 10), end.toISOString().slice(0, 10)]);
+                cursor = new Date(end);
+                cursor.setDate(cursor.getDate() + 1);
+            }
+            const counts = await Promise.all(segments.map(async ([s, e]) => {
+                try {
+                    const r = await fetch(`https://api.npmjs.org/downloads/range/${s}:${e}/${pkg}`);
+                    if (!r.ok) return 0;
+                    const d = await r.json();
+                    return Array.isArray(d.downloads)
+                        ? d.downloads.reduce((a, b) => a + (b.downloads || 0), 0)
+                        : 0;
+                } catch (e) {
+                    return 0;
+                }
+            }));
+            const total = counts.reduce((a, b) => a + b, 0);
+            return total > 0 ? total : null;
+        },
+
+        async youtubeViews(id) {
+            if (!id) return null;
+            const r = await fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${id}`);
+            if (!r.ok) return null;
+            const d = await r.json();
+            return typeof d.viewCount === 'number' ? d.viewCount : null;
         },
 
         humanize(n) {
@@ -271,11 +358,12 @@ const Website = {
         document.addEventListener('DOMContentLoaded', () => {
             this.navigation.init();
             this.backToTop.init();
+            this.news.init();
             this.theme.init();
             this.profileImage.init();
             this.scrollAnimations.init();
             this.lazyVideos.init();
-            this.hfDownloads.init();
+            this.metrics.init();
 
             document.body.classList.add('loaded');
         });

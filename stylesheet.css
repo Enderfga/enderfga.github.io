@@ -4,8 +4,8 @@
 
 :root {
   /* Color System - Professional Academic Theme */
-  --primary-color: #1772d0;
-  --primary-hover: #f09228;
+  --primary-color: #0f766e;
+  --primary-hover: #0d9488;
   --accent-color: #2196F3;
   --accent-secondary: #1565C0;
   --accent-gradient: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
@@ -19,8 +19,10 @@
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
 
-  /* Typography */
-  --font-family-base: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Typography — editorial pairing: Fraunces (soft display serif) over Hanken
+     Grotesk (clean, lightly characterful sans) to step off the default template */
+  --font-family-base: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-size-base: 14px;
   --font-size-lg: 16px;
   --font-size-xl: 22px;
@@ -50,25 +52,79 @@
   --glass-border: rgba(255, 255, 255, 0.18);
   --glass-blur: 12px;
 
-  /* Light Mode Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9f9f9;
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-tertiary: #999999;
+  /* Light Mode Colors — off-white canvas, white cards (layered "grouped" surfaces) */
+  --bg-primary: #f6f7f9;
+  --bg-secondary: #ffffff;
+  --text-primary: #2b2f36;
+  --text-secondary: #565b63;
+  --text-tertiary: #8b9099;
   --border-color: #e0e0e0;
+
+  /* Surfaces & accent — used by nav + cards (refined editorial system) */
+  --nav-bg: rgba(248, 249, 251, 0.78);
+  --nav-border: rgba(0, 0, 0, 0.08);
+  --nav-hover: rgba(0, 0, 0, 0.05);
+  --card-bg: #ffffff;
+  --card-border: #e4e6ea;
+  --card-hover-border: rgba(15, 118, 110, 0.35);
+
+  /* Soft macOS-style elevation — two layers (ambient + key), low opacity, downward */
+  --card-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 6px 18px rgba(17, 24, 39, 0.05);
+  --card-shadow-hover: 0 2px 5px rgba(17, 24, 39, 0.06), 0 16px 34px rgba(17, 24, 39, 0.10);
+  --grain-opacity: 0.03;
+  --grain-blend: normal;
+  --accent-line: var(--primary-color);
+  --accent-soft: rgba(15, 118, 110, 0.07);
+  --accent-soft-border: rgba(15, 118, 110, 0.2);
+  --accent-tint: linear-gradient(90deg, rgba(15, 118, 110, 0.045), transparent 55%);
+
+  /* Metric chips — subtle "raised pill" material (gradient + hairline + contact
+     shadow + top inset highlight) so the numbers read as crafted, not bare text */
+  --metric-bg: linear-gradient(180deg, #ffffff, #f3f4f7);
+  --metric-border: #e2e4e9;
+  --metric-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --metric-border-hover: #cfd2d9;
+  --metric-shadow-hover: 0 3px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .dark-mode {
   /* Dark Mode Colors */
-  --bg-primary: #121212;
+  --bg-primary: #131417;
   --bg-secondary: #1e1e1e;
   --text-primary: #ffffff;
   --text-secondary: #aaaaaa;
   --text-tertiary: #666666;
   --border-color: #333333;
+  /* Brighter teal for links/accents so they read on ink */
+  --primary-color: #2dd4bf;
+  --primary-hover: #5eead4;
   --glass-bg: rgba(30, 30, 30, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Dark surfaces & accent — slate/ink, no olive-yellow */
+  --nav-bg: rgba(22, 24, 28, 0.7);
+  --nav-border: rgba(255, 255, 255, 0.09);
+  --nav-hover: rgba(255, 255, 255, 0.07);
+  --card-bg: #1b1d21;
+  --card-border: #2e3138;
+  --card-hover-border: rgba(45, 212, 191, 0.4);
+
+  /* Dark elevation — deeper, since ambient shadow reads less on ink */
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.28);
+  --card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 38px rgba(0, 0, 0, 0.5);
+  --grain-opacity: 0.04;
+  --grain-blend: overlay;
+  --accent-line: #2dd4bf;
+  --accent-soft: rgba(45, 212, 191, 0.1);
+  --accent-soft-border: rgba(45, 212, 191, 0.26);
+  --accent-tint: linear-gradient(90deg, rgba(45, 212, 191, 0.07), transparent 55%);
+
+  /* Metric chips — dark glass: faint translucent fill, hairline, top inset sheen */
+  --metric-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025));
+  --metric-border: rgba(255, 255, 255, 0.13);
+  --metric-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --metric-border-hover: rgba(255, 255, 255, 0.22);
+  --metric-shadow-hover: 0 3px 10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* latin-ext */
@@ -211,8 +267,10 @@ strong {
 h2 {
   margin: 0;
   font-weight: 600;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-xl);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
   margin-bottom: var(--spacing-lg);
   position: relative;
@@ -233,14 +291,23 @@ h2::after {
 .name {
   padding-top: var(--spacing-lg);
   margin: 0;
-  font-family: var(--font-family-base);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: var(--font-size-xxl);
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
 }
 
+/* Inline "highlighted" word in the Publications intro — accent underline, not yellow */
 span.highlight {
-  background-color: #ffffd0;
+  background: none;
+  font-weight: 600;
+  color: var(--text-primary);
+  box-shadow: inset 0 -0.42em 0 var(--accent-soft);
+}
+.dark-mode span.highlight {
+  color: #fff;
 }
     footer {
         padding: 0;
@@ -248,12 +315,12 @@ span.highlight {
         margin-top: 48px;
     }
     footer a {
-        color: #1772d0;
+        color: #0f766e;
         text-decoration: none;
         transition: color 0.3s ease;
     }
     footer a:hover {
-        color: #f09228;
+        color: #0d9488;
     }
     footer > p {
         font-size: 14px;
@@ -284,28 +351,43 @@ span.highlight {
         left: 0;
         right: 0;
         height: 300px;
-        background: linear-gradient(180deg, rgba(23, 114, 208, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(180deg, rgba(15, 118, 110, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
         z-index: -1;
         pointer-events: none;
     }
 
     .dark-mode::before {
-        background: linear-gradient(180deg, rgba(23, 114, 208, 0.08) 0%, rgba(18, 18, 18, 0) 100%);
+        background: linear-gradient(180deg, rgba(15, 118, 110, 0.08) 0%, rgba(18, 18, 18, 0) 100%);
+    }
+
+    /* Matte grain overlay — barely-there fractal noise so flat areas read as paper.
+       Fixed, non-interactive, sits above content as a thin veil. Strength + blend
+       mode are theme-driven so it stays subtle in light and doesn't wash out ink. */
+    .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 180px 180px;
+        opacity: var(--grain-opacity);
+        mix-blend-mode: var(--grain-blend);
     }
     #main-content {
         width: 100%;
-        max-width: 800px;
+        max-width: 860px;
         margin: 0 auto;
         padding: 100px 24px 40px 24px;
     }
     section {
         padding: 0;
-        max-width: 800px;
+        max-width: 860px;
         margin: 0 auto 48px auto;
     }
     .name {
         text-align: center;
-        font-size: 2em;
+        font-size: 2.5em;
+        line-height: 1.05;
     }
     .highlight {
         font-weight: bold;
@@ -378,37 +460,52 @@ span.highlight {
         box-shadow: var(--shadow-xl);
     }
     .dark-mode {
-        background-color: #121212;
-        color: #ffffff;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
     }
     .to-top {
     position: fixed;
     right: 32px;
     bottom: 32px;
-    background: var(--primary-color);
-    color: #fff;
-    width: 50px;
-    height: 50px;
+    background: rgba(15, 118, 110, 0.12);
+    color: var(--primary-color);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
+    width: 48px;
+    height: 48px;
     border-radius: var(--radius-full);
     text-decoration: none;
-    border: none;
+    border: 1px solid rgba(15, 118, 110, 0.22);
     cursor: pointer;
     transition: all var(--transition-base);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 4px 16px rgba(17, 24, 39, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     display: none;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
     z-index: 999;
 }
 
+    .dark-mode .to-top {
+    background: rgba(45, 212, 191, 0.16);
+    color: #7cc4f0;
+    border-color: rgba(45, 212, 191, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
     .to-top:hover {
-    transform: translateY(-4px) scale(1.1);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-3px) scale(1.06);
+    background: rgba(15, 118, 110, 0.18);
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+    .dark-mode .to-top:hover {
+    background: rgba(45, 212, 191, 0.24);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
     .to-top:active {
-    transform: translateY(-2px) scale(1.05);
+    transform: translateY(-1px) scale(1.03);
 }
 
 /* ========================================
@@ -420,7 +517,7 @@ span.highlight {
     position: absolute;
     top: -40px;
     left: 6px;
-    background: #007cba;
+    background: #0f766e;
     color: white;
     padding: 8px;
     text-decoration: none;
@@ -452,7 +549,9 @@ span.highlight {
 
 .main-navigation {
     width: 100%;
-    background: #333;
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
     position: fixed;
     top: 0;
     left: 0;
@@ -462,14 +561,23 @@ span.highlight {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: padding var(--transition-base), box-shadow var(--transition-base);
+    padding: 9px 28px;
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    transition: padding var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.dark-mode .main-navigation {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .main-navigation.scrolled {
-    padding: 8px 20px;
-    box-shadow: var(--shadow-lg);
+    padding: 7px 28px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 18px rgba(17, 24, 39, 0.06);
+}
+
+.dark-mode .main-navigation.scrolled {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 18px rgba(0, 0, 0, 0.35);
 }
 
 .nav-list {
@@ -486,45 +594,51 @@ span.highlight {
 }
 
 .nav-list a {
-    color: #fff;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.9em;
-    padding: 10px 14px;
+    font-weight: 600;
+    padding: 8px 13px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    border-radius: 6px;
+    border-radius: 7px;
     transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .nav-list a i {
     font-size: 0.85em;
+    opacity: 0.7;
 }
 
 .nav-list a:hover {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    background-color: var(--nav-hover);
 }
 
 .nav-list a.active {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--primary-color);
+    background-color: var(--accent-soft);
     font-weight: 700;
+}
+
+.nav-list a.active i {
+    opacity: 1;
 }
 
 .social-icons {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #fff;
+    gap: 6px;
+    color: var(--text-secondary);
     font-size: 1.2em;
 }
 
 .social-icons a {
-    color: #fff;
+    color: var(--text-secondary);
     text-decoration: none;
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.05em;
     padding: 8px;
     border-radius: var(--radius-md);
     display: inline-flex;
@@ -534,8 +648,8 @@ span.highlight {
 }
 
 .social-icons a:hover {
-    color: #ccc;
-    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--primary-color);
+    background-color: var(--nav-hover);
 }
 
 .social-icons a::after {
@@ -545,15 +659,15 @@ span.highlight {
 .theme-switcher {
     display: flex;
     align-items: center;
-    color: #fff;
-    font-size: 1.2em;
+    color: var(--text-secondary);
+    font-size: 1.05em;
     margin-left: 4px;
 }
 
 .theme-icon {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-secondary);
     cursor: pointer;
     padding: 5px;
     display: flex;
@@ -562,7 +676,7 @@ span.highlight {
 }
 
 .theme-icon:hover {
-    color: #ccc;
+    color: var(--primary-color);
 }
 
 .three-way-radio {
@@ -572,8 +686,12 @@ span.highlight {
     margin: 0 4px;
     width: 45px;
     height: 20px;
-    background-color: #666;
+    background-color: rgba(0, 0, 0, 0.14);
     border-radius: 10px;
+}
+
+.dark-mode .three-way-radio {
+    background-color: rgba(255, 255, 255, 0.16);
 }
 
 .three-way-radio input {
@@ -586,7 +704,7 @@ span.highlight {
     left: 2px;
     width: 16px;
     height: 16px;
-    background-color: #fff;
+    background-color: var(--accent-line);
     border-radius: 50%;
     transition: transform 0.3s ease;
 }
@@ -609,7 +727,7 @@ span.highlight {
 
 #research {
     padding: 0;
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto 48px auto;
 }
 
@@ -630,17 +748,19 @@ span.highlight {
 
 .research-paper {
     display: flex;
-    gap: 28px;
-    margin: 0 0 24px 0;
-    padding: 24px;
-    border-radius: var(--radius-lg);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-base);
+    gap: 26px;
+    margin: 0 0 18px 0;
+    padding: 22px 24px;
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left-width: 1px;
+    box-shadow: var(--card-shadow);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
     position: relative;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
     animation: fadeInUp 0.6s ease forwards;
 }
 
@@ -651,44 +771,18 @@ span.highlight {
     }
 }
 
-.research-paper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--primary-color);
-    transform: scaleX(0);
-    transition: transform var(--transition-base);
-    transform-origin: left;
-}
-
+/* Calm hover — modest lift onto a softer, deeper elevation */
 .research-paper:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-3px);
+    border-color: var(--card-hover-border);
+    box-shadow: var(--card-shadow-hover);
 }
 
-.research-paper:hover::before {
-    transform: scaleX(1);
-}
-
+/* Representative work: left accent border + whisper tint. No yellow, no star. */
 .research-paper.highlight {
-    background: linear-gradient(135deg, rgba(255, 255, 208, 0.3), rgba(240, 192, 64, 0.1));
-    border-color: rgba(240, 192, 64, 0.4);
-    position: relative;
-}
-
-.research-paper.highlight::after {
-    content: '\f005';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.2rem;
-    opacity: 0.6;
-    color: #f0c040;
+    border-left: 3px solid var(--accent-line);
+    background-color: var(--card-bg);
+    background-image: var(--accent-tint);
 }
 
 .paper-media {
@@ -700,14 +794,9 @@ span.highlight {
 .paper-media img {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
-}
-
-.paper-media img:hover {
-    transform: scale(1.03);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border);
+    transition: border-color var(--transition-base);
 }
 
 .paper-media .paper-video {
@@ -715,47 +804,74 @@ span.highlight {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border);
     background: #000;
-    transition: all var(--transition-base);
 }
 
-.paper-media .paper-video:hover {
-    box-shadow: var(--shadow-lg);
-    transform: scale(1.02);
-}
-
-.paper-venue .badge-link {
-    display: inline-block;
+/* Custom data-driven metrics — our own quiet text indicators in place of
+   GitHub-README-style shields badges. Numbers filled live by app.js; each
+   anchor (and its row) starts [hidden] and only reveals on a successful fetch,
+   so a failed/zero metric simply shows nothing. */
+/* Metric chips sit inline at the end of the venue line (like the original
+   badges): platform logo + all-time figure in a quiet raised pill, so the
+   source is recognisable at a glance and no extra row is introduced. */
+.metric {
+    display: inline-flex;
+    align-items: center;
     vertical-align: middle;
-    margin-left: 14px;
-    line-height: 0;
+    gap: 5px;
+    margin-left: 8px;
+    padding: 2px 10px 2px 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    background: var(--metric-bg);
+    border: 1px solid var(--metric-border);
+    border-radius: 999px;
+    box-shadow: var(--metric-shadow);
+    transition: transform var(--transition-fast),
+                box-shadow var(--transition-fast),
+                border-color var(--transition-fast);
 }
 
-.paper-venue .badge-link img {
-    height: 20px;
-    vertical-align: middle;
-    transition: transform var(--transition-base);
+.metric[hidden] {
+    display: none;
 }
 
-.paper-venue .badge-link:hover img {
-    transform: scale(1.05);
+.metric i,
+.metric .metric-logo {
+    font-size: 0.95em;
+    line-height: 1;
+}
+
+/* Platform-coloured logos so each source reads at a glance (🤗 carries its own
+   colour). GitHub mark flips for contrast in dark mode. */
+.metric[data-metric="github-stars"] i { color: #24292f; }
+.metric[data-metric="npm"] i { color: #cb3837; }
+.metric[data-metric="youtube-views"] i { color: #ff0000; }
+.dark-mode .metric[data-metric="github-stars"] i { color: #e6edf3; }
+
+.metric:hover {
+    transform: translateY(-1px);
+    border-color: var(--metric-border-hover);
+    box-shadow: var(--metric-shadow-hover);
+}
+
+.metric::after {
+    display: none;
 }
 
 .paper-media lite-youtube {
     width: 100%;
     max-width: none;
     aspect-ratio: 16 / 9;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border);
     background-color: #000;
-}
-
-.paper-media lite-youtube:hover {
-    box-shadow: var(--shadow-lg);
-    transform: scale(1.02);
 }
 
 .paper-content {
@@ -803,7 +919,7 @@ span.highlight {
 .paper-venue {
     margin: 0 0 10px 0;
     font-style: italic;
-    color: #0066cc;
+    color: #0f766e;
     font-size: 0.9rem;
 }
 
@@ -816,7 +932,7 @@ span.highlight {
 
 .paper-links a {
     display: inline-block;
-    color: #007cba;
+    color: #0f766e;
     text-decoration: none;
     font-size: 0.85rem;
     white-space: nowrap;
@@ -837,6 +953,47 @@ span.highlight {
     font-size: 0.95rem;
     word-wrap: break-word;
     hyphens: auto;
+}
+
+/* ========================================
+   PRODUCTS — COMPACT PORTFOLIO VARIANT
+   Same system as Publications, denser + category chips for a product feel.
+   ======================================== */
+
+.cat-chip {
+    display: inline-block;
+    margin: 0 0 10px 0;
+    padding: 2px 9px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-soft-border);
+    border-radius: 999px;
+}
+
+.dark-mode .cat-chip {
+    color: var(--accent-line);
+}
+
+#products .research-paper {
+    gap: 22px;
+    padding: 18px 22px;
+}
+
+#products .paper-media {
+    flex: 0 0 34%;
+}
+
+#products .paper-title {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+
+#products .paper-venue {
+    margin-bottom: 8px;
 }
 
 /* ========================================
@@ -875,33 +1032,38 @@ span.highlight {
    NEWS LIST
    ======================================== */
 
-.news-scroll {
+/* News flows down the page (no inner scroll box): 5 items, then a Show more
+   toggle reveals the rest so nothing hides behind a tiny scrollbar. */
+.news-list-wrap {
     margin-top: 16px;
-    max-height: 11.5rem;
-    overflow-y: auto;
-    padding-right: 8px;
-    scrollbar-width: thin;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 24px), transparent 100%);
-            mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 24px), transparent 100%);
 }
 
-.news-scroll::-webkit-scrollbar {
-    width: 6px;
+.news-list li[hidden] {
+    display: none;
 }
 
-.news-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 124, 186, 0.35);
-    border-radius: 3px;
+.news-toggle {
+    margin: 16px 0 0 20px;
+    padding: 4px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--transition-fast);
 }
 
-.dark-mode .news-scroll::-webkit-scrollbar-thumb {
-    background: rgba(78, 168, 222, 0.4);
+.news-toggle:hover {
+    color: var(--primary-hover);
 }
 
-.news-scroll:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-    border-radius: 4px;
+.news-toggle i {
+    font-size: 0.78em;
 }
 
 .news-list {
@@ -927,7 +1089,7 @@ span.highlight {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #007cba;
+    background: #0f766e;
 }
 
 .news-date {
@@ -936,7 +1098,7 @@ span.highlight {
     margin-right: 12px;
     font-variant-numeric: tabular-nums;
     font-weight: 600;
-    color: #006699;
+    color: #0f766e;
     font-size: 0.88rem;
 }
 
@@ -945,11 +1107,11 @@ span.highlight {
 }
 
 .dark-mode .news-date {
-    color: #4ea8de;
+    color: #2dd4bf;
 }
 
 .dark-mode .news-list li::before {
-    background: #4ea8de;
+    background: #2dd4bf;
 }
 
 @media (max-width: 700px) {
@@ -985,9 +1147,10 @@ span.highlight {
     text-align: center;
     padding: 24px 20px;
     border-radius: var(--radius-lg);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-base);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -1001,7 +1164,7 @@ span.highlight {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(23, 114, 208, 0.1), transparent);
+    background: radial-gradient(circle, rgba(15, 118, 110, 0.1), transparent);
     transform: translate(-50%, -50%);
     transition: width 0.6s ease, height 0.6s ease;
 }
@@ -1012,9 +1175,9 @@ span.highlight {
 }
 
 .collaboration-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-xl);
-    border-color: transparent;
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--card-hover-border);
 }
 
 .organization-logo {
@@ -1227,14 +1390,13 @@ span.highlight {
    ======================================== */
 
 .dark-mode .research-paper {
-    background: #2a2a2a;
-    border-color: #444;
     color: #e0e0e0;
 }
 
+/* Dark highlight: slate card + accent left border (no olive-yellow block) */
 .dark-mode .research-paper.highlight {
-    background: #3a3a00;
-    border-color: #666600;
+    border-color: var(--card-border);
+    border-left-color: var(--accent-line);
 }
 
 .dark-mode .collaboration-item {
@@ -1252,11 +1414,11 @@ span.highlight {
 }
 
 .dark-mode .paper-venue {
-    color: #6cb6ff;
+    color: #2dd4bf;
 }
 
 .dark-mode .paper-links a {
-    color: #6cb6ff;
+    color: #2dd4bf;
 }
 
 
@@ -1272,7 +1434,7 @@ span.highlight {
 a:focus,
 button:focus,
 input:focus {
-    outline: 2px solid #007cba;
+    outline: 2px solid #0f766e;
     outline-offset: 2px;
 }
 
@@ -1320,12 +1482,12 @@ section {
 
 /* Selection styling */
 ::selection {
-    background: rgba(23, 114, 208, 0.2);
+    background: rgba(15, 118, 110, 0.2);
     color: var(--text-primary);
 }
 
 ::-moz-selection {
-    background: rgba(23, 114, 208, 0.2);
+    background: rgba(15, 118, 110, 0.2);
     color: var(--text-primary);
 }
 

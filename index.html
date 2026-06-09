@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
@@ -75,7 +76,10 @@
 <body>
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
+
+    <!-- Fine matte grain — barely-there texture so large flat areas read as paper, not blank -->
+    <div class="grain" aria-hidden="true"></div>
+
 
     <!-- Navigation Section -->
     <nav class="main-navigation" aria-label="Main navigation">
@@ -178,8 +182,8 @@
                 <h1 class="name">Guian Fang</h1>
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
                 <p>Previously, I received my B.Eng. in HCPLab, Artificial Intelligence at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
-                <p>I build generative video models and world-model systems for long-form visual generation, with recent work on video diffusion distillation and embodied intelligence.</p>
-                <p>Beyond papers, I work on agentic visual-generation pipelines and runtime infrastructure for coding agents. I am open to collaborations on long-form video, world models, embodied intelligence, and agent orchestration.</p>
+                <p>My research centers on <strong>generative video models</strong> and <strong>world models</strong> for long-form visual generation, with recent work on <strong>video diffusion distillation</strong> and <strong>embodied intelligence</strong>.</p>
+                <p>Beyond research, I build agentic visual-generation pipelines and runtime infrastructure for coding agents, and I am open to collaboration.</p>
             </div>
             <div class="profile-image">
                 <div class="image-container"
@@ -205,19 +209,20 @@
 
         <section id="news">
             <h2>News</h2>
-            <div class="news-scroll" tabindex="0" aria-label="News list, scroll for more">
+            <div class="news-list-wrap">
                 <ul class="news-list">
                     <li><span class="news-date">2026.05</span> Open-sourced <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> — any-step video diffusion via flow map distillation.</li>
                     <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
                     <li><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
                     <li><span class="news-date">2025.06</span> Launched <a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI</a> — an ACG (anime / comic / manga) creation tool, powered by <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a>.</li>
-                    <li><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
-                    <li><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
-                    <li><span class="news-date">2024.06</span> Co-organized <a href="https://sites.google.com/view/loveucvpr24/home" target="_blank" rel="noopener">LOVEU</a> workshop at <em>CVPR 2024</em> — long-form video understanding &amp; AI copilots.</li>
-                    <li><span class="news-date">2024.05</span> <a href="https://github.com/Notonion/ChartThinker" target="_blank" rel="noopener">ChartThinker</a> presented at <em>LREC-COLING 2024</em> in Torino.</li>
-                    <li><span class="news-date">2023.07</span> Released <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">LLaMA2-Accessory</a> with OpenGVLab, Shanghai AI Lab — open-source LLM toolkit.</li>
+                    <li class="news-extra" hidden><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
+                    <li class="news-extra" hidden><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
+                    <li class="news-extra" hidden><span class="news-date">2024.06</span> Co-organized <a href="https://sites.google.com/view/loveucvpr24/home" target="_blank" rel="noopener">LOVEU</a> workshop at <em>CVPR 2024</em> — long-form video understanding &amp; AI copilots.</li>
+                    <li class="news-extra" hidden><span class="news-date">2024.05</span> <a href="https://github.com/Notonion/ChartThinker" target="_blank" rel="noopener">ChartThinker</a> presented at <em>LREC-COLING 2024</em> in Torino.</li>
+                    <li class="news-extra" hidden><span class="news-date">2023.07</span> Released <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">LLaMA2-Accessory</a> with OpenGVLab, Shanghai AI Lab — open-source LLM toolkit.</li>
                 </ul>
+                <button type="button" class="news-toggle" aria-expanded="false" aria-label="Show more news">Show more <i class="fas fa-chevron-down" aria-hidden="true"></i></button>
             </div>
         </section>
 
@@ -230,11 +235,11 @@
                     <div class="paper-media">
                         <video class="paper-video"
                                src="https://nvlabs.github.io/AnyFlow/assets/videos/demo_video.mp4"
+                               poster="images/anyflow-poster.webp"
                                loop
                                muted
                                playsinline
-                               controls
-                               preload="metadata"
+                               preload="none"
                                aria-label="AnyFlow — any-step video diffusion demo"></video>
                     </div>
                     <div class="paper-content">
@@ -246,14 +251,7 @@
                         <p class="paper-authors">
                             Yuchao Gu, <strong>Guian Fang</strong>, Yuxin Jiang, Weijia Mao, Song Han, Han Cai, Mike Zheng Shou
                         </p>
-                        <p class="paper-venue"><em>arXiv preprint</em>, 2026
-                            <a href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
-                                <img src="https://img.shields.io/github/stars/NVlabs/AnyFlow?style=social&label=Star" alt="GitHub stars" loading="lazy">
-                            </a>
-                            <a href="https://huggingface.co/collections/nvidia/anyflow" target="_blank" rel="noopener" class="badge-link" data-hf-collection="nvidia/anyflow" aria-label="Hugging Face model downloads (all-time, summed across the collection)" style="display:none">
-                                <img alt="Hugging Face model downloads all-time">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>arXiv preprint</em>, 2026<a class="metric" href="https://github.com/NVlabs/AnyFlow" target="_blank" rel="noopener" data-metric="github-stars" data-repo="NVlabs/AnyFlow" aria-label="GitHub stars" hidden><i class="fab fa-github" aria-hidden="true"></i><span class="metric-val"></span></a><a class="metric" href="https://huggingface.co/collections/nvidia/anyflow" target="_blank" rel="noopener" data-metric="hf-collection" data-slug="nvidia/anyflow" aria-label="Hugging Face downloads" hidden><span class="metric-logo" aria-hidden="true">🤗</span><span class="metric-val"></span></a></p>
                         <div class="paper-links">
                             <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">Paper</a>
                             <a href="https://nvlabs.github.io/AnyFlow/" target="_blank" rel="noopener">Project page</a>
@@ -266,11 +264,11 @@
                     <div class="paper-media">
                         <video class="paper-video"
                                src="images/pai-studio-teaser.mp4"
+                               poster="images/pai-poster.webp"
                                loop
                                muted
                                playsinline
-                               controls
-                               preload="metadata"
+                               preload="none"
                                aria-label="PAI-Studio — cinematic video background replacement demo"></video>
                     </div>
                     <div class="paper-content">
@@ -305,11 +303,7 @@
                         <p class="paper-authors">
                             <strong>Guian Fang</strong>*, Wenbiao Yan*, Yuanfan Guo*, Jianhua Han, Zutao Jiang, Hang Xu, Shengcai Liao, Xiaodan Liang
                         </p>
-                        <p class="paper-venue"><em>ECCV</em>, 2024
-                            <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner" target="_blank" rel="noopener" class="badge-link" aria-label="Hugging Face dataset downloads">
-                                <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fdatasets%2FEnderfga%2FHumanRefiner%3Fexpand%3DdownloadsAllTime&query=%24.downloadsAllTime&label=%F0%9F%A4%97%20Downloads&color=ffce3a&style=social" alt="Hugging Face dataset downloads all-time" loading="lazy">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>ECCV</em>, 2024<a class="metric" href="https://huggingface.co/datasets/Enderfga/HumanRefiner" target="_blank" rel="noopener" data-metric="hf-dataset" data-id="Enderfga/HumanRefiner" aria-label="Hugging Face dataset downloads" hidden><span class="metric-logo" aria-hidden="true">🤗</span><span class="metric-val"></span></a></p>
                         <div class="paper-links">
                             <a href="https://huggingface.co/datasets/Enderfga/HumanRefiner" target="_blank" rel="noopener">Dataset page</a>
                             <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf" target="_blank" rel="noopener">Paper</a>
@@ -332,11 +326,7 @@
                         <p class="paper-authors">
                             Mengsha Liu, Daoyuan Chen, Yaliang Li, <strong>Guian Fang</strong>, Ying Shen
                         </p>
-                        <p class="paper-venue"><em>LREC-COLING</em>, 2024
-                            <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA" target="_blank" rel="noopener" class="badge-link" aria-label="Hugging Face dataset downloads">
-                                <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fdatasets%2FChartThinker%2FChart-Sum-QA%3Fexpand%3DdownloadsAllTime&query=%24.downloadsAllTime&label=%F0%9F%A4%97%20Downloads&color=ffce3a&style=social" alt="Hugging Face dataset downloads all-time" loading="lazy">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>LREC-COLING</em>, 2024<a class="metric" href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA" target="_blank" rel="noopener" data-metric="hf-dataset" data-id="ChartThinker/Chart-Sum-QA" aria-label="Hugging Face dataset downloads" hidden><span class="metric-logo" aria-hidden="true">🤗</span><span class="metric-val"></span></a></p>
                         <div class="paper-links">
                             <a href="https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA" target="_blank" rel="noopener">Dataset page</a>
                             <a href="https://aclanthology.org/2024.lrec-main.273/" target="_blank" rel="noopener">Paper</a>
@@ -378,16 +368,13 @@
                         <lite-youtube videoid="qJLv6ltFw04" playlabel="Play: PAI — Long-form Video Generation for Cinematic Storytelling"></lite-youtube>
                     </div>
                     <div class="paper-content">
+                        <span class="cat-chip">Product</span>
                         <h3 class="paper-title">
                             <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">
                                 <i class="fas fa-rocket"></i> Long-form Video Generation for Cinematic Storytelling
                             </a>
                         </h3>
-                        <p class="paper-venue"><em>Productized at Utopai Studios</em>, 2026
-                            <a href="https://www.youtube.com/watch?v=qJLv6ltFw04" target="_blank" rel="noopener" class="badge-link" aria-label="YouTube views">
-                                <img src="https://img.shields.io/youtube/views/qJLv6ltFw04?style=social" alt="YouTube views" loading="lazy">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>Productized at Utopai Studios</em>, 2026<a class="metric" href="https://www.youtube.com/watch?v=qJLv6ltFw04" target="_blank" rel="noopener" data-metric="youtube-views" data-video="qJLv6ltFw04" aria-label="YouTube views" hidden><i class="fab fa-youtube" aria-hidden="true"></i><span class="metric-val"></span></a></p>
                         <div class="paper-links">
                             <a href="https://www.linkedin.com/posts/utopaistudios_introducing-pai-a-long-form-video-generation-activity-7434327612258258944-R6gr" target="_blank" rel="noopener">Launch post</a>
                             <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">Product page</a>
@@ -402,19 +389,13 @@
                              loading="lazy">
                     </div>
                     <div class="paper-content">
+                        <span class="cat-chip">Open Source</span>
                         <h3 class="paper-title">
                             <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">
                                 <i class="fas fa-terminal"></i> Claw Orchestrator:<br>A Unified Runtime for Coding Agent CLIs
                             </a>
                         </h3>
-                        <p class="paper-venue"><em>Open-source</em>, 2026
-                            <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
-                                <img src="https://img.shields.io/github/stars/Enderfga/claw-orchestrator?style=social&label=Star" alt="GitHub stars" loading="lazy">
-                            </a>
-                            <a href="https://www.npmjs.com/package/@enderfga/claw-orchestrator" target="_blank" rel="noopener" class="badge-link" aria-label="npm downloads">
-                                <img src="https://img.shields.io/npm/d18m/@enderfga/claw-orchestrator?style=social&label=Downloads&logo=npm" alt="npm downloads total" loading="lazy">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>Open-source</em>, 2026<a class="metric" href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener" data-metric="github-stars" data-repo="Enderfga/claw-orchestrator" aria-label="GitHub stars" hidden><i class="fab fa-github" aria-hidden="true"></i><span class="metric-val"></span></a><a class="metric" href="https://www.npmjs.com/package/@enderfga/claw-orchestrator" target="_blank" rel="noopener" data-metric="npm" data-pkg="@enderfga/claw-orchestrator" aria-label="npm downloads (all-time)" hidden><i class="fab fa-npm" aria-hidden="true"></i><span class="metric-val"></span></a></p>
                     </div>
                 </article>
 
@@ -423,6 +404,7 @@
                         <lite-youtube videoid="UX46R72FsVs" playlabel="Play: MikoAI — FramePrompt Animation Demo"></lite-youtube>
                     </div>
                     <div class="paper-content">
+                        <span class="cat-chip">Product · Report</span>
                         <h3 class="paper-title">
                             <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">
                                 <i class="fas fa-video"></i> FramePrompt:<br>ACG Creation Made Easy, Powering MikoAI
@@ -443,6 +425,7 @@
                              loading="lazy">
                     </div>
                     <div class="paper-content">
+                        <span class="cat-chip">Product</span>
                         <h3 class="paper-title">
                             <a href="https://www.youtube.com/watch?v=uUqzCxnEURQ" target="_blank" rel="noopener">
                                 <i class="fas fa-globe"></i> Generate 3D Worlds in Production with AI
@@ -463,6 +446,7 @@
                              loading="lazy">
                     </div>
                     <div class="paper-content">
+                        <span class="cat-chip">Open Source</span>
                         <h3 class="paper-title">
                             <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">
                                 <i class="fas fa-file-alt"></i> LLaMA2-Accessory:<br>An Open-source Toolkit for LLM Development
@@ -471,11 +455,7 @@
                         <p class="paper-authors">
                             Chris Liu, Ziyi Lin, <strong>Guian Fang</strong>, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang
                         </p>
-                        <p class="paper-venue"><em>Open-source</em>, 2023
-                            <a href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener" class="badge-link" aria-label="GitHub repository">
-                                <img src="https://img.shields.io/github/stars/Alpha-VLLM/LLaMA2-Accessory?style=social&label=Star" alt="GitHub stars" loading="lazy">
-                            </a>
-                        </p>
+                        <p class="paper-venue"><em>Open-source</em>, 2023<a class="metric" href="https://github.com/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener" data-metric="github-stars" data-repo="Alpha-VLLM/LLaMA2-Accessory" aria-label="GitHub stars" hidden><i class="fab fa-github" aria-hidden="true"></i><span class="metric-val"></span></a></p>
                         <div class="paper-links">
                             <a href="https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory" target="_blank" rel="noopener">Checkpoint page</a>
                             <a href="https://llama2-accessory.readthedocs.io/en/latest/" target="_blank" rel="noopener">Documentation</a>
