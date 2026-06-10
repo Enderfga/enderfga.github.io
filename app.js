@@ -110,13 +110,12 @@ const Website = {
             if (!btn) return;
             const extra = document.querySelectorAll('.news-list .news-extra');
             if (!extra.length) { btn.hidden = true; return; }
+            const label = btn.querySelector('.news-toggle-label');
             btn.addEventListener('click', () => {
                 const open = btn.getAttribute('aria-expanded') === 'true';
                 extra.forEach(li => { li.hidden = open; });
                 btn.setAttribute('aria-expanded', String(!open));
-                btn.innerHTML = open
-                    ? 'Show more <i class="fas fa-chevron-down" aria-hidden="true"></i>'
-                    : 'Show less <i class="fas fa-chevron-up" aria-hidden="true"></i>';
+                if (label) label.textContent = open ? 'Show more' : 'Show less';
             });
         }
     },
@@ -173,18 +172,12 @@ const Website = {
         },
 
         applyTheme(theme) {
-            switch(theme) {
-                case 'light':
-                    this.body.classList.remove('dark-mode');
-                    break;
-                case 'dark':
-                    this.body.classList.add('dark-mode');
-                    break;
-                case 'system':
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    this.body.classList.toggle('dark-mode', prefersDark);
-                    break;
-            }
+            // The class lives on <html> as well as <body>: the root scrollbar and
+            // overscroll canvas belong to <html>, so its vars must flip too.
+            const dark = theme === 'dark' ||
+                (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark-mode', dark);
+            this.body.classList.toggle('dark-mode', dark);
         },
 
         saveTheme(theme) {
@@ -215,19 +208,53 @@ const Website = {
     // a successful, positive fetch, so a failure / zero / rate-limit shows nothing
     // rather than a broken badge.
     metrics: {
+        CACHE_TTL: 6 * 60 * 60 * 1000, // 6h — fresh numbers, instant repeat visits, no rate-limit roulette
+
         init() {
             document.querySelectorAll('[data-metric]').forEach(el => this.load(el));
         },
 
         async load(el) {
             try {
-                const value = await this.fetchValue(el);
-                if (value == null || value <= 0) return;
+                const key = this.cacheKey(el);
+                let value = this.cacheGet(key);
+                if (value == null) {
+                    value = await this.fetchValue(el);
+                    if (value == null || value <= 0) return;
+                    this.cacheSet(key, value);
+                }
                 const valEl = el.querySelector('.metric-val');
                 if (valEl) valEl.textContent = this.humanize(value);
                 el.hidden = false;
             } catch (e) {
                 /* leave hidden on failure */
+            }
+        },
+
+        cacheKey(el) {
+            const id = el.getAttribute('data-repo') || el.getAttribute('data-id') ||
+                el.getAttribute('data-slug') || el.getAttribute('data-pkg') ||
+                el.getAttribute('data-video') || '';
+            return `metric:${el.getAttribute('data-metric')}:${id}`;
+        },
+
+        cacheGet(key) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return null;
+                const { v, t } = JSON.parse(raw);
+                if (typeof v !== 'number' || Date.now() - t > this.CACHE_TTL) return null;
+                return v;
+            } catch (e) {
+                return null;
+            }
+        },
+
+        cacheSet(key, v) {
+            try {
+                localStorage.setItem(key, JSON.stringify({ v, t: Date.now() }));
+            } catch (e) {
+                /* private mode / quota — fine, just no cache */
             }
         },
 
@@ -283,11 +310,20 @@ const Website = {
         async npmDownloads(pkg) {
             if (!pkg) return null;
             // npm's point API only exposes fixed recent windows (last-week/month/year),
-            // so for an all-time total we walk 18-month range segments from npm's
-            // stats epoch (2015-01-10) to today and sum the daily counts.
+            // so for an all-time total we walk 18-month range segments and sum the
+            // daily counts. Segments start at the package's publish date (falling
+            // back to npm's stats epoch, 2015-01-10) to avoid empty-range requests.
+            let start = '2015-01-10';
+            try {
+                const meta = await fetch(`https://registry.npmjs.org/${pkg}`);
+                if (meta.ok) {
+                    const created = ((await meta.json()).time || {}).created;
+                    if (created) start = created.slice(0, 10);
+                }
+            } catch (e) { /* fall back to the stats epoch */ }
             const today = new Date();
             const segments = [];
-            for (let cursor = new Date('2015-01-10'); cursor < today;) {
+            for (let cursor = new Date(start); cursor < today;) {
                 const segStart = new Date(cursor);
                 const segEnd = new Date(cursor);
                 segEnd.setMonth(segEnd.getMonth() + 18);
@@ -324,6 +360,35 @@ const Website = {
             if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
             if (n >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
             return String(n);
+        }
+    },
+
+    // One-click BibTeX copy — each publication carries its entry in an inert
+    // <script type="text/plain" data-bibtex> block; the button copies it and
+    // confirms inline, no popover or extra UI.
+    bibtex: {
+        init() {
+            document.querySelectorAll('.bib-copy').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const content = btn.closest('.paper-content');
+                    const src = content && content.querySelector('script[data-bibtex]');
+                    if (!src || !navigator.clipboard) return;
+                    try {
+                        await navigator.clipboard.writeText(src.textContent.trim() + '\n');
+                    } catch (e) {
+                        return;
+                    }
+                    const label = btn.querySelector('.bib-label');
+                    if (label && !btn.classList.contains('copied')) {
+                        btn.classList.add('copied');
+                        label.textContent = 'Copied!';
+                        setTimeout(() => {
+                            label.textContent = 'BibTeX';
+                            btn.classList.remove('copied');
+                        }, 1600);
+                    }
+                });
+            });
         }
     },
 
@@ -388,6 +453,7 @@ const Website = {
             this.scrollAnimations.init();
             this.lazyVideos.init();
             this.metrics.init();
+            this.bibtex.init();
 
             document.body.classList.add('loaded');
         });

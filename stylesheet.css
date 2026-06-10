@@ -6,7 +6,10 @@
   /* Color System - Professional Academic Theme */
   --primary-color: #0f766e;
   --primary-hover: #0d9488;
-  --highlight-color: #ffffd0;
+
+  /* Scrollbar — neutral thumb so the page-long teal strip doesn't outshout the
+     accent system; teal only on hover */
+  --scrollbar-thumb: #c3c8d0;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -111,6 +114,7 @@
   --text-secondary: #aaaaaa;
   --text-tertiary: #909090;
   --border-color: #333333;
+  --scrollbar-thumb: #3a3e46;
   /* Brighter teal for links/accents so they read on ink */
   --primary-color: #2dd4bf;
   --primary-hover: #5eead4;
@@ -240,6 +244,18 @@ h2::after {
   font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--text-primary);
+  text-align: center;
+  line-height: 1.05;
+}
+
+/* Inline SVG icons (replacing the Font Awesome webfont) — sized and coloured
+   like the <i> glyphs they stand in for */
+.fa-svg {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  fill: currentColor;
 }
 
 /* Inline "highlighted" word in the Publications intro — accent underline, not yellow */
@@ -248,9 +264,6 @@ span.highlight {
   font-weight: 600;
   color: var(--text-primary);
   box-shadow: inset 0 -0.42em 0 var(--accent-soft);
-}
-.dark-mode span.highlight {
-  color: #fff;
 }
     footer {
         padding: 0;
@@ -267,13 +280,10 @@ span.highlight {
     }
     footer > p {
         font-size: var(--fs-sm);
-        color: #666;
+        color: var(--text-secondary);
         margin: 0;
         padding: 24px 0;
         line-height: var(--line-height-base);
-    }
-    .dark-mode footer > p {
-        color: #999;
     }
     body {
         font-family: var(--font-family-base);
@@ -326,14 +336,6 @@ span.highlight {
         padding: 0;
         max-width: 860px;
         margin: 0 auto var(--spacing-section) auto;
-    }
-    .name {
-        text-align: center;
-        font-size: 2.5em;
-        line-height: 1.05;
-    }
-    .highlight {
-        font-weight: bold;
     }
     .profile-section {
         display: flex;
@@ -561,7 +563,7 @@ span.highlight {
     transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.nav-list a i {
+.nav-list a .fa-svg {
     font-size: 0.85em;
     opacity: 0.7;
 }
@@ -577,7 +579,7 @@ span.highlight {
     font-weight: 700;
 }
 
-.nav-list a.active i {
+.nav-list a.active .fa-svg {
     opacity: 1;
 }
 
@@ -733,8 +735,12 @@ span.highlight {
                 transform var(--transition-base), opacity var(--transition-slow);
     position: relative;
     overflow: hidden;
-    /* Revealed on scroll by the IntersectionObserver in app.js (which staggers
-       each card). The card stays hidden until it enters the viewport. */
+}
+
+/* Revealed on scroll by the IntersectionObserver in app.js (which staggers each
+   card). Gated on .js (set by an inline head script) so the content is never
+   hidden for no-JS visitors, crawlers or print. */
+.js .research-paper {
     opacity: 0;
     transform: translateY(24px);
 }
@@ -810,7 +816,7 @@ span.highlight {
     display: none;
 }
 
-.metric i,
+.metric .fa-svg,
 .metric .metric-logo {
     font-size: 0.95em;
     line-height: 1;
@@ -819,10 +825,10 @@ span.highlight {
 
 /* Platform-coloured logos so each source reads at a glance (🤗 carries its own
    colour). GitHub mark flips for contrast in dark mode. */
-.metric[data-metric="github-stars"] i { color: #24292f; }
-.metric[data-metric="npm"] i { color: #cb3837; }
-.metric[data-metric="youtube-views"] i { color: #ff0000; }
-.dark-mode .metric[data-metric="github-stars"] i { color: #e6edf3; }
+.metric[data-metric="github-stars"] .fa-svg { color: #24292f; }
+.metric[data-metric="npm"] .fa-svg { color: #cb3837; }
+.metric[data-metric="youtube-views"] .fa-svg { color: #ff0000; }
+.dark-mode .metric[data-metric="github-stars"] .fa-svg { color: #e6edf3; }
 
 .metric:hover {
     transform: translateY(-1px);
@@ -860,7 +866,7 @@ span.highlight {
     hyphens: auto;
 }
 
-.paper-title a i {
+.paper-title a .fa-svg {
     margin-right: 6px;
     color: var(--primary-color);
 }
@@ -882,7 +888,7 @@ span.highlight {
 
 .paper-authors {
     margin: 0 0 8px 0;
-    color: #666;
+    color: var(--text-secondary);
     font-size: var(--fs-sm);
     line-height: var(--lh-snug);
     word-wrap: break-word;
@@ -914,17 +920,28 @@ span.highlight {
     text-decoration: underline;
 }
 
-.paper-stats {
-    margin: 0 0 8px 0;
+/* One-click BibTeX copy — dressed as just another paper link, no extra chrome */
+.bib-copy {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--fs-sm);
+    line-height: var(--line-height-base);
+    color: var(--primary-color);
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-.paper-description {
-    margin: 0;
-    line-height: var(--line-height-base);
-    color: #444;
-    font-size: var(--fs-md);
-    word-wrap: break-word;
-    hyphens: auto;
+.bib-copy:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.bib-copy.copied {
+    color: var(--text-secondary);
+    cursor: default;
 }
 
 /* ========================================
@@ -991,7 +1008,7 @@ span.highlight {
 }
 
 #honors h3 {
-    color: #333;
+    color: var(--text-primary);
     margin: 24px 0 12px 0;
     font-family: var(--font-display);
     font-size: var(--fs-lg);
@@ -1037,8 +1054,13 @@ span.highlight {
     color: var(--primary-hover);
 }
 
-.news-toggle i {
+.news-toggle .fa-svg {
     font-size: 0.78em;
+    transition: transform var(--transition-fast);
+}
+
+.news-toggle[aria-expanded="true"] .fa-svg {
+    transform: rotate(180deg);
 }
 
 .news-list {
@@ -1053,7 +1075,7 @@ span.highlight {
     padding: 8px 0 8px 20px;
     line-height: var(--line-height-base);
     font-size: var(--fs-md);
-    color: #333;
+    color: var(--text-primary);
 }
 
 .news-list li::before {
@@ -1077,18 +1099,6 @@ span.highlight {
     font-size: var(--fs-sm);
 }
 
-.dark-mode .news-list li {
-    color: #ddd;
-}
-
-.dark-mode .news-date {
-    color: #2dd4bf;
-}
-
-.dark-mode .news-list li::before {
-    background: #2dd4bf;
-}
-
 @media (max-width: 700px) {
     .news-date {
         display: block;
@@ -1097,7 +1107,7 @@ span.highlight {
 }
 
 .activities-content h3 {
-    color: #333;
+    color: var(--text-primary);
     margin: 24px 0 12px 0 !important;
     font-family: var(--font-display);
     font-size: var(--fs-lg);
@@ -1181,7 +1191,7 @@ span.highlight {
 
 .collaboration-item p {
     margin: 0;
-    color: #666;
+    color: var(--text-secondary);
     font-size: var(--fs-sm);
 }
 
@@ -1382,41 +1392,10 @@ span.highlight {
    DARK MODE SUPPORT
    ======================================== */
 
-.dark-mode .research-paper {
-    color: #e0e0e0;
-}
-
 /* Dark highlight: slate card + accent left border (no olive-yellow block) */
 .dark-mode .research-paper.highlight {
     border-color: var(--card-border);
     border-left-color: var(--accent-line);
-}
-
-.dark-mode .collaboration-item {
-    background: #2a2a2a;
-    border-color: #444;
-    color: #e0e0e0;
-}
-
-.dark-mode .paper-authors {
-    color: #aaa;
-}
-
-.dark-mode .paper-description {
-    color: #d8d8d8;
-}
-
-.dark-mode .paper-venue {
-    color: #2dd4bf;
-}
-
-.dark-mode .paper-links a {
-    color: #2dd4bf;
-}
-
-
-.dark-mode .collaboration-item p {
-    color: #aaa;
 }
 
 /* ========================================
@@ -1431,12 +1410,12 @@ input:focus {
     outline-offset: 2px;
 }
 
-/* Loading state */
-body:not(.loaded) {
+/* Loading state — .js-gated so a failed script never leaves the page unscrollable */
+.js body:not(.loaded) {
     overflow: hidden;
 }
 
-body:not(.loaded)::after {
+.js body:not(.loaded)::after {
     content: '';
     position: fixed;
     top: 0;
@@ -1484,22 +1463,23 @@ section {
     color: var(--text-primary);
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — quiet by default, teal only on hover (vars resolve on <html>,
+   which carries the .dark-mode class alongside <body>) */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
+    background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: var(--scrollbar-thumb);
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-hover);
+    background: var(--primary-color);
 }
 
 /* Focus visible for better keyboard navigation */
@@ -1507,6 +1487,33 @@ section {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
+}
+
+/* Print: undo the JS-driven reveal states and drop screen chrome so the page
+   prints/saves-to-PDF complete */
+@media print {
+    .js .research-paper,
+    .js .collaboration-item {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .news-list li[hidden] {
+        display: list-item !important;
+    }
+
+    .grain,
+    .main-navigation,
+    .to-top,
+    .news-toggle,
+    .skip-link,
+    .bib-copy {
+        display: none !important;
+    }
+
+    #main-content {
+        padding-top: 24px;
+    }
 }
 
 /* Reduced motion for users who prefer it */
