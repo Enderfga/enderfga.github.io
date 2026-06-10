@@ -235,7 +235,9 @@ const Website = {
             const id = el.getAttribute('data-repo') || el.getAttribute('data-id') ||
                 el.getAttribute('data-slug') || el.getAttribute('data-pkg') ||
                 el.getAttribute('data-video') || '';
-            return `metric:${el.getAttribute('data-metric')}:${id}`;
+            // v2: bumped to invalidate entries cached before the all-or-nothing
+            // collection fix (a partial undercount could be pinned for the TTL)
+            return `metric-v2:${el.getAttribute('data-metric')}:${id}`;
         },
 
         cacheGet(key) {
@@ -293,16 +295,17 @@ const Website = {
             const items = ((await res.json()).items || [])
                 .filter(i => i.type === 'model' || i.type === 'dataset');
             if (!items.length) return null;
+            // All-or-nothing: all-time downloads only ever grow, so a partial sum
+            // (one item's fetch failing → counted as 0) would read as a drop —
+            // and the cache would pin that undercount for the whole TTL. Any
+            // failed item aborts instead: nothing shown, nothing cached, retried
+            // on the next visit.
             const counts = await Promise.all(items.map(async item => {
                 const kind = item.type === 'dataset' ? 'datasets' : 'models';
-                try {
-                    const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
-                    if (!r.ok) return 0;
-                    const d = await r.json();
-                    return d.downloadsAllTime || d.downloads || 0;
-                } catch (e) {
-                    return 0;
-                }
+                const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
+                if (!r.ok) throw new Error(`metric fetch failed for ${item.id}`);
+                const d = await r.json();
+                return d.downloadsAllTime || d.downloads || 0;
             }));
             return counts.reduce((a, b) => a + b, 0);
         },
