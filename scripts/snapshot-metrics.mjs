@@ -115,7 +115,8 @@ function fetchValue({ metric, id }) {
 }
 
 const html = readFileSync(HTML, 'utf8');
-const prevValues = (existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')).values : null) || {};
+const hadFile = existsSync(OUT);
+const prevValues = (hadFile ? JSON.parse(readFileSync(OUT, 'utf8')).values : null) || {};
 const values = {};
 
 for (const m of parseMetrics(html)) {
@@ -130,5 +131,12 @@ for (const m of parseMetrics(html)) {
     console.log(`${m.key} = ${values[m.key] ?? '(none)'}`);
 }
 
-writeFileSync(OUT, JSON.stringify({ generated: new Date().toISOString(), values }, null, 2) + '\n');
-console.log(`wrote ${OUT} with ${Object.keys(values).length} metric(s)`);
+// Only rewrite when a value actually changed, so the `generated` timestamp alone
+// never produces a daily no-op commit. (Order-independent compare.)
+const canon = o => JSON.stringify(Object.keys(o).sort().reduce((a, k) => (a[k] = o[k], a), {}));
+if (hadFile && canon(values) === canon(prevValues)) {
+    console.log('No value changes — snapshot left untouched.');
+} else {
+    writeFileSync(OUT, JSON.stringify({ generated: new Date().toISOString(), values }, null, 2) + '\n');
+    console.log(`wrote ${OUT} with ${Object.keys(values).length} metric(s)`);
+}
