@@ -285,7 +285,9 @@ const Website = {
             const r = await fetch(`https://huggingface.co/api/${kind}/${id}?expand=downloadsAllTime`);
             if (!r.ok) return null;
             const d = await r.json();
-            return d.downloadsAllTime || d.downloads || null;
+            // All-time only — never fall back to `downloads` (a 30-day rolling
+            // window), or the metric would silently shrink week to week.
+            return d.downloadsAllTime || null;
         },
 
         async hfCollection(slug) {
@@ -305,7 +307,7 @@ const Website = {
                 const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
                 if (!r.ok) throw new Error(`metric fetch failed for ${item.id}`);
                 const d = await r.json();
-                return d.downloadsAllTime || d.downloads || 0;
+                return d.downloadsAllTime || 0;  // all-time only, no 30-day fallback
             }));
             return counts.reduce((a, b) => a + b, 0);
         },
