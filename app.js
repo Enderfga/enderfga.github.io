@@ -210,18 +210,37 @@ const Website = {
     metrics: {
         CACHE_TTL: 6 * 60 * 60 * 1000, // 6h — fresh numbers, instant repeat visits, no rate-limit roulette
 
-        init() {
+        // Numbers are snapshotted daily into data/metrics.json by a GitHub Action,
+        // so most visitors read one static file and hit zero external APIs. The live
+        // per-source fetch below stays as a fallback for anything the snapshot is
+        // missing (e.g. a metric added since the last run, or the file 404ing).
+        snapshot: {},
+
+        async init() {
+            await this.loadSnapshot();
             document.querySelectorAll('[data-metric]').forEach(el => this.load(el));
+        },
+
+        async loadSnapshot() {
+            try {
+                const r = await fetch('data/metrics.json', { cache: 'no-cache' });
+                if (r.ok) this.snapshot = (await r.json()).values || {};
+            } catch (e) {
+                /* no snapshot — every metric falls back to a live fetch */
+            }
         },
 
         async load(el) {
             try {
-                const key = this.cacheKey(el);
-                let value = this.cacheGet(key);
+                let value = this.snapshotGet(el);
                 if (value == null) {
-                    value = await this.fetchValue(el);
-                    if (value == null || value <= 0) return;
-                    this.cacheSet(key, value);
+                    const key = this.cacheKey(el);
+                    value = this.cacheGet(key);
+                    if (value == null) {
+                        value = await this.fetchValue(el);
+                        if (value == null || value <= 0) return;
+                        this.cacheSet(key, value);
+                    }
                 }
                 const valEl = el.querySelector('.metric-val');
                 if (valEl) valEl.textContent = this.humanize(value);
@@ -231,13 +250,21 @@ const Website = {
             }
         },
 
-        cacheKey(el) {
-            const id = el.getAttribute('data-repo') || el.getAttribute('data-id') ||
+        metricId(el) {
+            return el.getAttribute('data-repo') || el.getAttribute('data-id') ||
                 el.getAttribute('data-slug') || el.getAttribute('data-pkg') ||
                 el.getAttribute('data-video') || '';
+        },
+
+        snapshotGet(el) {
+            const v = this.snapshot[`${el.getAttribute('data-metric')}:${this.metricId(el)}`];
+            return typeof v === 'number' && v > 0 ? v : null;
+        },
+
+        cacheKey(el) {
             // v2: bumped to invalidate entries cached before the all-or-nothing
             // collection fix (a partial undercount could be pinned for the TTL)
-            return `metric-v2:${el.getAttribute('data-metric')}:${id}`;
+            return `metric-v2:${el.getAttribute('data-metric')}:${this.metricId(el)}`;
         },
 
         cacheGet(key) {

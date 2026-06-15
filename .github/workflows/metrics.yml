@@ -1,0 +1,38 @@
+name: Snapshot Metrics
+
+# Fetch GitHub/HF/npm/YouTube numbers once a day and commit data/metrics.json,
+# so visitors read a static file instead of each hammering those APIs on page load.
+on:
+  schedule:
+    - cron: '0 4 * * *'   # daily 04:00 UTC (12:00 SGT)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch metrics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/snapshot-metrics.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet data/metrics.json; then
+            git add data/metrics.json
+            git commit -m "chore: refresh metrics snapshot"
+            git push
+          else
+            echo "No metric changes."
+          fi
