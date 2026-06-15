@@ -46,21 +46,40 @@ jobs:
 
         # AoE 时区 (UTC-12) - 会议 deadline 通常以此为准
         AoE = datetime.timezone(datetime.timedelta(hours=-12))
-        
+
         # 用 AoE 时区计算"今天"
         now_aoe = datetime.datetime.now(AoE)
         today_aoe = now_aoe.date()
-        
+
         # 同时显示新加坡时间供参考
         SGT = datetime.timezone(datetime.timedelta(hours=8))
         now_sgt = datetime.datetime.now(SGT)
-        
-        lines = [
+
+        header = [
             f"📅 每周会议截稿提醒（Weekly Conference Deadlines Update）",
             f"📆 更新时间：{now_sgt.strftime('%Y-%m-%d %H:%M')} SGT",
             f"⏰ 剩余时间按 AoE 时区计算（UTC-12，比新加坡晚 20 小时）",
+            f"🔮 标记 = 官方未公布，按往年规律推算的预计截稿日，仅供提前规划，以官方为准",
             ""
         ]
+
+        official = []   # (days, block)
+        predicted = []  # (days, block)
+
+        def shift_year(d, n):
+            try:
+                return d.replace(year=d.year + n)
+            except ValueError:  # 2 月 29 日等情况
+                return d.replace(year=d.year + n, day=28)
+
+        def urgency_tag(days):
+            if days == 0:
+                return "🔴 今天截止！"
+            if days <= 3:
+                return "🟠 紧急"
+            if days <= 7:
+                return "🟡 本周内"
+            return ""
 
         def parse_conf(path):
             with open(path) as f:
@@ -70,8 +89,9 @@ jobs:
 
             for item in items:
                 name = item.get("title", path.split("/")[-1].split(".")[0].upper())
-                confs = item.get("confs", [])
-                for c in confs:
+                # 收集该会议历届所有"正文截稿"条目
+                entries = []  # (conf_year, deadline_date, place)
+                for c in item.get("confs", []):
                     year = c.get("year")
                     place = c.get("place", "")
                     for tl in c.get("timeline", []):
@@ -79,36 +99,55 @@ jobs:
                         abs_ddl = tl.get("abstract_deadline")
                         if ddl and (not abs_ddl or abs_ddl != ddl):
                             try:
-                                # 解析 deadline 日期
-                                date = datetime.datetime.fromisoformat(ddl.split()[0]).date()
-                                # 用 AoE 时区计算剩余天数
-                                days = (date - today_aoe).days
-                                if days >= 0:
-                                    date_str = date.strftime("%Y年%m月%d日")
-                                    # 添加紧急程度提示
-                                    if days == 0:
-                                        urgency = "🔴 今天截止！"
-                                    elif days <= 3:
-                                        urgency = "🟠 紧急"
-                                    elif days <= 7:
-                                        urgency = "🟡 本周内"
-                                    else:
-                                        urgency = ""
-                                    
-                                    lines.append(
-                                        f"🎯 {name} {year} {urgency}\n"
-                                        f"🗓️ 截稿日期：{date_str}（剩余 {days} 天）\n"
-                                        f"📍 举办地：{place}\n"
-                                    )
+                                d = datetime.datetime.fromisoformat(ddl.split()[0]).date()
+                                entries.append((year, d, place))
                             except Exception:
-                                lines.append(
-                                    f"🎯 {name} {year}\n"
-                                    f"🗓️ 截稿日期：{ddl}\n"
-                                    f"📍 举办地：{place}\n"
-                                )
+                                pass
+                if not entries:
+                    return
+
+                entries.sort(key=lambda e: e[1])
+                future = [e for e in entries if (e[1] - today_aoe).days >= 0]
+
+                if future:
+                    # 有官方公布的未来 ddl —— 全部如实列出
+                    for year, d, place in future:
+                        days = (d - today_aoe).days
+                        official.append((days,
+                            f"🎯 {name} {year} {urgency_tag(days)}\n"
+                            f"🗓️ 截稿日期：{d.strftime('%Y年%m月%d日')}（剩余 {days} 天）\n"
+                            f"📍 举办地：{place}\n"
+                        ))
+                else:
+                    # 没有未来官方 ddl —— 用最近一届按年推算下一届
+                    last_year, last_d, _ = entries[-1]
+                    n = 1
+                    pred = shift_year(last_d, n)
+                    while (pred - today_aoe).days < 0 and n < 5:
+                        n += 1
+                        pred = shift_year(last_d, n)
+                    if (pred - today_aoe).days < 0:
+                        return
+                    days = (pred - today_aoe).days
+                    pred_year = (last_year + n) if isinstance(last_year, int) else last_year
+                    predicted.append((days,
+                        f"🔮 {name} {pred_year}（预计，官方未公布）\n"
+                        f"🗓️ 预计截稿：约 {pred.strftime('%Y年%m月')}（按往年 {last_d.strftime('%m月%d日')} 规律推算，剩约 {days} 天）\n"
+                        f"📍 举办地：待定\n"
+                    ))
 
         for path in sorted(glob.glob("data/*.yml")):
             parse_conf(path)
+
+        lines = list(header)
+        if official:
+            lines.append("──────── ✅ 官方已公布 ────────\n")
+            lines.extend(b for _, b in sorted(official, key=lambda x: x[0]))
+        else:
+            lines.append("（本周暂无已公布的 upcoming 官方截稿日）\n")
+        if predicted:
+            lines.append("──────── 🔮 预计（待官方确认）────────\n")
+            lines.extend(b for _, b in sorted(predicted, key=lambda x: x[0]))
 
         body = "\n".join(lines)
         print("=== 邮件内容预览 ===\n" + body + "\n==================")
