@@ -1,13 +1,13 @@
 {
-  "generated": "2026-06-18T08:45:42.760Z",
+  "generated": "2026-06-19T09:04:38.286Z",
   "values": {
-    "github-stars:NVlabs/AnyFlow": 367,
-    "hf-collection:nvidia/anyflow": 745,
-    "hf-dataset:Enderfga/HumanRefiner": 1078,
+    "github-stars:NVlabs/AnyFlow": 368,
+    "hf-collection:nvidia/anyflow": 827,
+    "hf-dataset:Enderfga/HumanRefiner": 1083,
     "hf-dataset:ChartThinker/Chart-Sum-QA": 1625,
     "youtube-views:qJLv6ltFw04": 4767518,
-    "github-stars:Enderfga/claw-orchestrator": 509,
-    "npm:@enderfga/claw-orchestrator": 3442,
+    "github-stars:Enderfga/claw-orchestrator": 510,
+    "npm:@enderfga/claw-orchestrator": 3468,
     "github-stars:Alpha-VLLM/LLaMA2-Accessory": 2805
   }
 }
