@@ -301,10 +301,18 @@ const Website = {
 
         async githubStars(repo) {
             if (!repo) return null;
-            const r = await fetch(`https://api.github.com/repos/${repo}`);
-            if (!r.ok) return null;
-            const d = await r.json();
-            return typeof d.stargazers_count === 'number' ? d.stargazers_count : null;
+            // One repo, or a comma-separated list summed into a single count (e.g.
+            // two co-developed repos shown as one number). All-or-nothing: any failed
+            // repo aborts the sum, so a partial undercount is never shown or cached.
+            let total = 0;
+            for (const name of repo.split(',').map(s => s.trim()).filter(Boolean)) {
+                const r = await fetch(`https://api.github.com/repos/${name}`);
+                if (!r.ok) return null;
+                const d = await r.json();
+                if (typeof d.stargazers_count !== 'number') return null;
+                total += d.stargazers_count;
+            }
+            return total || null;
         },
 
         async hfDownloads(kind, id) {

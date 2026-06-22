@@ -35,10 +35,17 @@ const GH_HEADERS = {
 };
 
 async function githubStars(repo) {
-    const r = await fetch(`https://api.github.com/repos/${repo}`, { headers: GH_HEADERS });
-    if (!r.ok) return null;
-    const d = await r.json();
-    return typeof d.stargazers_count === 'number' ? d.stargazers_count : null;
+    // Comma-separated repos sum into one count (co-developed projects shown as a
+    // single number); all-or-nothing so a failed repo never yields an undercount.
+    let total = 0;
+    for (const name of repo.split(',').map(s => s.trim()).filter(Boolean)) {
+        const r = await fetch(`https://api.github.com/repos/${name}`, { headers: GH_HEADERS });
+        if (!r.ok) return null;
+        const d = await r.json();
+        if (typeof d.stargazers_count !== 'number') return null;
+        total += d.stargazers_count;
+    }
+    return total || null;
 }
 
 async function hfDownloads(kind, id) {
