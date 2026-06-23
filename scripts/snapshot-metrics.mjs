@@ -102,6 +102,19 @@ async function npmDownloads(pkg) {
     return total > 0 ? total : null;
 }
 
+async function pypiDownloads(pkg) {
+    // All-time downloads from pepy.tech. Needs a free API key (PEPY_API_KEY) — the
+    // public PyPI API exposes no download counts and pypistats is rolling-window only.
+    // CI-only: the key lives as a GitHub Actions secret and never reaches the page,
+    // which just reads the number snapshotted here. No key → skip (keep prev value).
+    const key = process.env.PEPY_API_KEY;
+    if (!key) return null;
+    const r = await fetch(`https://api.pepy.tech/api/v2/projects/${pkg}`, { headers: { 'X-API-Key': key } });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return typeof d.total_downloads === 'number' ? d.total_downloads : null;
+}
+
 async function youtubeViews(id) {
     const r = await fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${id}`);
     if (!r.ok) return null;
@@ -116,6 +129,7 @@ function fetchValue({ metric, id }) {
         case 'hf-model': return hfDownloads('models', id);
         case 'hf-collection': return hfCollection(id);
         case 'npm': return npmDownloads(id);
+        case 'pypi-downloads': return pypiDownloads(id);
         case 'youtube-views': return youtubeViews(id);
         default: return Promise.resolve(null);
     }

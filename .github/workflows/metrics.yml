@@ -23,6 +23,7 @@ jobs:
       - name: Fetch metrics
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PEPY_API_KEY: ${{ secrets.PEPY_API_KEY }}
         run: node scripts/snapshot-metrics.mjs
 
       - name: Commit if changed

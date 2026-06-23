@@ -294,6 +294,9 @@ const Website = {
                 case 'hf-model':     return this.hfDownloads('models', el.getAttribute('data-id'));
                 case 'hf-collection':return this.hfCollection(el.getAttribute('data-slug'));
                 case 'npm':          return this.npmDownloads(el.getAttribute('data-pkg'));
+                // PyPI all-time needs an API key that can't ship in client JS — this
+                // metric is snapshot-only (filled by CI). No live fallback on purpose.
+                case 'pypi-downloads':return Promise.resolve(null);
                 case 'youtube-views':return this.youtubeViews(el.getAttribute('data-video'));
                 default:             return Promise.resolve(null);
             }
