@@ -32,12 +32,12 @@
     <link rel="canonical" href="https://enderfga.cn/">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="stylesheet.css?v=20260623" as="style">
+    <link rel="preload" href="stylesheet.css?v=20260629h" as="style">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="stylesheet.css?v=20260623">
+    <link rel="stylesheet" href="stylesheet.css?v=20260629h">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -620,19 +620,11 @@
             <h2>Acknowledgements</h2>
             <p>Grateful to the mentors and teams I've worked with along the way.</p>
             
-            <div class="collaborations-grid">
-                <div class="collaboration-item">
-                    <img src="images/miko.webp"
-                         alt="MikoAI Ltd. logo" 
-                         loading="lazy"
-                         class="organization-logo">
-                    <h3><a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI Ltd.</a></h3>
-                    <p>
-                        <a href="https://mikomiko.ai/" target="_blank" rel="noopener">@Yuan Ma</a><br>
-                        <a href="https://github.com/Jason-Chi-xx" target="_blank" rel="noopener">@Zhaosheng Chi</a>
-                    </p>
-                </div>
-                
+            <div class="ack-carousel">
+                <div class="ack-stage">
+                    <button type="button" class="ack-btn ack-prev" aria-label="Previous acknowledgement"><svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-chevron-down"/></svg></button>
+                    <div class="ack-window">
+                        <div class="ack-track">
                 <div class="collaboration-item">
                     <img src="images/utopai_logo.webp"
                          alt="Utopai Studios logo"
@@ -644,9 +636,21 @@
                         <a href="https://scholar.google.com/citations?user=G03EzSMAAAAJ&hl=en" target="_blank" rel="noopener">@Zijian He</a>
                     </p>
                 </div>
-                
+
                 <div class="collaboration-item">
-                    <img src="images/gvlab.jpeg" 
+                    <img src="images/miko.webp"
+                         alt="MikoAI Ltd. logo"
+                         loading="lazy"
+                         class="organization-logo">
+                    <h3><a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI Ltd.</a></h3>
+                    <p>
+                        <a href="https://mikomiko.ai/" target="_blank" rel="noopener">@Yuan Ma</a><br>
+                        <a href="https://github.com/Jason-Chi-xx" target="_blank" rel="noopener">@Zhaosheng Chi</a>
+                    </p>
+                </div>
+
+                <div class="collaboration-item">
+                    <img src="images/gvlab.jpeg"
                          alt="OpenGVLab, Shanghai AI Lab logo" 
                          loading="lazy"
                          class="organization-logo">
@@ -668,7 +672,11 @@
                         <a href="https://scholar.google.com/citations?user=OEPMQEMAAAAJ&hl=en" target="_blank" rel="noopener">@Jianhua Han</a>
                     </p>
                 </div>
-                
+                        </div>
+                    </div>
+                    <button type="button" class="ack-btn ack-next" aria-label="Next acknowledgement"><svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-chevron-down"/></svg></button>
+                </div>
+                <div class="ack-dots" aria-label="Choose acknowledgement"></div>
             </div>
         </section>
         
@@ -676,6 +684,6 @@
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a> — please grab it from the repo, not by scraping this page.</p>
         </footer>
     </main>
-    <script src="app.js?v=20260623" defer></script>
+    <script src="app.js?v=20260629h" defer></script>
 </body>
 </html>

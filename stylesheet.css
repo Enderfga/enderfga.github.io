@@ -1007,6 +1007,13 @@ span.highlight {
     margin-bottom: 10px;
 }
 
+/* The italic category labels (e.g. "NLP:") slant into the colon that follows.
+   A little trailing space keeps the last letter clear of it. */
+.reviewer-list li > em,
+.ta-list li > em {
+    padding-right: 0.18em;
+}
+
 #honors h3 {
     color: var(--text-primary);
     margin: 24px 0 12px 0;
@@ -1124,11 +1131,142 @@ span.highlight {
    COLLABORATIONS GRID
    ======================================== */
 
-.collaborations-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+/* Acknowledgements carousel — one card at a time, arrows + dots + swipe (JS).
+   Without JS the cards just stack (track is plain block, arrows/dots hidden). */
+.ack-carousel {
     margin: 24px 0 0 0;
+}
+
+.ack-stage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ack-window {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.js .ack-window {
+    overflow: hidden;
+}
+
+.js .ack-track {
+    display: flex;
+    gap: 0;
+    position: relative;
+    transition: transform var(--transition-base);
+    will-change: transform;
+}
+
+/* Peek layout: the active card is centered at full strength; its neighbours
+   stay partly visible but dimmed and slightly shrunk, hinting "swipe for more". */
+.js .ack-track > .collaboration-item {
+    flex: 0 0 50%;
+    min-width: 0;
+    opacity: 0.5;
+    transform: scale(0.9);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.js .ack-track > .collaboration-item.is-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* During the seamless wrap snap, kill the track AND card transitions so the new
+   centred card doesn't visibly scale 0.9 → 1 (the "it jumped again" pulse). */
+.js .ack-track.ack-snap,
+.js .ack-track.ack-snap > .collaboration-item {
+    transition: none;
+}
+
+/* no-JS fallback: stacked cards need vertical spacing */
+.ack-track > .collaboration-item + .collaboration-item {
+    margin-top: 16px;
+}
+
+.js .ack-track > .collaboration-item + .collaboration-item {
+    margin-top: 0;
+}
+
+.ack-btn {
+    flex: 0 0 auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.js .ack-btn {
+    display: inline-flex;
+}
+
+.ack-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--card-hover-border);
+    transform: scale(1.08);
+}
+
+.ack-prev .fa-svg {
+    transform: rotate(90deg);
+}
+
+.ack-next .fa-svg {
+    transform: rotate(-90deg);
+}
+
+.ack-dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.js .ack-dots {
+    display: flex;
+}
+
+.ack-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--card-border);
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.ack-dot[aria-current="true"] {
+    background: var(--accent-line);
+    transform: scale(1.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .ack-track,
+    .js .ack-track > .collaboration-item {
+        transition: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .js .ack-track > .collaboration-item {
+        flex-basis: 74%;
+    }
+    .ack-btn {
+        width: 34px;
+        height: 34px;
+    }
 }
 
 .collaboration-item {
@@ -1306,11 +1444,6 @@ span.highlight {
         font-size: 1.05em;
     }
 
-    .collaborations-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
     .collaboration-item {
         padding: 16px 12px;
     }
@@ -1369,10 +1502,6 @@ span.highlight {
         font-size: 1rem;
     }
 
-    .collaborations-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
 
     .to-top {
         right: 12px;

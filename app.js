@@ -93,13 +93,9 @@ const Website = {
             document.querySelectorAll('.research-paper').forEach(paper => {
                 observer.observe(paper);
             });
-
-            document.querySelectorAll('.collaboration-item').forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(30px)';
-                item.style.transition = 'all 0.6s ease';
-                observer.observe(item);
-            });
+            // Acknowledgement cards live in a carousel (one shown at a time), so we
+            // don't fade them on scroll — off-screen slides would never intersect
+            // and would stay invisible. The carousel manages their reveal instead.
         }
     },
 
@@ -117,6 +113,128 @@ const Website = {
                 btn.setAttribute('aria-expanded', String(!open));
                 if (label) label.textContent = open ? 'Show more' : 'Show less';
             });
+        }
+    },
+
+    // Acknowledgements carousel — centred card at full strength, dimmed neighbours
+    // peeking on both sides, infinite loop (arrows / dots / swipe / ← →). Degrades
+    // to a plain stack without JS (arrows/dots are CSS-hidden).
+    acknowledgements: {
+        init() {
+            const carousel = document.querySelector('.ack-carousel');
+            if (!carousel) return;
+            const track = carousel.querySelector('.ack-track');
+            const win = carousel.querySelector('.ack-window');
+            const prev = carousel.querySelector('.ack-prev');
+            const next = carousel.querySelector('.ack-next');
+            const dotsWrap = carousel.querySelector('.ack-dots');
+            const real = track ? Array.from(track.children) : [];
+            if (real.length <= 1) {
+                if (prev) prev.hidden = true;
+                if (next) next.hidden = true;
+                return;
+            }
+
+            // Infinite loop. At the wrap boundary a CLONE briefly sits in the centre
+            // before we snap to its real twin, so that clone needs a neighbour on each
+            // side too. Cloning the last PAD reals before the first and the first PAD
+            // reals after the last (PAD = 2) keeps BOTH peeks filled through the wrap,
+            // so the snap is visually identical — no flicker.
+            const N = real.length;
+            const PAD = 2;
+            const clone = (node) => {
+                const c = node.cloneNode(true);
+                c.setAttribute('aria-hidden', 'true');
+                return c;
+            };
+            real.slice(N - PAD).forEach((node) => track.insertBefore(clone(node), real[0]));
+            real.slice(0, PAD).forEach((node) => track.appendChild(clone(node)));
+            const children = Array.from(track.children);
+
+            let pos = PAD;          // track-child index at centre (first real card)
+            let animating = false;
+
+            const dots = real.map((_, i) => {
+                const d = document.createElement('button');
+                d.type = 'button';
+                d.className = 'ack-dot';
+                d.setAttribute('aria-label', `Go to acknowledgement ${i + 1}`);
+                d.addEventListener('click', () => goLogical(i));
+                dotsWrap.appendChild(d);
+                return d;
+            });
+
+            const render = (animate) => {
+                if (!animate) track.classList.add('ack-snap'); // freeze track + card transitions
+                track.style.transition = animate ? '' : 'none';
+                const child = children[pos];
+                const x = win.clientWidth / 2 - (child.offsetLeft + child.offsetWidth / 2);
+                track.style.transform = `translateX(${x}px)`;
+                children.forEach((c, ci) => c.classList.toggle('is-active', ci === pos));
+                const logical = (pos - PAD + N) % N;
+                dots.forEach((d, di) => d.setAttribute('aria-current', String(di === logical)));
+                if (!animate) {
+                    void track.offsetWidth; // flush the instant jump, then re-enable transitions
+                    track.classList.remove('ack-snap');
+                    track.style.transition = '';
+                }
+            };
+
+            const step = (dir) => {
+                if (animating) return;
+                animating = true;
+                pos += dir;
+                render(true);
+            };
+
+            const goLogical = (i) => {
+                const target = i + PAD;
+                if (animating || target === pos) return;
+                animating = true;
+                pos = target;
+                render(true);
+            };
+
+            track.addEventListener('transitionend', (e) => {
+                if (e.propertyName !== 'transform') return;
+                if (pos >= PAD + N) { pos -= N; render(false); }   // into trailing clones → snap back
+                else if (pos < PAD) { pos += N; render(false); }   // into leading clones → snap forward
+                animating = false;
+            });
+
+            prev.addEventListener('click', () => step(-1));
+            next.addEventListener('click', () => step(1));
+
+            carousel.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') step(-1);
+                else if (e.key === 'ArrowRight') step(1);
+            });
+
+            // Click a peeking neighbour to advance toward it (ignore link clicks)
+            children.forEach((c, ci) => {
+                c.addEventListener('click', (e) => {
+                    if (ci !== pos && !e.target.closest('a')) step(ci < pos ? -1 : 1);
+                });
+            });
+
+            // Touch swipe
+            let startX = null;
+            win.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+            win.addEventListener('touchend', (e) => {
+                if (startX == null) return;
+                const dx = e.changedTouches[0].clientX - startX;
+                if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+                startX = null;
+            }, { passive: true });
+
+            // Slide widths are %-based, so re-centre (without animating) on resize.
+            let raf = null;
+            window.addEventListener('resize', () => {
+                if (raf) cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(() => render(false));
+            }, { passive: true });
+
+            render(false);
         }
     },
 
@@ -491,6 +609,7 @@ const Website = {
             this.navigation.init();
             this.backToTop.init();
             this.news.init();
+            this.acknowledgements.init();
             this.theme.init();
             this.profileImage.init();
             this.scrollAnimations.init();
