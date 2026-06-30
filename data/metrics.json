@@ -1,12 +1,12 @@
 {
-  "generated": "2026-06-29T08:57:02.028Z",
+  "generated": "2026-06-30T07:52:15.878Z",
   "values": {
-    "github-stars:NVlabs/AnyFlow": 380,
-    "hf-collection:nvidia/anyflow": 984,
-    "hf-dataset:Enderfga/HumanRefiner": 1105,
+    "github-stars:NVlabs/AnyFlow": 381,
+    "hf-collection:nvidia/anyflow": 985,
+    "hf-dataset:Enderfga/HumanRefiner": 1107,
     "hf-dataset:ChartThinker/Chart-Sum-QA": 1638,
-    "github-stars:Rath-Team/OpenRath": 911,
-    "pypi-downloads:openrath": 1975,
+    "github-stars:Rath-Team/OpenRath": 977,
+    "pypi-downloads:openrath": 1979,
     "youtube-views:qJLv6ltFw04": 4767729,
     "github-stars:Enderfga/claw-orchestrator": 519,
     "npm:@enderfga/claw-orchestrator": 3797,
