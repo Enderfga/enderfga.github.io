@@ -1,15 +1,15 @@
 {
-  "generated": "2026-06-30T07:52:15.878Z",
+  "generated": "2026-07-01T08:10:34.311Z",
   "values": {
-    "github-stars:NVlabs/AnyFlow": 381,
-    "hf-collection:nvidia/anyflow": 985,
+    "github-stars:NVlabs/AnyFlow": 380,
+    "hf-collection:nvidia/anyflow": 987,
     "hf-dataset:Enderfga/HumanRefiner": 1107,
-    "hf-dataset:ChartThinker/Chart-Sum-QA": 1638,
-    "github-stars:Rath-Team/OpenRath": 977,
-    "pypi-downloads:openrath": 1979,
-    "youtube-views:qJLv6ltFw04": 4767729,
-    "github-stars:Enderfga/claw-orchestrator": 519,
-    "npm:@enderfga/claw-orchestrator": 3797,
-    "github-stars:Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter": 8725
+    "hf-dataset:ChartThinker/Chart-Sum-QA": 1639,
+    "github-stars:Rath-Team/OpenRath": 1007,
+    "pypi-downloads:openrath": 1988,
+    "youtube-views:qJLv6ltFw04": 4767763,
+    "github-stars:Enderfga/claw-orchestrator": 520,
+    "npm:@enderfga/claw-orchestrator": 3804,
+    "github-stars:Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter": 8723
   }
 }
