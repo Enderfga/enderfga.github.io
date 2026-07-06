@@ -13,13 +13,22 @@ jobs:
     - name: Download target conference YAMLs
       run: |
         mkdir -p data
-        base=https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI
-        # Fetch one at a time with retries and a small gap: firing all 14 back-to-back
+        base=https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference
+        # ccfddl splits conferences into category folders; SIGGRAPH/ACM MM/3DV live
+        # under CG, the rest under AI.
+        ai="iclr nips icml ijcai aaai cvpr iccv eccv rss icra corl emnlp acl naacl wacv bmvc accv iros aistats colm uai eacl"
+        cg="sig siga mm 3dv"
+        # Fetch one at a time with retries and a small gap: firing them all back-to-back
         # gets rate-limited (HTTP 429), and --fail keeps a rate-limit/404 body from
         # being saved as a bogus .yml. A miss is tolerated — the mailer skips it.
-        for c in iclr nips icml ijcai aaai cvpr iccv eccv rss icra corl emnlp acl naacl; do
-          curl -sL --fail --retry 3 --retry-delay 5 "$base/$c.yml" -o "data/$c.yml" \
-            || { echo "WARN: failed to fetch $c.yml"; rm -f "data/$c.yml"; }
+        for c in $ai; do
+          curl -sL --fail --retry 3 --retry-delay 5 "$base/AI/$c.yml" -o "data/$c.yml" \
+            || { echo "WARN: failed to fetch AI/$c.yml"; rm -f "data/$c.yml"; }
+          sleep 1
+        done
+        for c in $cg; do
+          curl -sL --fail --retry 3 --retry-delay 5 "$base/CG/$c.yml" -o "data/$c.yml" \
+            || { echo "WARN: failed to fetch CG/$c.yml"; rm -f "data/$c.yml"; }
           sleep 1
         done
 
@@ -46,6 +55,8 @@ jobs:
         # 用 AoE 时区计算"今天"
         now_aoe = datetime.datetime.now(AoE)
         today_aoe = now_aoe.date()
+
+        PRED_HORIZON = 400  # 预测只详列 ~400 天内的；更远的（如下一届 ECCV）折叠成一行
 
         # 同时显示新加坡时间供参考
         SGT = datetime.timezone(datetime.timedelta(hours=8))
@@ -132,7 +143,7 @@ jobs:
                         return
                     days = (pred - today_aoe).days
                     pred_year = (last_year + n) if isinstance(last_year, int) else last_year
-                    predicted.append((days,
+                    predicted.append((days, f"{name} {pred_year}",
                         f"🔮 {name} {pred_year}（预计，官方未公布）\n"
                         f"🗓️ 预计截稿：约 {pred.strftime('%Y年%m月')}（按往年 {last_d.strftime('%m月%d日')} 规律推算，剩约 {days} 天）\n"
                         f"📍 举办地：待定\n"
@@ -153,8 +164,14 @@ jobs:
         else:
             lines.append("（本周暂无已公布的 upcoming 官方截稿日）\n")
         if predicted:
-            lines.append("──────── 🔮 预计（待官方确认）────────\n")
-            lines.extend(b for _, b in sorted(predicted, key=lambda x: x[0]))
+            near = sorted([p for p in predicted if p[0] <= PRED_HORIZON], key=lambda x: x[0])
+            far = sorted([p for p in predicted if p[0] > PRED_HORIZON], key=lambda x: x[0])
+            if near:
+                lines.append("──────── 🔮 预计（待官方确认）────────\n")
+                lines.extend(b for _, _, b in near)
+            if far:
+                lines.append(f"──────── 🔮 更远预计（>{PRED_HORIZON}天，仅列名）────────")
+                lines.append("、".join(f"{nm}（剩约{d}天）" for d, nm, _ in far) + "\n")
         if skipped:
             lines.append(f"\n⚠️ 本周有 {len(skipped)} 个数据源未取到（可能被 GitHub 限流），未纳入：{', '.join(sorted(skipped))}")
 
