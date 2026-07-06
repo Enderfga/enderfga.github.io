@@ -13,20 +13,15 @@ jobs:
     - name: Download target conference YAMLs
       run: |
         mkdir -p data
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iclr.yml -o data/iclr.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/nips.yml -o data/nips.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icml.yml -o data/icml.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/ijcai.yml -o data/ijcai.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/aaai.yml -o data/aaai.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/cvpr.yml -o data/cvpr.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/iccv.yml -o data/iccv.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/eccv.yml -o data/eccv.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/rss.yml -o data/rss.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/icra.yml -o data/icra.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/corl.yml -o data/corl.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/emnlp.yml -o data/emnlp.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/acl.yml -o data/acl.yml
-        curl -sL https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI/naacl.yml -o data/naacl.yml
+        base=https://raw.githubusercontent.com/ccfddl/ccf-deadlines/main/conference/AI
+        # Fetch one at a time with retries and a small gap: firing all 14 back-to-back
+        # gets rate-limited (HTTP 429), and --fail keeps a rate-limit/404 body from
+        # being saved as a bogus .yml. A miss is tolerated — the mailer skips it.
+        for c in iclr nips icml ijcai aaai cvpr iccv eccv rss icra corl emnlp acl naacl; do
+          curl -sL --fail --retry 3 --retry-delay 5 "$base/$c.yml" -o "data/$c.yml" \
+            || { echo "WARN: failed to fetch $c.yml"; rm -f "data/$c.yml"; }
+          sleep 1
+        done
 
     - name: Install dependencies
       shell: zsh {0}
@@ -43,6 +38,7 @@ jobs:
         conda activate base
         python <<'PYCODE'
         import yaml, datetime, glob
+        from collections import Counter
 
         # AoE 时区 (UTC-12) - 会议 deadline 通常以此为准
         AoE = datetime.timezone(datetime.timedelta(hours=-12))
@@ -88,7 +84,13 @@ jobs:
             items = data if isinstance(data, list) else [data]
 
             for item in items:
+                if not isinstance(item, dict):
+                    continue
                 name = item.get("title", path.split("/")[-1].split(".")[0].upper())
+                # 推断届数间隔（一年一届=1；ECCV/ICCV 等双年展=2），别把双年会当成每年一届
+                conf_years = sorted({c.get("year") for c in item.get("confs", []) if isinstance(c.get("year"), int)})
+                year_diffs = [b - a for a, b in zip(conf_years, conf_years[1:]) if b > a]
+                period = max(1, Counter(year_diffs).most_common(1)[0][0]) if year_diffs else 1
                 # 收集该会议历届所有"正文截稿"条目
                 entries = []  # (conf_year, deadline_date, place)
                 for c in item.get("confs", []):
@@ -121,10 +123,10 @@ jobs:
                 else:
                     # 没有未来官方 ddl —— 用最近一届按年推算下一届
                     last_year, last_d, _ = entries[-1]
-                    n = 1
+                    n = period
                     pred = shift_year(last_d, n)
-                    while (pred - today_aoe).days < 0 and n < 5:
-                        n += 1
+                    while (pred - today_aoe).days < 0 and n < 5 * period:
+                        n += period
                         pred = shift_year(last_d, n)
                     if (pred - today_aoe).days < 0:
                         return
@@ -136,8 +138,13 @@ jobs:
                         f"📍 举办地：待定\n"
                     ))
 
+        skipped = []
         for path in sorted(glob.glob("data/*.yml")):
-            parse_conf(path)
+            try:
+                parse_conf(path)
+            except Exception as e:
+                skipped.append(path.split("/")[-1])
+                print(f"WARN: skipped {path}: {type(e).__name__}: {e}")
 
         lines = list(header)
         if official:
@@ -148,6 +155,8 @@ jobs:
         if predicted:
             lines.append("──────── 🔮 预计（待官方确认）────────\n")
             lines.extend(b for _, b in sorted(predicted, key=lambda x: x[0]))
+        if skipped:
+            lines.append(f"\n⚠️ 本周有 {len(skipped)} 个数据源未取到（可能被 GitHub 限流），未纳入：{', '.join(sorted(skipped))}")
 
         body = "\n".join(lines)
         print("=== 邮件内容预览 ===\n" + body + "\n==================")
