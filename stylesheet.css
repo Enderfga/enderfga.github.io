@@ -1502,6 +1502,12 @@ span.highlight {
         flex: none;
     }
 
+    /* Name and photo stay centred, but running prose reads left-aligned —
+       centred multi-line paragraphs are ragged on both edges and slower to read */
+    .profile-text p {
+        text-align: left;
+    }
+
     .profile-image {
         max-width: 180px;
         margin: 0 auto;
