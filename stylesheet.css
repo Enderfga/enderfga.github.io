@@ -168,6 +168,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* Clear the fixed nav (~57px) when jumping to #news / #research / #products,
+     via nav clicks or an inbound deep link — otherwise the section heading
+     lands underneath the bar */
+  scroll-padding-top: 72px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

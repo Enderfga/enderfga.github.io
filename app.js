@@ -618,6 +618,10 @@ const Website = {
             this.bibtex.init();
 
             document.body.classList.add('loaded');
+
+            // Every init above succeeded, so the .js-gated reveals will actually
+            // happen — disarm the blank-page safety net armed in <head>.
+            clearTimeout(window.__jsGateFallback);
         });
     }
 };

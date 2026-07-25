@@ -23,8 +23,17 @@
     
     <title>Guian Fang (方桂安)</title>
     <!-- Mark JS availability before first paint: card reveal animations are gated
-         on .js so content stays visible for no-JS visitors, print and crawlers -->
-    <script>document.documentElement.classList.add('js');</script>
+         on .js so content stays visible for no-JS visitors, print and crawlers.
+         Everything .js hides is only ever un-hidden by app.js, so if app.js never
+         runs — 404, stale cache, extension block, or a throw — the page would show
+         empty Publications/Products sections and a body stuck at overflow:hidden.
+         Arm a safety net that drops the class; app.js clears it once it is live. -->
+    <script>
+    document.documentElement.classList.add('js');
+    window.__jsGateFallback = setTimeout(function () {
+        document.documentElement.classList.remove('js');
+    }, 2500);
+    </script>
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f7f9">
@@ -32,12 +41,12 @@
     <link rel="canonical" href="https://enderfga.cn/">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="stylesheet.css?v=20260725a" as="style">
+    <link rel="preload" href="stylesheet.css?v=20260725b" as="style">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="stylesheet.css?v=20260725a">
+    <link rel="stylesheet" href="stylesheet.css?v=20260725b">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -726,6 +735,6 @@
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a> — please grab it from the repo, not by scraping this page.</p>
         </footer>
     </main>
-    <script src="app.js?v=20260725a" defer></script>
+    <script src="app.js?v=20260725b" defer></script>
 </body>
 </html>
