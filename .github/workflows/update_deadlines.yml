@@ -193,8 +193,6 @@ jobs:
         username: ${{ secrets.MAIL_USER }}
         password: ${{ secrets.MAIL_PASS }}
         subject: "Weekly AI/CV/NLP Conference Deadlines"
-        # Extra recipients live in their own secret so MAIL_TO never has to be
-        # retyped (secrets are write-only). Unset MAIL_TO2 => no trailing comma.
-        to: ${{ secrets.MAIL_TO }}${{ secrets.MAIL_TO2 && format(', {0}', secrets.MAIL_TO2) || '' }}
+        to: ${{ secrets.MAIL_TO }}
         from: "GitHub Actions <${{ secrets.MAIL_USER }}>"
         body: file://body.txt
