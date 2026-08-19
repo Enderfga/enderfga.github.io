@@ -1269,7 +1269,9 @@ span.highlight {
 .ack-dots {
     display: none;
     justify-content: center;
-    gap: 8px;
+    /* No gap: each dot carries 8px of transparent padding on every side, so
+       adjacent dots already sit 16px apart visually. */
+    gap: 0;
     margin-top: 16px;
 }
 
@@ -1278,18 +1280,25 @@ span.highlight {
 }
 
 .ack-dot {
+    /* The dot reads as 8px but has to be tappable: content-box keeps the
+       painted circle at 8px while 8px of padding grows the hit area to the
+       24x24 minimum. background-clip stops the padding from being painted. */
+    box-sizing: content-box;
     width: 8px;
     height: 8px;
-    padding: 0;
+    padding: 8px;
     border: none;
     border-radius: 50%;
-    background: var(--card-border);
+    background-color: var(--card-border);
+    background-clip: content-box;
     cursor: pointer;
     transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
 .ack-dot[aria-current="true"] {
-    background: var(--accent-line);
+    /* background-color, not the `background` shorthand: the shorthand would
+       reset background-clip and paint the whole 24px hit area. */
+    background-color: var(--accent-line);
     transform: scale(1.3);
 }
 
