@@ -1437,6 +1437,12 @@ span.highlight {
         flex: none;
         max-width: 100%;
         min-width: auto;
+        /* The base rule sets align-self:flex-start to top-align the media next
+           to the text. Once .research-paper flips to a column here, that same
+           declaration governs the horizontal axis instead and the column
+           shrink-to-fits. img/video still size themselves from their intrinsic
+           dimensions, but <lite-youtube> has none and collapses to ~4px. */
+        align-self: stretch;
     }
 
     .paper-content {
