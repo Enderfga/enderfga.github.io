@@ -942,6 +942,15 @@ span.highlight {
     font-size: var(--fs-sm);
 }
 
+/* Quiet adoption note under the venue line — where the work was upstreamed.
+   Each name links to its merged PR so the claim is checkable. */
+.paper-adoption {
+    margin: -4px 0 10px 0;
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-snug);
+}
+
 .paper-links {
     margin: 0 0 12px 0;
     display: flex;
