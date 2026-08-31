@@ -942,6 +942,19 @@ span.highlight {
     font-size: var(--fs-sm);
 }
 
+/* NVIDIA green, sampled from nvidia.com (#76B900). The true brand green only
+   manages 2.21:1 on the light canvas, so light mode uses the darkest-passing
+   shade of the same hue (4.7:1) and dark mode keeps the real one (7.6:1).
+   Not a link: no underline, no hover. */
+.brand-nvidia {
+    color: #4E7A00;
+    font-weight: 600;
+}
+
+.dark-mode .brand-nvidia {
+    color: #76B900;
+}
+
 /* Quiet adoption note under the venue line — where the work was upstreamed.
    Each name links to its merged PR so the claim is checkable. */
 .paper-adoption {
