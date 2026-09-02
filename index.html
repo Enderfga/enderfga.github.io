@@ -242,11 +242,12 @@
             <h2>News</h2>
             <div class="news-list-wrap">
                 <ul class="news-list" id="news-list">
+                    <li><span class="news-date">2026.09</span> Released <a href="https://junchao-cs.github.io/SolarWM-Web/" target="_blank" rel="noopener">SolarWM</a> — open data and scalable training for long-horizon video world models.</li>
                     <li><span class="news-date">2026.06</span> Two papers — <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> and <a href="https://arxiv.org/abs/2606.01399" target="_blank" rel="noopener">PAI-Studio</a> — accepted to <em>ECCV 2026</em>.</li>
                     <li><span class="news-date">2026.05</span> Open-sourced <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> with <span class="brand-nvidia">NVIDIA</span> — any-step video diffusion via <strong>on-policy distillation</strong>.</li>
                     <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
-                    <li><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
+                    <li class="news-extra" hidden><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
                     <li class="news-extra" hidden><span class="news-date">2025.06</span> Launched <a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI</a> — an ACG (anime / comic / manga) creation tool, powered by <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a>.</li>
                     <li class="news-extra" hidden><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
                     <li class="news-extra" hidden><span class="news-date">2024.07</span> <a href="https://github.com/Enderfga/HumanRefiner" target="_blank" rel="noopener">HumanRefiner</a> accepted to <em>ECCV 2024</em>.</li>
@@ -263,6 +264,44 @@
             <p>Representative works are <span class="highlight">highlighted</span>. * denotes equal contribution. Full list on <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener">Google Scholar</a> · <a href="data/cv.pdf" target="_blank" rel="noopener">CV</a>.</p>
 
             <div class="research-content">
+                <article class="research-paper">
+                    <div class="paper-media">
+                        <img src='images/solarwm.webp' width="2000" height="1144"
+                             alt="SolarWM teaser — one framework generating diverse long-horizon interactive worlds"
+                             loading="lazy">
+                    </div>
+                    <div class="paper-content">
+                        <h3 class="paper-title">
+                            <a href="https://arxiv.org/abs/2609.02886" target="_blank" rel="noopener">
+                                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-file-lines"/></svg> SolarWM:<br>Open Data and Scalable Training for Long-Horizon Video World Models
+                            </a>
+                        </h3>
+                        <p class="paper-authors">
+                            Junchao Huang, <strong>Guian Fang</strong>, Shengju Qian, Xianghao Kong, Zhuoran Zhao, Wei Huang, Yihua Du, Zixin Zhang, Justin Cui, Yuchao Gu, Yukang Chen, Xinting Hu, Tianyu He, Shaoshuai Shi, Zhuotao Tian, Xin Wang, Mike Zheng Shou, Li Jiang
+                        </p>
+                        <p class="paper-venue"><em>Preprint</em>, 2026</p>
+                        <div class="paper-links">
+                            <a href="https://arxiv.org/abs/2609.02886" target="_blank" rel="noopener">Paper</a>
+                            <a href="https://junchao-cs.github.io/SolarWM-Web/" target="_blank" rel="noopener">Project page</a>
+                            <a href="https://huggingface.co/junchaoh-cs/SolarWM" target="_blank" rel="noopener">Models</a>
+                            <a href="https://huggingface.co/datasets/junchaoh-cs/SolarWM-Data" target="_blank" rel="noopener">Dataset</a>
+                            <a href="https://github.com/Junchao-cs/SolarWM" target="_blank" rel="noopener">Code</a>
+                            <button type="button" class="bib-copy" aria-label="Copy BibTeX to clipboard"><span class="bib-label">BibTeX</span></button>
+                        </div>
+                        <script type="text/plain" data-bibtex>
+@misc{huang2026solarwm,
+  title  = {SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models},
+  author = {Junchao Huang and Guian Fang and Shengju Qian and Xianghao Kong and Zhuoran Zhao and Wei Huang and Yihua Du and Zixin Zhang and Justin Cui and Yuchao Gu and Yukang Chen and Xinting Hu and Tianyu He and Shaoshuai Shi and Zhuotao Tian and Xin Wang and Mike Zheng Shou and Li Jiang},
+  year   = {2026},
+  eprint = {2609.02886},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url    = {https://arxiv.org/abs/2609.02886},
+}
+                        </script>
+                    </div>
+                </article>
+
                 <article class="research-paper highlight">
                     <div class="paper-media">
                         <video class="paper-video"
@@ -660,51 +699,9 @@
             </div>
         </section>
         
-        <section id="honors">
-            <h2>Honors &amp; Awards</h2>
-            <h3>Scholarships</h3>
-            <ul class="honors-list">
-                <li><strong>Li Xuerou Fund Scholarship</strong> (2023)</li>
-                <li><strong>National Scholarship</strong> (2023)</li>
-                <li><strong>SYSU Outstanding Student Scholarship — 1st Class</strong> (2023)</li>
-                <li><strong>Huawei Intelligent Foundation Scholarship</strong> (2022)</li>
-                <li><strong>National Encouragement Scholarship</strong> (2022)</li>
-            </ul>
-            <h3>Competitions</h3>
-            <ul class="honors-list">
-                <li><strong>1st Place</strong>, National College Computer Ability Challenge (2023)</li>
-                <li><strong>2nd Place</strong>, Asia and Pacific Mathematical Contest in Modeling (2022)</li>
-                <li><strong>Silver Medal</strong>, China Collegiate Algorithm Design &amp; Programming Challenge Contest (2022)</li>
-                <li><strong>2nd Place</strong>, Social Computing Innovation Competition (2022)</li>
-            </ul>
-        </section>
-        
-        <section id="activities">
-            <h2>Activities &amp; Services</h2>
-            <div class="activities-content">
-                <h3>Conference Reviewer</h3>
-                <ul class="reviewer-list">
-                    <li><em>CV</em>: <abbr title="European Conference on Computer Vision">ECCV</abbr>, <abbr title="Conference on Computer Vision and Pattern Recognition">CVPR</abbr>, <abbr title="International Conference on Computer Vision">ICCV</abbr></li>
-                    <li><em>ML</em>: <abbr title="Conference on Neural Information Processing Systems">NeurIPS</abbr>, <abbr title="International Conference on Learning Representations">ICLR</abbr>, <abbr title="International Conference on Machine Learning">ICML</abbr></li>
-                    <li><em>AI</em>: <abbr title="Association for the Advancement of Artificial Intelligence">AAAI</abbr>, <abbr title="International Conference on Artificial Intelligence and Statistics">AISTATS</abbr></li>
-                    <li><em>NLP</em>: <abbr title="ACL Rolling Review">ACL Rolling Review (ACL, EMNLP, NAACL, EACL)</abbr></li>
-                </ul>
-                <h3>Workshop Organizer</h3>
-                <ul class="organization-list">
-                    <li>LOVEU Workshop @ CVPR 2024: <em>Long-form Video Understanding Towards Multimodal AI Assistant and Copilot</em></li>
-                </ul>
-                <h3>Teaching Assistant</h3>
-                <ul class="ta-list">
-                    <li><em>EE3703</em>: Machine Learning with Applications</li>
-                    <li><em>EE4309</em>: Robot Perception</li>
-                    <li><em>EE5106</em>: Advanced Robotics</li>
-                    <li><em>EE6733</em>: Advanced Topics on Vision and Machine Learning</li>
-                </ul>
-            </div>
-        </section>
         <section id="acknowledgements">
-            <h2>Acknowledgements</h2>
-            <p>Grateful to the mentors and teams I've worked with along the way.</p>
+            <h2>Collaborations</h2>
+            <p>The teams I've worked with, and my closest collaborators at each.</p>
             
             <div class="ack-carousel">
                 <div class="ack-stage">
@@ -791,6 +788,40 @@
                 </div>
                 <div class="ack-dots" aria-label="Choose acknowledgement"></div>
             </div>
+        </section>
+        
+        <section id="activities">
+            <h2>Activities &amp; Services</h2>
+            <div class="activities-content">
+                <h3>Conference Reviewer</h3>
+                <ul class="reviewer-list">
+                    <li><em>CV</em>: <abbr title="European Conference on Computer Vision">ECCV</abbr>, <abbr title="Conference on Computer Vision and Pattern Recognition">CVPR</abbr>, <abbr title="International Conference on Computer Vision">ICCV</abbr></li>
+                    <li><em>ML</em>: <abbr title="Conference on Neural Information Processing Systems">NeurIPS</abbr>, <abbr title="International Conference on Learning Representations">ICLR</abbr>, <abbr title="International Conference on Machine Learning">ICML</abbr></li>
+                    <li><em>AI</em>: <abbr title="Association for the Advancement of Artificial Intelligence">AAAI</abbr>, <abbr title="International Conference on Artificial Intelligence and Statistics">AISTATS</abbr></li>
+                    <li><em>NLP</em>: <abbr title="ACL Rolling Review">ACL Rolling Review (ACL, EMNLP, NAACL, EACL)</abbr></li>
+                </ul>
+                <h3>Workshop Organizer</h3>
+                <ul class="organization-list">
+                    <li>LOVEU Workshop @ CVPR 2024: <em>Long-form Video Understanding Towards Multimodal AI Assistant and Copilot</em></li>
+                </ul>
+                <h3>Teaching Assistant</h3>
+                <ul class="ta-list">
+                    <li><em>EE3703</em>: Machine Learning with Applications</li>
+                    <li><em>EE4309</em>: Robot Perception</li>
+                    <li><em>EE5106</em>: Advanced Robotics</li>
+                    <li><em>EE6733</em>: Advanced Topics on Vision and Machine Learning</li>
+                </ul>
+            </div>
+        </section>
+        <section id="honors">
+            <h2>Honors &amp; Awards</h2>
+            <ul class="honors-list">
+                <li><strong>Li Xuerou Fund Scholarship</strong> (2023)</li>
+                <li><strong>National Scholarship</strong> (2023)</li>
+                <li><strong>SYSU Outstanding Student Scholarship — 1st Class</strong> (2023)</li>
+                <li><strong>Huawei Intelligent Foundation Scholarship</strong> (2022)</li>
+                <li><strong>National Encouragement Scholarship</strong> (2022)</li>
+            </ul>
         </section>
         
         <footer role="contentinfo">
