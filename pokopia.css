@@ -269,9 +269,10 @@
     position: relative;
 }
 
-.pokopia-mode .avatar-clickable img {
+/* Both stacked photos share their frame in every theme and viewport. */
+.pokopia-mode .profile-image img {
     border: 4px solid var(--pk-green) !important;
-    border-radius: 50% !important;
+    border-radius: var(--profile-radius) !important;
     box-shadow:
         0 5px 0 0 var(--pk-border-accent),
         0 0 0 4px var(--pk-sunshine),

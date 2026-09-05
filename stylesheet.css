@@ -90,7 +90,7 @@
   /* Soft macOS-style elevation — two layers (ambient + key), low opacity, downward */
   --card-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 6px 18px rgba(17, 24, 39, 0.05);
   --card-shadow-hover: 0 2px 5px rgba(17, 24, 39, 0.06), 0 16px 34px rgba(17, 24, 39, 0.10);
-  --grain-opacity: 0.03;
+  --grain-opacity: 0.018;
   --grain-blend: normal;
   --accent-line: var(--primary-color);
   --accent-soft: rgba(15, 118, 110, 0.07);
@@ -138,7 +138,7 @@
   /* Dark elevation — deeper, since ambient shadow reads less on ink */
   --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.28);
   --card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 38px rgba(0, 0, 0, 0.5);
-  --grain-opacity: 0.04;
+  --grain-opacity: 0.025;
   --grain-blend: overlay;
   --accent-line: #2dd4bf;
   --accent-soft: rgba(45, 212, 191, 0.1);
@@ -251,15 +251,15 @@ h2::after {
 }
 
 .name {
-  padding-top: var(--spacing-lg);
+  padding-top: 0;
   margin: 0;
   font-family: var(--font-display);
   font-optical-sizing: auto;
-  font-size: var(--font-size-xxl);
+  font-size: 2.75rem;
   font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--text-primary);
-  text-align: center;
+  text-align: left;
   line-height: 1.05;
 }
 
@@ -353,33 +353,86 @@ span.highlight {
         margin: 0 auto var(--spacing-section) auto;
     }
     .profile-section {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 40px;
-        margin-bottom: var(--spacing-section);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 184px;
+        grid-template-areas: 'heading photo' 'bio photo' 'contact photo';
+        gap: 20px 56px;
+        align-items: start;
+        margin-bottom: 56px;
+    }
+    .profile-heading {
+        grid-area: heading;
+    }
+    .profile-direction {
+        margin: 12px 0 0;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: -0.015em;
     }
     .profile-text {
-        flex: 1;
+        grid-area: bio;
+        min-width: 0;
     }
     .profile-text p {
-        margin: 0 0 16px 0;
-        max-width: 640px;
-        line-height: var(--lh-relaxed);
+        margin: 0 0 14px;
+        max-width: 700px;
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+    .profile-text .profile-background {
+        color: var(--text-secondary);
+        font-size: var(--fs-sm);
+        margin-top: 20px;
+    }
+    .profile-background strong {
+        font-weight: 500;
+    }
+    .profile-contact {
+        grid-area: contact;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .profile-contact a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        transition: color var(--transition-fast), background-color var(--transition-fast);
+    }
+    .profile-contact a:hover {
+        color: var(--primary-color);
+        background-color: var(--accent-soft);
+    }
+    .profile-contact a::after {
+        display: none;
+    }
+    .profile-contact .fa-svg {
+        width: 20px;
+        height: 20px;
     }
     .profile-text p:last-child {
         margin-bottom: 0;
     }
     .profile-image {
-        flex: 0 0 200px;
-        max-width: 200px;
+        --profile-radius: 12px;
+        --profile-height: 244px;
+        grid-area: photo;
+        width: 184px;
+        max-width: 184px;
+        margin-top: 4px;
         position: relative;
     }
     .avatar-clickable {
         cursor: pointer;
         position: relative;
         z-index: 1;
-        border-radius: var(--radius-full);
+        border-radius: var(--profile-radius);
         display: block;
         width: 100%;
         padding: 0;
@@ -392,15 +445,17 @@ span.highlight {
     }
     .profile-image img {
         width: 100%;
-        height: auto;
+        height: var(--profile-height);
+        object-fit: cover;
+        object-position: center 28%;
         display: block;
-        border-radius: var(--radius-full);
-        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--profile-radius);
+        box-shadow: none;
         transition: all var(--transition-base);
         will-change: transform;
     }
     .avatar-clickable img {
-        border: 3px solid var(--border-color);
         position: relative;
         z-index: 1;
     }
@@ -418,8 +473,8 @@ span.highlight {
         50% { transform: scale(1.3) rotate(15deg); opacity: 0.7; }
     }
     .profile-image:hover img {
-        transform: scale(1.05) rotate(2deg);
-        box-shadow: var(--shadow-xl);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
     }
     .dark-mode {
         background-color: var(--bg-primary);
@@ -533,7 +588,7 @@ span.highlight {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding: 9px 28px;
+    padding: 0;
     border-bottom: 1px solid var(--nav-border);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
     transition: padding var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
@@ -544,8 +599,23 @@ span.highlight {
 }
 
 .main-navigation.scrolled {
-    padding: 7px 28px;
+    padding: 0;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 18px rgba(17, 24, 39, 0.06);
+}
+
+.navigation-inner {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.navigation-inner .nav-list {
+    margin-left: -13px;
 }
 
 .dark-mode .main-navigation.scrolled {
@@ -1425,7 +1495,6 @@ span.highlight {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
 }
 
 /* ========================================
@@ -1437,6 +1506,7 @@ span.highlight {
    the reclaimed width goes to the demo media, not the text. */
 @media (min-width: 1200px) {
     #main-content,
+    .navigation-inner,
     section,
     #research {
         max-width: 1040px;
@@ -1481,14 +1551,33 @@ span.highlight {
     }
 
     .main-navigation {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 8px 12px;
-        gap: 6px 12px;
+        padding: 0;
     }
 
     .main-navigation.scrolled {
-        padding: 6px 12px;
+        padding: 0;
+    }
+
+    .navigation-inner {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .navigation-inner .nav-list {
+        margin-left: -6px;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    .navigation-inner .nav-list a {
+        padding: 7px 6px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .navigation-inner .nav-list .fa-svg,
+    .navigation-inner .theme-icon {
+        display: none;
     }
 
     .nav-list {
@@ -1531,9 +1620,25 @@ span.highlight {
     }
 
     .profile-section {
-        flex-direction: column;
-        text-align: center;
-        gap: 24px;
+        grid-template-columns: minmax(0, 1fr) 92px;
+        grid-template-areas: 'heading photo' 'bio bio' 'contact contact';
+        gap: 24px 16px;
+        text-align: left;
+        margin-bottom: 44px;
+    }
+
+    .profile-heading {
+        align-self: center;
+    }
+
+    .profile-heading .name {
+        font-size: 2.2rem;
+    }
+
+    .profile-direction {
+        font-size: 1rem;
+        margin-top: 10px;
+        line-height: 1.5;
     }
 
     .profile-text,
@@ -1543,15 +1648,16 @@ span.highlight {
         flex: none;
     }
 
-    /* Name and photo stay centred, but running prose reads left-aligned —
-       centred multi-line paragraphs are ragged on both edges and slower to read */
+    /* Running prose spans the full mobile grid beneath the name and portrait. */
     .profile-text p {
         text-align: left;
     }
 
     .profile-image {
-        max-width: 180px;
-        margin: 0 auto;
+        --profile-radius: 9px;
+        --profile-height: 122px;
+        max-width: 92px;
+        margin: 0;
     }
 
     .to-top {
@@ -1569,7 +1675,7 @@ span.highlight {
 
 @media (max-width: 480px) {
     #main-content {
-        padding: 108px 12px 24px 12px;
+        padding: 88px 18px 24px;
     }
 
     .research-content {
@@ -1693,6 +1799,253 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
+}
+
+/* Selected work shares the acknowledgements' centred, peeking composition.
+   Enhancement is local: without JS, all three cards remain readable. */
+#selected {
+    margin-bottom: 52px;
+}
+
+.selected-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.selected-heading h2 {
+    margin-bottom: 0;
+}
+
+.work-count {
+    display: none;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+}
+
+.work-count span {
+    color: var(--text-tertiary);
+    margin-left: 5px;
+}
+
+.work-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.work-card {
+    min-width: 0;
+    padding: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+}
+
+.work-cover {
+    display: block;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--card-border);
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.work-cover img,
+.work-cover video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.work-caption {
+    min-height: 78px;
+    padding: 17px 3px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.work-caption h3 {
+    margin: 0 0 4px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.work-caption h3 a {
+    color: var(--text-primary);
+    font: inherit;
+}
+
+.work-caption p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.work-award {
+    color: var(--primary-color);
+    margin-left: 8px;
+}
+
+.work-detail {
+    flex-shrink: 0;
+    font-size: 12px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.work-detail span {
+    font-size: 19px;
+}
+
+.work-controls {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 20px;
+}
+
+.work-choices {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.work-choice {
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: 13px;
+    min-height: 44px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 180ms, border-color 180ms;
+}
+
+.work-choice:hover,
+.work-choice[aria-pressed="true"] {
+    color: var(--primary-color);
+}
+
+.work-choice[aria-pressed="true"] {
+    border-bottom-color: var(--primary-color);
+}
+
+.work-arrow {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 180ms, border-color 180ms;
+}
+
+.work-arrow:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.work-prev .fa-svg { transform: rotate(90deg); }
+.work-next .fa-svg { transform: rotate(-90deg); }
+
+.work-carousel.is-ready .work-window {
+    overflow: hidden;
+    touch-action: pan-y;
+    padding: 8px 0 14px;
+}
+
+.work-carousel.is-ready .work-track {
+    display: flex;
+    position: relative;
+    gap: 20px;
+    transition: transform 380ms cubic-bezier(0.22, 0.68, 0.22, 1);
+}
+
+.work-carousel.is-ready .work-card {
+    flex: 0 0 54%;
+    opacity: 0.72;
+    transform: scale(0.93);
+    cursor: pointer;
+    transition: opacity 380ms, transform 380ms, border-color 380ms, box-shadow 380ms;
+}
+
+.work-carousel.is-ready .work-card.is-active {
+    opacity: 1;
+    transform: scale(1);
+    border-color: var(--accent-soft-border);
+    box-shadow: 0 6px 20px rgba(17, 24, 39, 0.06);
+    cursor: auto;
+}
+
+.work-card.is-before .work-caption > div {
+    margin-left: auto;
+    text-align: right;
+}
+
+.work-card.is-before .work-detail,
+.work-card.is-after .work-detail { display: none; }
+
+.work-carousel.is-ready .work-controls { display: flex; }
+.work-track.work-snap,
+.work-track.work-snap .work-card { transition: none !important; }
+.work-card[data-clone] { display: none; }
+.work-carousel.is-ready .work-card[data-clone] { display: block; }
+
+.research-paper[id] { scroll-margin-top: 90px; }
+
+@media (max-width: 768px) {
+    .work-carousel.is-ready .work-card { flex-basis: 80%; }
+    .work-track { grid-template-columns: 1fr; }
+    .work-controls { gap: 12px; }
+    .work-choices { gap: 18px; }
+}
+
+@media (max-width: 480px) {
+    .selected-heading { margin-bottom: 20px; }
+    .work-carousel.is-ready .work-card { flex-basis: 76%; transform: scale(0.97); }
+    .work-carousel.is-ready .work-card.is-active { transform: scale(1); }
+    .work-carousel.is-ready .work-track { gap: 8px; }
+    .work-card { padding: 10px; border-radius: 11px; }
+    .work-caption { padding-top: 13px; min-height: 76px; gap: 8px; }
+    .work-caption h3 { font-size: 1.05rem; }
+    .work-detail { font-size: 0; gap: 0; }
+    .work-detail span { font-size: 20px; }
+    .work-controls { gap: 10px; margin-top: 10px; }
+    .work-arrow { width: 32px; height: 36px; }
+    .work-choices { flex: 1; justify-content: space-evenly; gap: 8px; }
+    .work-choice { font-size: 12px; }
+}
+
+@media print {
+    #selected { display: none; }
+}
+
+@media (max-width: 360px) {
+    .navigation-inner { padding-inline: 12px; gap: 4px; }
+    .navigation-inner .nav-list { margin-left: -4px; }
+    .navigation-inner .nav-list a { font-size: 11px; padding-inline: 4px; }
+    .profile-section { grid-template-columns: minmax(0, 1fr) 72px; column-gap: 12px; }
+    .profile-heading .name { font-size: 1.875rem; }
+    .profile-direction { font-size: 0.9rem; }
+    .profile-image { --profile-height: 96px; max-width: 72px; }
 }
 
 /* Focus visible for better keyboard navigation */

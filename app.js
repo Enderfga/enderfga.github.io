@@ -116,6 +116,171 @@ const Website = {
         }
     },
 
+    // Manual selected-work carousel. Clones keep both neighbours visible at the
+    // wrap; a bounded timer also completes transitions under reduced motion.
+    selectedWork: {
+        init() {
+            const carousel = document.querySelector('.work-carousel');
+            if (!carousel) return;
+            const win = carousel.querySelector('.work-window');
+            const track = carousel.querySelector('.work-track');
+            const cards = Array.from(track.children);
+            const choices = carousel.querySelector('.work-choices');
+            const status = carousel.querySelector('.work-status');
+            const count = document.querySelector('.work-count');
+            const total = cards.length;
+            if (total < 2) return;
+
+            const pad = 2;
+            const clone = card => {
+                const copy = card.cloneNode(true);
+                copy.dataset.clone = 'true';
+                copy.setAttribute('aria-hidden', 'true');
+                // Peeking/wrap copies only need a poster, not another video stream.
+                copy.querySelectorAll('video').forEach(video => {
+                    const poster = document.createElement('img');
+                    poster.src = video.poster;
+                    poster.alt = video.getAttribute('aria-label') || '';
+                    video.replaceWith(poster);
+                });
+                return copy;
+            };
+            cards.slice(-pad).forEach(card => track.insertBefore(clone(card), cards[0]));
+            cards.slice(0, pad).forEach(card => track.appendChild(clone(card)));
+            const children = Array.from(track.children);
+            let position = pad;
+            let busy = false;
+            let timer;
+            const logicalIndex = () => (position - pad + total) % total;
+            const videos = Array.from(track.querySelectorAll('video'));
+            let inView = false;
+            let visibleVideo = null;
+            const syncVideos = () => {
+                const active = inView && !document.hidden ? children[position].querySelector('video') : null;
+                if (active === visibleVideo) return;
+                visibleVideo = active;
+                videos.forEach(video => {
+                    if (video !== active || prefersReducedMotion()) video.pause();
+                });
+                if (active && !prefersReducedMotion()) active.play().catch(() => {});
+            };
+
+            const buttons = cards.map((card, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'work-choice';
+                button.textContent = card.dataset.name;
+                button.setAttribute('aria-label', `Show ${card.dataset.name}`);
+                button.addEventListener('click', () => move(index + pad));
+                choices.appendChild(button);
+                return button;
+            });
+
+            const render = animate => {
+                track.classList.toggle('work-snap', !animate);
+                const active = children[position];
+                track.style.transform = `translateX(${win.clientWidth / 2 - active.offsetLeft - active.offsetWidth / 2}px)`;
+                const index = logicalIndex();
+                children.forEach((card, i) => {
+                    card.classList.toggle('is-active', i === position);
+                    card.classList.toggle('is-before', i === position - 1);
+                    card.classList.toggle('is-after', i === position + 1);
+                    const accessible = !card.dataset.clone && i === index + pad;
+                    card.setAttribute('aria-hidden', String(!accessible));
+                    card.querySelectorAll('a, video').forEach(link => { link.tabIndex = accessible ? 0 : -1; });
+                    const video = card.querySelector('video');
+                    if (video) video.controls = i === position;
+                });
+                buttons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+                count.innerHTML = `${String(index + 1).padStart(2, '0')} <span>/ ${String(total).padStart(2, '0')}</span>`;
+                if (!animate) {
+                    void track.offsetWidth;
+                    track.classList.remove('work-snap');
+                }
+                syncVideos();
+            };
+
+            const finish = () => {
+                clearTimeout(timer);
+                if (position >= total + pad) position -= total;
+                else if (position < pad) position += total;
+                render(false);
+                busy = false;
+            };
+
+            const move = next => {
+                if (busy || next === position) return;
+                busy = true;
+                position = next;
+                const animate = !prefersReducedMotion();
+                render(animate);
+                status.textContent = `${cards[logicalIndex()].dataset.name}, ${logicalIndex() + 1} of ${total}`;
+                if (animate) timer = setTimeout(finish, 460);
+                else finish();
+            };
+
+            track.addEventListener('transitionend', event => {
+                if (event.target === track && event.propertyName === 'transform' && busy) finish();
+            });
+            carousel.querySelector('.work-prev').addEventListener('click', () => move(position - 1));
+            carousel.querySelector('.work-next').addEventListener('click', () => move(position + 1));
+            carousel.addEventListener('keydown', event => {
+                if (event.target.tagName === 'VIDEO') return;
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    move(position + (event.key === 'ArrowLeft' ? -1 : 1));
+                    if (event.target.closest('.work-card')) buttons[logicalIndex()].focus({ preventScroll: true });
+                }
+            });
+            children.forEach((card, index) => {
+                card.addEventListener('click', event => {
+                    if (index !== position) {
+                        event.preventDefault();
+                        move(position + (index < position ? -1 : 1));
+                    }
+                });
+            });
+
+            let touch = null;
+            win.addEventListener('touchstart', event => {
+                const video = event.target.closest('video');
+                if (video && event.touches[0].clientY > video.getBoundingClientRect().bottom - 40) {
+                    touch = null;
+                    return;
+                }
+                touch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+            }, { passive: true });
+            win.addEventListener('touchend', event => {
+                if (!touch) return;
+                const dx = event.changedTouches[0].clientX - touch.x;
+                const dy = event.changedTouches[0].clientY - touch.y;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) move(position + (dx < 0 ? 1 : -1));
+                touch = null;
+            }, { passive: true });
+            win.addEventListener('touchcancel', () => { touch = null; }, { passive: true });
+
+            let resizeFrame;
+            window.addEventListener('resize', () => {
+                cancelAnimationFrame(resizeFrame);
+                resizeFrame = requestAnimationFrame(finish);
+            }, { passive: true });
+            carousel.classList.add('is-ready');
+            count.style.display = 'inline';
+            render(false);
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(entries => {
+                    inView = entries[0].isIntersecting && entries[0].intersectionRatio >= 0.25;
+                    syncVideos();
+                }, { threshold: 0.25 }).observe(win);
+            }
+            document.addEventListener('visibilitychange', syncVideos);
+            window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', () => {
+                visibleVideo = null;
+                syncVideos();
+            });
+        }
+    },
+
     // Acknowledgements carousel — centred card at full strength, dimmed neighbours
     // peeking on both sides, infinite loop (arrows / dots / swipe / ← →). Degrades
     // to a plain stack without JS (arrows/dots are CSS-hidden).
@@ -609,6 +774,7 @@ const Website = {
             this.navigation.init();
             this.backToTop.init();
             this.news.init();
+            this.selectedWork.init();
             this.acknowledgements.init();
             this.theme.init();
             this.profileImage.init();
@@ -642,7 +808,7 @@ function loadPokopiaStyles() {
     pokopiaStylesPromise = new Promise((resolve, reject) => {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'pokopia.css';
+        link.href = 'pokopia.css?v=20260905e';
         link.dataset.pokopiaStyles = 'true';
         link.onload = resolve;
         link.onerror = reject;

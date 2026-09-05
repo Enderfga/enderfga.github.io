@@ -41,12 +41,12 @@
     <link rel="canonical" href="https://enderfga.cn/">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="stylesheet.css?v=20260828a" as="style">
+    <link rel="preload" href="stylesheet.css?v=20260905e" as="style">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="stylesheet.css?v=20260828a">
+    <link rel="stylesheet" href="stylesheet.css?v=20260905e">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -115,54 +115,13 @@
 
     <!-- Navigation Section -->
     <nav class="main-navigation" aria-label="Main navigation">
+        <div class="navigation-inner">
         <ul class="nav-list">
             <li><a href="#news" id="nav-news"><svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-newspaper"/></svg> News</a></li>
             <li><a href="#research" id="nav-research"><svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-file-lines"/></svg> Publications</a></li>
             <li><a href="#products" id="nav-products"><svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-rocket"/></svg> Products</a></li>
         </ul>
 
-        <div class="social-icons" role="complementary" aria-label="Social media and contact links">
-            <a href="mailto:guianfang@u.nus.edu"
-               aria-label="Send email to Guian Fang">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-envelope"/></svg>
-                <span class="sr-only">Email</span>
-            </a>
-            <a href="data/cv.pdf"
-               aria-label="Download CV (PDF)"
-               target="_blank"
-               rel="noopener">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-file-lines"/></svg>
-                <span class="sr-only">CV</span>
-            </a>
-            <a href="https://scholar.google.com/citations?hl=en&user=2z4sraUAAAAJ"
-               aria-label="View Google Scholar profile" 
-               target="_blank" 
-               rel="noopener">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-graduation-cap"/></svg>
-                <span class="sr-only">Google Scholar</span>
-            </a>
-            <a href="https://www.linkedin.com/in/enderfga" 
-               aria-label="View LinkedIn profile" 
-               target="_blank" 
-               rel="noopener">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg>
-                <span class="sr-only">LinkedIn</span>
-            </a>
-            <a href="https://twitter.com/Enderfga" 
-               aria-label="View Twitter profile" 
-               target="_blank" 
-               rel="noopener">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-twitter"/></svg>
-                <span class="sr-only">Twitter</span>
-            </a>
-            <a href="https://github.com/Enderfga" 
-               aria-label="View GitHub profile" 
-               target="_blank" 
-               rel="noopener">
-                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>
-                <span class="sr-only">GitHub</span>
-            </a>
-            
             <div class="theme-switcher" role="group" aria-label="Theme selection">
                 <button type="button"
                         class="theme-icon"
@@ -209,12 +168,23 @@
 
     <main id="main-content">
         <section class="profile-section">
-            <div class="profile-text">
+            <div class="profile-heading">
                 <h1 class="name">Guian Fang</h1>
+                <p class="profile-direction">Video Generation &amp; World Models</p>
+            </div>
+            <div class="profile-text">
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
-                <p>Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
                 <p>My research centers on <strong>generative video models</strong> and <strong>world models</strong> for long-form visual generation, currently on few-step distillation, long-horizon memory, and <strong>embodied intelligence</strong>.</p>
                 <p>I also work on agents that produce visual content rather than only consume it, and on runtime infrastructure for coding agents. I am open to collaboration.</p>
+                <p class="profile-background">Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
+            </div>
+            <div class="profile-contact" aria-label="Contact and profiles">
+                <a href="mailto:guianfang@u.nus.edu" aria-label="Email" title="Email"><svg class="fa-svg" aria-hidden="true"><use href="#i-envelope"/></svg></a>
+                <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg class="fa-svg" aria-hidden="true"><use href="#i-graduation-cap"/></svg></a>
+                <a href="https://github.com/Enderfga" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg class="fa-svg" aria-hidden="true"><use href="#i-github"/></svg></a>
+                <a href="data/cv.pdf" target="_blank" rel="noopener" aria-label="CV (PDF)" title="CV (PDF)"><svg class="fa-svg" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+                <a href="https://www.linkedin.com/in/enderfga" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg class="fa-svg" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+                <a href="https://twitter.com/Enderfga" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg class="fa-svg" aria-hidden="true"><use href="#i-twitter"/></svg></a>
             </div>
             <div class="profile-image">
                 <div class="image-container"
@@ -238,6 +208,56 @@
             </div>
         </section>
 
+        <section id="selected" aria-labelledby="selected-title">
+            <div class="selected-heading">
+                <h2 id="selected-title">Selected Work</h2>
+                <span class="work-count" aria-hidden="true">01 <span>/ 03</span></span>
+            </div>
+            <div class="work-carousel" role="region" aria-roledescription="carousel" aria-label="Selected work">
+                <div class="work-window">
+                    <div class="work-track">
+                        <article class="work-card" data-name="AnyFlow" role="group" aria-roledescription="slide" aria-label="AnyFlow, 1 of 3">
+                            <div class="work-cover">
+                                <video class="work-video" src="images/anyflow-demo.mp4" poster="images/anyflow-poster.webp"
+                                       loop muted playsinline controls preload="none"
+                                       aria-label="AnyFlow — any-step video diffusion demo"></video>
+                            </div>
+                            <div class="work-caption">
+                                <div><h3><a href="#work-anyflow">AnyFlow</a></h3><p>ECCV 2026 <span class="work-award">Oral</span></p></div>
+                                <a class="work-detail" href="#work-anyflow" aria-label="View AnyFlow details">View work <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="work-card" data-name="SolarWM" role="group" aria-roledescription="slide" aria-label="SolarWM, 2 of 3">
+                            <div class="work-cover">
+                                <video class="work-video" src="images/solarwm-demo.mp4" poster="images/solarwm.webp"
+                                       loop muted playsinline controls preload="none"
+                                       aria-label="SolarWM — long-horizon interactive world generation demo"></video>
+                            </div>
+                            <div class="work-caption">
+                                <div><h3><a href="#work-solarwm">SolarWM</a></h3><p>Preprint · 2026</p></div>
+                                <a class="work-detail" href="#work-solarwm" aria-label="View SolarWM details">View work <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                        <article class="work-card" data-name="Claw Orchestrator" role="group" aria-roledescription="slide" aria-label="Claw Orchestrator, 3 of 3">
+                            <a class="work-cover" href="#work-claw" aria-label="View Claw Orchestrator details">
+                                <img src="https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg" alt="Claw Orchestrator architecture" loading="eager">
+                            </a>
+                            <div class="work-caption">
+                                <div><h3><a href="#work-claw">Claw Orchestrator</a></h3><p>Open Source · 2026</p></div>
+                                <a class="work-detail" href="#work-claw" aria-label="View Claw Orchestrator details">View work <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="work-controls">
+                    <button type="button" class="work-arrow work-prev" aria-label="Previous selected work"><svg class="fa-svg" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+                    <div class="work-choices" role="group" aria-label="Choose selected work"></div>
+                    <button type="button" class="work-arrow work-next" aria-label="Next selected work"><svg class="fa-svg" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+                </div>
+                <p class="work-status sr-only" aria-live="polite" aria-atomic="true"></p>
+            </div>
+        </section>
+
         <section id="news">
             <h2>News</h2>
             <div class="news-list-wrap">
@@ -245,8 +265,8 @@
                     <li><span class="news-date">2026.09</span> Released <a href="https://junchao-cs.github.io/SolarWM-Web/" target="_blank" rel="noopener">SolarWM</a> — open data and scalable training for long-horizon video world models.</li>
                     <li><span class="news-date">2026.06</span> Two papers — <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> and <a href="https://arxiv.org/abs/2606.01399" target="_blank" rel="noopener">PAI-Studio</a> — accepted to <em>ECCV 2026</em>.</li>
                     <li><span class="news-date">2026.05</span> Open-sourced <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> with <span class="brand-nvidia">NVIDIA</span> — any-step video diffusion via <strong>on-policy distillation</strong>.</li>
-                    <li><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
-                    <li><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
+                    <li class="news-extra" hidden><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
+                    <li class="news-extra" hidden><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
                     <li class="news-extra" hidden><span class="news-date">2025.07</span> <a href="https://github.com/Enderfga/RealignDiff" target="_blank" rel="noopener">RealignDiff</a> accepted to <em>IEEE TNNLS</em> — coarse-to-fine semantic re-alignment for diffusion.</li>
                     <li class="news-extra" hidden><span class="news-date">2025.06</span> Launched <a href="https://mikomiko.ai/" target="_blank" rel="noopener">MikoAI</a> — an ACG (anime / comic / manga) creation tool, powered by <a href="https://arxiv.org/abs/2506.17301" target="_blank" rel="noopener">FramePrompt</a>.</li>
                     <li class="news-extra" hidden><span class="news-date">2024.08</span> Started Ph.D. at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, NUS, advised by Prof. Mike Zheng Shou.</li>
@@ -264,7 +284,7 @@
             <p>Representative works are <span class="highlight">highlighted</span>. * denotes equal contribution. Full list on <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener">Google Scholar</a> · <a href="data/cv.pdf" target="_blank" rel="noopener">CV</a>.</p>
 
             <div class="research-content">
-                <article class="research-paper">
+                <article class="research-paper" id="work-solarwm" tabindex="-1">
                     <div class="paper-media">
                         <img src='images/solarwm.webp' width="2000" height="1144"
                              alt="SolarWM teaser — one framework generating diverse long-horizon interactive worlds"
@@ -302,7 +322,7 @@
                     </div>
                 </article>
 
-                <article class="research-paper highlight">
+                <article class="research-paper highlight" id="work-anyflow" tabindex="-1">
                     <div class="paper-media">
                         <video class="paper-video"
                                src="images/anyflow-demo.mp4"
@@ -615,7 +635,7 @@
                     </div>
                 </article>
 
-                <article class="research-paper">
+                <article class="research-paper" id="work-claw" tabindex="-1">
                     <div class="paper-media">
                         <img src="https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg"
                              alt="Claw Orchestrator architecture — entrypoints, session layer, engines, and orchestration modes"
@@ -829,6 +849,6 @@
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a> — please grab it from the repo, not by scraping this page.</p>
         </footer>
     </main>
-    <script src="app.js?v=20260828a" defer></script>
+    <script src="app.js?v=20260905e" defer></script>
 </body>
 </html>
