@@ -1,14 +1,14 @@
 {
-  "generated": "2026-09-04T08:27:37.642Z",
+  "generated": "2026-09-05T08:02:18.531Z",
   "values": {
-    "github-stars:Junchao-cs/SolarWM": 348,
-    "hf-dataset:junchaoh-cs/SolarWM-Data": 69,
-    "github-stars:NVlabs/AnyFlow": 417,
-    "hf-collection:nvidia/anyflow": 1725,
-    "hf-dataset:Enderfga/HumanRefiner": 1383,
+    "github-stars:Junchao-cs/SolarWM": 374,
+    "hf-dataset:junchaoh-cs/SolarWM-Data": 4343,
+    "github-stars:NVlabs/AnyFlow": 418,
+    "hf-collection:nvidia/anyflow": 1736,
+    "hf-dataset:Enderfga/HumanRefiner": 1392,
     "hf-dataset:ChartThinker/Chart-Sum-QA": 2520,
     "youtube-views:qJLv6ltFw04": 4768439,
-    "github-stars:Enderfga/claw-orchestrator": 563,
+    "github-stars:Enderfga/claw-orchestrator": 566,
     "npm:@enderfga/claw-orchestrator": 10422,
     "github-stars:Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter": 8714
   }
