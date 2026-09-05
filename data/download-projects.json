@@ -1,0 +1,33 @@
+{
+  "solarwm": {
+    "namePrefix": "SolarWM",
+    "publishers": [
+      { "host": "huggingface.co", "owner": "junchaoh-cs" },
+      { "host": "modelscope.cn", "owner": "junchao2003" },
+      { "host": "modelscope.ai", "owner": "Junchao-cs" }
+    ],
+    "sources": [
+      "https://junchao-cs.github.io/SolarWM-Web/",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/README.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/data-access.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/latent-wds.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/backends/wan22-ti2v-5b.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/backends/wan22-i2v-a14b.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/backends/ltx25.md",
+      "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/docs/backends/minimax-h3.md"
+    ],
+    "collections": ["https://huggingface.co/collections/junchaoh-cs/solarwm"],
+    "repositories": [
+      "https://huggingface.co/junchaoh-cs/SolarWM",
+      "https://huggingface.co/junchaoh-cs/SolarWM-Wan2.2-5B",
+      "https://huggingface.co/junchaoh-cs/SolarWM-Wan2.2-14B",
+      "https://huggingface.co/junchaoh-cs/SolarWM-LTX-22B",
+      "https://huggingface.co/junchaoh-cs/SolarWM-H3-33B",
+      "https://huggingface.co/datasets/junchaoh-cs/SolarWM-Data",
+      "https://modelscope.cn/datasets/junchao2003/SolarWM-Data",
+      "https://modelscope.cn/datasets/junchao2003/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1",
+      "https://modelscope.ai/datasets/Junchao-cs/SolarWM-Data",
+      "https://modelscope.ai/datasets/Junchao-cs/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1"
+    ]
+  }
+}

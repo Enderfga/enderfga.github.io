@@ -6,6 +6,7 @@
 // previous value rather than drop it — all-time numbers only grow, so a stale-but-
 // real number always beats a hole. Run: `node scripts/snapshot-metrics.mjs`.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { discoverRepositories, aggregateDownloads, downloadCount, hfCollectionDownloads } from './project-downloads.mjs';
 
 const HTML = 'index.html';
 const OUT = 'data/metrics.json';
@@ -52,23 +53,24 @@ async function hfDownloads(kind, id) {
     const r = await fetch(`https://huggingface.co/api/${kind}/${id}?expand=downloadsAllTime`);
     if (!r.ok) return null;
     const d = await r.json();
-    return d.downloadsAllTime || null; // all-time only, never the 30-day window
+    return downloadCount(d.downloadsAllTime); // all-time only, never the 30-day window
 }
 
 async function hfCollection(slug) {
-    const res = await fetch(`https://huggingface.co/api/collections/${slug}`);
-    if (!res.ok) return null;
-    const items = ((await res.json()).items || []).filter(i => i.type === 'model' || i.type === 'dataset');
-    if (!items.length) return null;
-    let total = 0;
-    for (const item of items) { // all-or-nothing: any failed item aborts the sum
-        const kind = item.type === 'dataset' ? 'datasets' : 'models';
-        const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
-        if (!r.ok) return null;
-        const d = await r.json();
-        total += d.downloadsAllTime || 0;
-    }
-    return total;
+    return hfCollectionDownloads(slug);
+}
+
+const catalogs = new Map();
+const projectDetails = {};
+async function projectDownloads(platform, id, key) {
+    const configs = JSON.parse(readFileSync('data/download-projects.json', 'utf8'));
+    if (!configs[id]) throw new Error(`Unknown download project: ${id}`);
+    if (!catalogs.has(id)) catalogs.set(id, discoverRepositories(configs[id]));
+    const result = await aggregateDownloads(await catalogs.get(id), platform);
+    projectDetails[key] = { ...result, checkedAt: new Date().toISOString(), sources: configs[id].sources,
+        publishers: configs[id].publishers,
+        counter: platform === 'hf' ? 'downloadsAllTime' : 'Data.Downloads' };
+    return result.total;
 }
 
 async function npmDownloads(pkg) {
@@ -122,12 +124,14 @@ async function youtubeViews(id) {
     return typeof d.viewCount === 'number' ? d.viewCount : null;
 }
 
-function fetchValue({ metric, id }) {
+function fetchValue({ metric, id, key }) {
     switch (metric) {
         case 'github-stars': return githubStars(id);
         case 'hf-dataset': return hfDownloads('datasets', id);
         case 'hf-model': return hfDownloads('models', id);
         case 'hf-collection': return hfCollection(id);
+        case 'hf-project': return projectDownloads('hf', id, key);
+        case 'modelscope-project': return projectDownloads('modelscope', id, key);
         case 'npm': return npmDownloads(id);
         case 'pypi-downloads': return pypiDownloads(id);
         case 'youtube-views': return youtubeViews(id);
@@ -137,27 +141,36 @@ function fetchValue({ metric, id }) {
 
 const html = readFileSync(HTML, 'utf8');
 const hadFile = existsSync(OUT);
-const prevValues = (hadFile ? JSON.parse(readFileSync(OUT, 'utf8')).values : null) || {};
+const previous = hadFile ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
+const prevValues = previous.values || {};
 const values = {};
+const details = {};
 
 for (const m of parseMetrics(html)) {
     let v = null;
     try { v = await fetchValue(m); } catch (e) { console.error(`fetch error ${m.key}: ${e.message}`); }
-    if (typeof v === 'number' && v > 0) {
+    // A real zero is publishable (a freshly released repo), but an all-time counter
+    // that was positive yesterday never legitimately returns to zero — that is an API
+    // hiccup, so fall through and keep the last good value.
+    const usable = typeof v === 'number' && Number.isFinite(v) && v >= 0 &&
+        !(v === 0 && prevValues[m.key] > 0);
+    if (usable) {
         values[m.key] = v;
+        if (projectDetails[m.key]) details[m.key] = projectDetails[m.key];
     } else if (m.key in prevValues) {
         values[m.key] = prevValues[m.key]; // keep last good value on transient failure
+        if (previous.details?.[m.key]) details[m.key] = previous.details[m.key];
         console.warn(`kept previous ${m.key} = ${prevValues[m.key]}`);
     }
     console.log(`${m.key} = ${values[m.key] ?? '(none)'}`);
 }
 
-// Only rewrite when a value actually changed, so the `generated` timestamp alone
-// never produces a daily no-op commit. (Order-independent compare.)
+// Rewrite when values or audited project details change. A failed project fetch
+// keeps its previous checkedAt as well as its count and complete repository list.
 const canon = o => JSON.stringify(Object.keys(o).sort().reduce((a, k) => (a[k] = o[k], a), {}));
-if (hadFile && canon(values) === canon(prevValues)) {
+if (hadFile && canon(values) === canon(prevValues) && canon(details) === canon(previous.details || {})) {
     console.log('No value changes — snapshot left untouched.');
 } else {
-    writeFileSync(OUT, JSON.stringify({ generated: new Date().toISOString(), values }, null, 2) + '\n');
+    writeFileSync(OUT, JSON.stringify({ generated: new Date().toISOString(), values, details }, null, 2) + '\n');
     console.log(`wrote ${OUT} with ${Object.keys(values).length} metric(s)`);
 }

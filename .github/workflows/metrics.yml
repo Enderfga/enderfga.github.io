@@ -1,6 +1,6 @@
 name: Snapshot Metrics
 
-# Fetch GitHub/HF/npm/YouTube numbers once a day and commit data/metrics.json,
+# Fetch GitHub/HF/ModelScope/npm/YouTube numbers once a day and commit data/metrics.json,
 # so visitors read a static file instead of each hammering those APIs on page load.
 on:
   schedule:
@@ -19,6 +19,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Test download aggregation
+        run: node --test scripts/project-downloads.test.mjs
 
       - name: Fetch metrics
         env:

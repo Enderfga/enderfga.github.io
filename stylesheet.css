@@ -913,7 +913,11 @@ span.highlight {
 .metric[data-metric="github-stars"] .fa-svg { color: #24292f; }
 .metric[data-metric="npm"] .fa-svg { color: #cb3837; }
 .metric[data-metric="youtube-views"] .fa-svg { color: #ff0000; }
+/* ModelScope violet, taken from the project's own badge (logo=modelscope, 624AFF);
+   lightened in dark mode so the mark clears 4.5:1 on the dark chip. */
+.metric[data-metric="modelscope-project"] .fa-svg { color: #624AFF; }
 .dark-mode .metric[data-metric="github-stars"] .fa-svg { color: #e6edf3; }
+.dark-mode .metric[data-metric="modelscope-project"] .fa-svg { color: #9B8CFF; }
 
 .metric:hover {
     transform: translateY(-1px);

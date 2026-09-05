@@ -527,6 +527,7 @@ const Website = {
                 }
                 const valEl = el.querySelector('.metric-val');
                 if (valEl) valEl.textContent = this.humanize(value);
+                el.title = value.toLocaleString('en-US');  // exact count behind the rounded chip
                 el.hidden = false;
             } catch (e) {
                 /* leave hidden on failure */
@@ -576,6 +577,11 @@ const Website = {
                 case 'hf-dataset':   return this.hfDownloads('datasets', el.getAttribute('data-id'));
                 case 'hf-model':     return this.hfDownloads('models', el.getAttribute('data-id'));
                 case 'hf-collection':return this.hfCollection(el.getAttribute('data-slug'));
+                // Release discovery and the ModelScope API run in CI: they need
+                // requests a browser cannot make (CORS) and a sum a single page
+                // load should not be paying for. Snapshot-only, no live fallback.
+                case 'hf-project':
+                case 'modelscope-project': return Promise.resolve(null);
                 case 'npm':          return this.npmDownloads(el.getAttribute('data-pkg'));
                 // PyPI all-time needs an API key that can't ship in client JS — this
                 // metric is snapshot-only (filled by CI). No live fallback on purpose.
@@ -608,15 +614,16 @@ const Website = {
             const d = await r.json();
             // All-time only — never fall back to `downloads` (a 30-day rolling
             // window), or the metric would silently shrink week to week.
-            return d.downloadsAllTime || null;
+            return Number.isSafeInteger(d.downloadsAllTime) && d.downloadsAllTime >= 0 ? d.downloadsAllTime : null;
         },
 
         async hfCollection(slug) {
             if (!slug) return null;
             const res = await fetch(`https://huggingface.co/api/collections/${slug}`);
             if (!res.ok) return null;
-            const items = ((await res.json()).items || [])
+            const entries = ((await res.json()).items || [])
                 .filter(i => i.type === 'model' || i.type === 'dataset');
+            const items = [...new Map(entries.map(i => [`${i.type}:${i.id}`, i])).values()];
             if (!items.length) return null;
             // All-or-nothing: all-time downloads only ever grow, so a partial sum
             // (one item's fetch failing → counted as 0) would read as a drop —
@@ -628,7 +635,8 @@ const Website = {
                 const r = await fetch(`https://huggingface.co/api/${kind}/${item.id}?expand=downloadsAllTime`);
                 if (!r.ok) throw new Error(`metric fetch failed for ${item.id}`);
                 const d = await r.json();
-                return d.downloadsAllTime || 0;  // all-time only, no 30-day fallback
+                if (!Number.isSafeInteger(d.downloadsAllTime) || d.downloadsAllTime < 0) throw new Error(`missing download count for ${item.id}`);
+                return d.downloadsAllTime;  // explicit zero is valid; missing is not
             }));
             return counts.reduce((a, b) => a + b, 0);
         },
