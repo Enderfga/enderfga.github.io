@@ -1,21 +1,21 @@
 {
-  "generated": "2026-09-08T08:35:50.350Z",
+  "generated": "2026-09-09T08:36:32.021Z",
   "values": {
-    "github-stars:Junchao-cs/SolarWM": 463,
-    "hf-project:solarwm": 5810,
-    "modelscope-project:solarwm": 133818,
-    "github-stars:NVlabs/AnyFlow": 422,
-    "hf-collection:nvidia/anyflow": 1759,
-    "hf-dataset:Enderfga/HumanRefiner": 1414,
-    "hf-dataset:ChartThinker/Chart-Sum-QA": 2523,
+    "github-stars:Junchao-cs/SolarWM": 493,
+    "hf-project:solarwm": 6373,
+    "modelscope-project:solarwm": 162862,
+    "github-stars:NVlabs/AnyFlow": 424,
+    "hf-collection:nvidia/anyflow": 1761,
+    "hf-dataset:Enderfga/HumanRefiner": 1421,
+    "hf-dataset:ChartThinker/Chart-Sum-QA": 2525,
     "youtube-views:qJLv6ltFw04": 4768439,
     "github-stars:Enderfga/claw-orchestrator": 570,
     "npm:@enderfga/claw-orchestrator": 11099,
-    "github-stars:Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter": 8714
+    "github-stars:Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter": 8715
   },
   "details": {
     "hf-project:solarwm": {
-      "total": 5810,
+      "total": 6373,
       "repositories": [
         {
           "platform": "hf",
@@ -23,7 +23,7 @@
           "kind": "dataset",
           "id": "junchaoh-cs/SolarWM-Data",
           "url": "https://huggingface.co/datasets/junchaoh-cs/SolarWM-Data",
-          "downloads": 5810,
+          "downloads": 6373,
           "api": "https://huggingface.co/api/datasets/junchaoh-cs/SolarWM-Data?expand=downloadsAllTime"
         },
         {
@@ -72,7 +72,7 @@
           "api": "https://huggingface.co/api/models/junchaoh-cs/SolarWM-Wan2.2-5B?expand=downloadsAllTime"
         }
       ],
-      "checkedAt": "2026-09-08T08:35:42.969Z",
+      "checkedAt": "2026-09-09T08:36:29.246Z",
       "sources": [
         "https://junchao-cs.github.io/SolarWM-Web/",
         "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/README.md",
@@ -100,7 +100,7 @@
       "counter": "downloadsAllTime"
     },
     "modelscope-project:solarwm": {
-      "total": 133818,
+      "total": 162862,
       "repositories": [
         {
           "platform": "modelscope",
@@ -117,7 +117,7 @@
           "kind": "dataset",
           "id": "Junchao-cs/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1",
           "url": "https://modelscope.ai/datasets/Junchao-cs/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1",
-          "downloads": 84778,
+          "downloads": 101038,
           "api": "https://modelscope.ai/api/v1/datasets/Junchao-cs/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1"
         },
         {
@@ -126,7 +126,7 @@
           "kind": "dataset",
           "id": "junchao2003/SolarWM-Data",
           "url": "https://modelscope.cn/datasets/junchao2003/SolarWM-Data",
-          "downloads": 23584,
+          "downloads": 28859,
           "api": "https://modelscope.cn/api/v1/datasets/junchao2003/SolarWM-Data"
         },
         {
@@ -135,11 +135,11 @@
           "kind": "dataset",
           "id": "junchao2003/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1",
           "url": "https://modelscope.cn/datasets/junchao2003/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1",
-          "downloads": 24067,
+          "downloads": 31576,
           "api": "https://modelscope.cn/api/v1/datasets/junchao2003/SolarWM-Data_Latent-WDS_wan22-ti2v5b-153f-480p-v1"
         }
       ],
-      "checkedAt": "2026-09-08T08:35:46.997Z",
+      "checkedAt": "2026-09-09T08:36:30.216Z",
       "sources": [
         "https://junchao-cs.github.io/SolarWM-Web/",
         "https://raw.githubusercontent.com/Junchao-cs/SolarWM/main/README.md",
