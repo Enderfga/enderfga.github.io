@@ -41,12 +41,12 @@
     <link rel="canonical" href="https://enderfga.cn/">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="stylesheet.css?v=20260925a" as="style">
+    <link rel="preload" href="stylesheet.css?v=20260925b" as="style">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="stylesheet.css?v=20260925a">
+    <link rel="stylesheet" href="stylesheet.css?v=20260925b">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -168,47 +168,60 @@
     </button>
 
     <main id="main-content">
-        <section class="profile-section">
-            <div class="profile-heading">
-                <h1 class="name">Guian Fang</h1>
-                <p class="profile-direction">Video Generation &amp; World Models</p>
-            </div>
+        <section class="hero-xl" id="hero">
+            <div class="hx-layer hx-en">
+                <img class="hx-art hx-ink-light" src="images/hero/desert-ink.webp?v=20260925b" width="2400" height="1350" alt="" aria-hidden="true">
+                <img class="hx-art hx-ink-dark" src="images/hero/desert-ink-dark.webp?v=20260925b" width="2400" height="1350" alt="" aria-hidden="true" loading="lazy">
+                <div class="hx-content">
+                    <h1 class="name hx-name">Guian Fang</h1>
+                    <p class="bb-title"><span class="sr-only">Video Generation &amp; World Models</span><span aria-hidden="true"><span class="el"><span class="el-z">23</span><span class="el-sh">2<br>8<br>11<br>2</span><span class="el-sym">V</span><span class="el-m">50.942</span></span>ideo Generation <span class="bb-amp">&amp;</span> <span class="el"><span class="el-z">74</span><span class="el-sh">2<br>8<br>18<br>32<br>12<br>2</span><span class="el-sym">W</span><span class="el-m">183.84</span></span>orld Models</span></p>
             <div class="profile-text">
-                <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
-                <p>My research centers on <strong>generative video models</strong> and <strong>world models</strong> for long-form visual generation, currently on few-step distillation, long-horizon memory, and <strong>embodied intelligence</strong>.</p>
-                <p>I also work on agents that produce visual content rather than only consume it, and on runtime infrastructure for coding agents. I am open to collaboration.</p>
-                <p class="profile-background">Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(<span lang="zh-CN">梁小丹</span>)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
-            </div>
-            <div class="profile-contact" aria-label="Contact and profiles">
-                <a href="mailto:guianfang@u.nus.edu" aria-label="Email" title="Email"><svg class="fa-svg" aria-hidden="true"><use href="#i-envelope"/></svg></a>
-                <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg class="fa-svg" aria-hidden="true"><use href="#i-graduation-cap"/></svg></a>
-                <a href="https://www.alphaxiv.org/@guian-fang" target="_blank" rel="noopener" aria-label="alphaXiv">
-                    <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-alphaxiv"/></svg>
-                </a>
-                <a href="https://github.com/Enderfga" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg class="fa-svg" aria-hidden="true"><use href="#i-github"/></svg></a>
-                <a href="data/cv.pdf" target="_blank" rel="noopener" aria-label="CV (PDF)" title="CV (PDF)"><svg class="fa-svg" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
-                <a href="https://www.linkedin.com/in/enderfga" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg class="fa-svg" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-                <a href="https://twitter.com/Enderfga" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg class="fa-svg" aria-hidden="true"><use href="#i-twitter"/></svg></a>
-            </div>
-            <div class="profile-image">
-                <div class="image-container"
-                     id="guian_image"
-                     aria-hidden="true">
-                    <img src="images/guian_easter.webp"
-                         alt="Alternative profile photo of Guian Fang"
-                         width="600" height="900"
-                         loading="lazy">
+                    <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof.&nbsp;Mike Zheng Shou</a>.</p>
+                    <p>My research centers on <strong>generative video models</strong> and <strong>world models</strong> for long-form visual generation, currently on few-step distillation, long-horizon memory, and <strong>embodied intelligence</strong>.</p>
+                    <p>I also work on agents that produce visual content rather than only consume it, and on runtime infrastructure for coding agents. I am open to collaboration.</p>
+                    <p class="profile-background">Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">Prof.&nbsp;Xiaodan Liang</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Prof.&nbsp;Shengcai Liao</a>.</p>
                 </div>
-                <button type="button"
-                        class="avatar-clickable"
-                        onclick="togglePokopia()"
-                        aria-label="Toggle Pokopia easter-egg mode"
-                        title="✨ Click me!">
-                    <img src="images/guian.webp"
-                         alt="Guian Fang"
-                         width="800" height="1213"
-                         loading="eager">
-                </button>
+            <div class="profile-contact" aria-label="Contact and profiles">
+                    <a href="mailto:guianfang@u.nus.edu" aria-label="Email" title="Email"><svg class="fa-svg" aria-hidden="true"><use href="#i-envelope"/></svg></a>
+                    <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg class="fa-svg" aria-hidden="true"><use href="#i-graduation-cap"/></svg></a>
+                    <a href="https://www.alphaxiv.org/@guian-fang" target="_blank" rel="noopener" aria-label="alphaXiv">
+                        <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-alphaxiv"/></svg>
+                    </a>
+                    <a href="https://github.com/Enderfga" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg class="fa-svg" aria-hidden="true"><use href="#i-github"/></svg></a>
+                    <a href="data/cv.pdf" target="_blank" rel="noopener" aria-label="CV (PDF)" title="CV (PDF)"><svg class="fa-svg" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+                    <a href="https://www.linkedin.com/in/enderfga" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg class="fa-svg" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+                    <a href="https://twitter.com/Enderfga" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg class="fa-svg" aria-hidden="true"><use href="#i-twitter"/></svg></a>
+                </div>
+                </div>
+            </div>
+            <div class="hx-layer hx-zh" aria-hidden="true">
+                <div class="hx-ambient" aria-hidden="true"></div>
+                <img class="hx-art" src="images/hero/desert-color.webp?v=20260925b" width="2400" height="1350" alt="">
+                <div class="hx-content" lang="zh-CN">
+                    <p class="name hx-name">方桂安</p>
+                    <p class="bb-title"><span class="el"><span class="el-z">23</span><span class="el-sh">2<br>8<br>11<br>2</span><span class="el-sym">V</span><span class="el-m">50.942</span></span>视频生成 <span class="bb-amp">&amp;</span> <span class="el"><span class="el-z">74</span><span class="el-sh">2<br>8<br>18<br>32<br>12<br>2</span><span class="el-sym">W</span><span class="el-m">183.84</span></span>世界模型</p>
+                <div class="profile-text">
+                    <p>我是<strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">新加坡国立大学</a></strong> <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a> 的博士生，导师是<a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">寿政教授</a>。</p>
+                    <p>我的研究关注面向长时视觉生成的<strong>视频生成模型</strong>与<strong>世界模型</strong>，目前聚焦少步蒸馏、长程记忆与<strong>具身智能</strong>。</p>
+                    <p>我也研究能够创作视觉内容、而不只是理解视觉内容的智能体，以及编程智能体的运行时基础设施。欢迎交流合作。</p>
+                    <p class="profile-background">本科毕业于<strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">中山大学</a></strong>智能工程学院智能科学与技术专业，师从<a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">梁小丹教授</a>，由<a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">廖胜才教授</a>共同指导。</p>
+                </div>
+                    <div class="profile-contact" aria-label="联系方式与主页">
+                    <a href="mailto:guianfang@u.nus.edu" aria-label="Email" title="Email"><svg class="fa-svg" aria-hidden="true"><use href="#i-envelope"/></svg></a>
+                    <a href="https://scholar.google.com/citations?hl=en&amp;user=2z4sraUAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg class="fa-svg" aria-hidden="true"><use href="#i-graduation-cap"/></svg></a>
+                    <a href="https://www.alphaxiv.org/@guian-fang" target="_blank" rel="noopener" aria-label="alphaXiv">
+                        <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-alphaxiv"/></svg>
+                    </a>
+                    <a href="https://github.com/Enderfga" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg class="fa-svg" aria-hidden="true"><use href="#i-github"/></svg></a>
+                    <a href="data/cv.pdf" target="_blank" rel="noopener" aria-label="CV (PDF)" title="CV (PDF)"><svg class="fa-svg" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+                    <a href="https://www.linkedin.com/in/enderfga" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg class="fa-svg" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+                    <a href="https://twitter.com/Enderfga" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><svg class="fa-svg" aria-hidden="true"><use href="#i-twitter"/></svg></a>
+                </div>
+                </div>
+            </div>
+            <div class="hx-hint">
+                <span class="hx-hint-text" aria-hidden="true">Hover to develop · double-click</span>
+                <button type="button" class="hx-toggle" aria-pressed="false" aria-label="Show the Chinese film-still version">中文</button>
             </div>
         </section>
 
@@ -939,6 +952,7 @@
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a> — please grab it from the repo, not by scraping this page.</p>
         </footer>
     </main>
-    <script src="app.js?v=20260925a" defer></script>
+    <script src="hx.js?v=20260925b" defer></script>
+    <script src="app.js?v=20260925b" defer></script>
 </body>
 </html>

@@ -729,35 +729,6 @@ const Website = {
         }
     },
 
-    // Profile image hover effect
-    profileImage: {
-        init() {
-            this.container = document.querySelector('.profile-image');
-            this.hoverImage = document.getElementById('guian_image');
-
-            if (this.container && this.hoverImage) {
-                this.container.addEventListener('mouseenter', this.show.bind(this));
-                this.container.addEventListener('mouseleave', this.hide.bind(this));
-                if (!document.body.classList.contains('pokopia-mode')) {
-                    this.hide();
-                }
-            }
-        },
-
-        show() {
-            if (this.hoverImage) {
-                this.hoverImage.style.opacity = '1';
-            }
-        },
-
-        hide() {
-            if (document.body.classList.contains('pokopia-mode')) return;
-            if (this.hoverImage) {
-                this.hoverImage.style.opacity = '0';
-            }
-        }
-    },
-
     // In-view video playback — play demo videos only when scrolled into view, pause
     // when out of view, and never auto-play under prefers-reduced-motion. Replaces the
     // old `autoplay` attributes so the external mp4s aren't fetched + played on load.
@@ -788,7 +759,6 @@ const Website = {
             this.selectedWork.init();
             this.acknowledgements.init();
             this.theme.init();
-            this.profileImage.init();
             this.scrollAnimations.init();
             this.lazyVideos.init();
             this.metrics.init();
@@ -804,108 +774,3 @@ const Website = {
 };
 
 Website.init();
-
-let pokopiaStylesPromise = null;
-
-function loadPokopiaStyles() {
-    if (pokopiaStylesPromise) return pokopiaStylesPromise;
-
-    const existing = document.querySelector('link[data-pokopia-styles]');
-    if (existing) {
-        pokopiaStylesPromise = Promise.resolve();
-        return pokopiaStylesPromise;
-    }
-
-    pokopiaStylesPromise = new Promise((resolve, reject) => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'pokopia.css?v=20260905e';
-        link.dataset.pokopiaStyles = 'true';
-        link.onload = resolve;
-        link.onerror = reject;
-        document.head.appendChild(link);
-    });
-
-    return pokopiaStylesPromise;
-}
-
-window.guian_start = function() {
-    const hoverImage = document.getElementById('guian_image');
-    if (hoverImage) {
-        hoverImage.style.opacity = '1';
-    }
-};
-
-window.guian_stop = function() {
-    if (document.body.classList.contains('pokopia-mode')) return;
-    const hoverImage = document.getElementById('guian_image');
-    if (hoverImage) {
-        hoverImage.style.opacity = '0';
-    }
-};
-
-window.togglePokopia = async function() {
-    const body = document.body;
-    const enablePokopia = !body.classList.contains('pokopia-mode');
-
-    if (enablePokopia) {
-        try {
-            await loadPokopiaStyles();
-        } catch (e) {
-            console.warn('Unable to load Pokopia styles');
-        }
-    }
-
-    const isPokopia = body.classList.toggle('pokopia-mode', enablePokopia);
-
-    const hoverImage = document.getElementById('guian_image');
-    if (hoverImage) {
-        hoverImage.style.opacity = isPokopia ? '1' : '0';
-    }
-
-    const overlay = document.createElement('div');
-    overlay.className = 'pokopia-transition-overlay';
-    body.appendChild(overlay);
-
-    requestAnimationFrame(() => {
-        overlay.classList.add('active');
-        setTimeout(() => {
-            overlay.classList.add('fade-out');
-            setTimeout(() => overlay.remove(), 600);
-        }, 400);
-    });
-
-    if (isPokopia) {
-        spawnPokopiaDecorations();
-    } else {
-        clearPokopiaDecorations();
-    }
-    // Session-only easter egg: intentionally NOT persisted. Every fresh visit lands
-    // in the sober academic view; the playful mode is always an explicit opt-in.
-};
-
-function spawnPokopiaDecorations() {
-    clearPokopiaDecorations();
-    const container = document.createElement('div');
-    container.id = 'pokopia-decorations';
-    container.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(container);
-
-    const emojis = ['🌿', '⭐', '🌸', '☁️', '🍃', '🌻', '✨', '🦋', '🐝', '🍄', '🌈'];
-    for (let i = 0; i < 20; i++) {
-        const el = document.createElement('span');
-        el.className = 'pokopia-float';
-        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = Math.random() * 100 + 'vw';
-        el.style.animationDuration = (8 + Math.random() * 12) + 's';
-        el.style.animationDelay = (Math.random() * 10) + 's';
-        el.style.fontSize = (14 + Math.random() * 20) + 'px';
-        el.style.opacity = 0.4 + Math.random() * 0.4;
-        container.appendChild(el);
-    }
-}
-
-function clearPokopiaDecorations() {
-    const existing = document.getElementById('pokopia-decorations');
-    if (existing) existing.remove();
-}
