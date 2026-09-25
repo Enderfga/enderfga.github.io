@@ -1,0 +1,21 @@
+name: Check
+
+# The Publications and Products cards are generated from data/works.mjs. Fail the
+# push if index.html was edited by hand (or the data changed without a rebuild).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  works:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: index.html matches data/works.mjs
+        run: node scripts/build-works.mjs --check

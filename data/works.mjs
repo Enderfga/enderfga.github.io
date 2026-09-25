@@ -1,0 +1,478 @@
+// The Publications and Products cards on the homepage, one record per work.
+//
+// index.html is generated from this file: edit here, then run
+//     node scripts/build-works.mjs
+// CI runs the same script with --check and fails if index.html has drifted.
+//
+// Fields: media {img|video|youtube}, title/subtitle (rendered "title:<br>subtitle"),
+// authors and adoption are HTML, venue is shown in italics, metrics become the
+// live chips on the venue line, links render in order, and bibtex is copied
+// verbatim by the BibTeX button — it is deliberately NOT derived from the other
+// fields, so a record can differ from the display on purpose.
+
+export const publications = [
+    {
+        media: {
+            type: "img",
+            src: "images/mask-forcing.webp",
+            width: 2400,
+            height: 1108,
+            alt: "Mask Forcing pipeline — masking the self-rollout with two noise levels widens the student's coverage of the teacher distribution",
+        },
+        href: "https://arxiv.org/abs/2609.09123",
+        title: "Mask Forcing",
+        subtitle: "Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout",
+        authors: "Zhuoran Zhao, Shengju Qian, Tongtong Liang, Xianghao Kong, Songchun Zhang, Junchao Huang, Guian Fang, Xin Wang, Pan Hui, Anyi Rao",
+        venue: "Preprint",
+        year: 2026,
+        links: [
+            ["Paper", "https://arxiv.org/abs/2609.09123"],
+            ["Project page", "https://alicezrzhao.github.io/mask_forcing/"],
+            ["Code", "https://github.com/delaprada/Mask-Forcing"],
+        ],
+        bibtex: `
+@misc{zhao2026maskforcing,
+  title  = {Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout},
+  author = {Zhuoran Zhao and Shengju Qian and Tongtong Liang and Xianghao Kong and Songchun Zhang and Junchao Huang and Guian Fang and Xin Wang and Pan Hui and Anyi Rao},
+  year   = {2026},
+  eprint = {2609.09123},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url    = {https://arxiv.org/abs/2609.09123},
+}
+`,
+    },
+    {
+        media: {
+            type: "video",
+            src: "images/pai-actor-demo.mp4",
+            poster: "images/pai-actor-poster.webp",
+            label: "PAI-Actor — single- and multi-character replacement in film scenes",
+        },
+        href: "https://arxiv.org/abs/2609.05918",
+        title: "PAI-Actor",
+        subtitle: "Cinematic Multi-Character Replacement in Dynamic Scenes",
+        authors: "Bangxun Tang*, Heyuan Gao*, Yiren Song*, Guian Fang, Zijian He, Jie Yang, Mike Zheng Shou",
+        venue: "NeurIPS",
+        year: 2026,
+        links: [
+            ["Paper", "https://arxiv.org/abs/2609.05918"],
+            ["Code", "https://github.com/showlab/PAI-Actor"],
+        ],
+        bibtex: `
+@misc{tang2026paiactor,
+      title={PAI-Actor: Cinematic Multi-Character Replacement in Dynamic Scenes},
+      author={Bangxun Tang and Heyuan Gao and Yiren Song and Guian Fang and Zijian He and Jie Yang and Mike Zheng Shou},
+      year={2026},
+      eprint={2609.05918},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2609.05918},
+}
+`,
+    },
+    {
+        id: "work-solarwm",
+        highlight: true,
+        media: {
+            type: "img",
+            src: "images/solarwm.webp",
+            width: 2000,
+            height: 1144,
+            alt: "SolarWM teaser — one framework generating diverse long-horizon interactive worlds",
+        },
+        href: "https://arxiv.org/abs/2609.02886",
+        title: "SolarWM",
+        subtitle: "Open Data and Scalable Training for Long-Horizon Video World Models",
+        authors: "Junchao Huang*, Guian Fang*, Shengju Qian, Xianghao Kong, Zhuoran Zhao, Wei Huang, Yihua Du, Zixin Zhang, Justin Cui, Yuchao Gu, Yukang Chen, Xinting Hu, Tianyu He, Shaoshuai Shi, Zhuotao Tian, Xin Wang, Mike Zheng Shou, Li Jiang",
+        venue: "Preprint",
+        year: 2026,
+        metrics: [
+            { type: "github-stars", repo: "Junchao-cs/SolarWM", href: "https://github.com/Junchao-cs/SolarWM" },
+            { type: "hf-project", id: "solarwm", href: "https://huggingface.co/collections/junchaoh-cs/solarwm" },
+            { type: "modelscope-project", id: "solarwm", href: "https://modelscope.cn/profile/junchao2003" },
+        ],
+        links: [
+            ["Paper", "https://arxiv.org/abs/2609.02886"],
+            ["Project page", "https://junchao-cs.github.io/SolarWM-Web/"],
+            ["Models", "https://huggingface.co/collections/junchaoh-cs/solarwm"],
+            ["Dataset", "https://huggingface.co/datasets/junchaoh-cs/SolarWM-Data"],
+            ["Code", "https://github.com/Junchao-cs/SolarWM"],
+        ],
+        bibtex: `
+@misc{huang2026solarwm,
+  title  = {SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models},
+  author = {Junchao Huang and Guian Fang and Shengju Qian and Xianghao Kong and Zhuoran Zhao and Wei Huang and Yihua Du and Zixin Zhang and Justin Cui and Yuchao Gu and Yukang Chen and Xinting Hu and Tianyu He and Shaoshuai Shi and Zhuotao Tian and Xin Wang and Mike Zheng Shou and Li Jiang},
+  year   = {2026},
+  eprint = {2609.02886},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url    = {https://arxiv.org/abs/2609.02886},
+}
+`,
+    },
+    {
+        id: "work-anyflow",
+        highlight: true,
+        media: {
+            type: "video",
+            src: "images/anyflow-demo.mp4",
+            poster: "images/anyflow-poster.webp",
+            label: "AnyFlow — any-step video diffusion demo",
+        },
+        href: "https://arxiv.org/abs/2605.13724",
+        title: "AnyFlow",
+        subtitle: "Any-Step Video Diffusion Model with On-Policy Flow Map Distillation",
+        authors: "Yuchao Gu, Guian Fang, Yuxin Jiang, Weijia Mao, Song Han, Han Cai, Mike Zheng Shou",
+        venue: "ECCV",
+        year: 2026,
+        award: "Oral",
+        metrics: [
+            { type: "github-stars", repo: "NVlabs/AnyFlow", href: "https://github.com/NVlabs/AnyFlow" },
+            { type: "hf-collection", slug: "nvidia/anyflow", href: "https://huggingface.co/collections/nvidia/anyflow" },
+        ],
+        adoption: {
+            text: "Upstreamed into",
+            links: [
+                ["diffusers", "https://github.com/huggingface/diffusers/pull/13745"],
+                ["FastVideo", "https://github.com/hao-ai-lab/FastVideo/pull/1371"],
+                ["FastGen", "https://github.com/NVlabs/FastGen/pull/25"],
+            ],
+        },
+        links: [
+            ["Paper", "https://arxiv.org/abs/2605.13724"],
+            ["Project page", "https://nvlabs.github.io/AnyFlow/"],
+            ["Models", "https://huggingface.co/collections/nvidia/anyflow"],
+        ],
+        bibtex: `
+@misc{gu2026anyflow,
+      title={AnyFlow: Any-Step Video Diffusion Model with On-Policy Flow Map Distillation},
+      author={Yuchao Gu and Guian Fang and Yuxin Jiang and Weijia Mao and Song Han and Han Cai and Mike Zheng Shou},
+      year={2026},
+      eprint={2605.13724},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.13724},
+}
+`,
+    },
+    {
+        media: {
+            type: "video",
+            src: "images/pai-studio-teaser.mp4",
+            poster: "images/pai-poster.webp",
+            label: "PAI-Studio — cinematic video background replacement demo",
+        },
+        href: "https://arxiv.org/abs/2606.01399",
+        title: "PAI-Studio",
+        subtitle: "Cinematic Video Background Replacement with Camera-Aware Motion",
+        authors: "Heyuan Gao*, Bangxun Tang*, Yiren Song*, Guian Fang, Zijian He, Jie Yang, Mike Zheng Shou",
+        venue: "ECCV",
+        year: 2026,
+        links: [
+            ["Paper", "https://arxiv.org/abs/2606.01399"],
+            ["Project page", "https://showlab.github.io/PAI-Studio/"],
+            ["Code", "https://github.com/showlab/PAI-Studio"],
+        ],
+        bibtex: `
+@misc{gao2026paistudio,
+      title={PAI-Studio: Cinematic Video Background Replacement with Camera-Aware Motion},
+      author={Heyuan Gao and Bangxun Tang and Yiren Song and Guian Fang and Zijian He and Jie Yang and Mike Zheng Shou},
+      year={2026},
+      eprint={2606.01399},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2606.01399},
+}
+`,
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/declare-compile-look.webp",
+            width: 2000,
+            height: 1231,
+            alt: "Declare, Compile, Look pipeline — plan a typed FigureSpec, compile the geometry deterministically, emit figures, and repair by patching the spec",
+        },
+        href: "data/declare-compile-look.pdf",
+        title: "Declare, Compile, Look",
+        subtitle: "Coordinate-Free Layout Generation with Vision-in-the-Loop Repair",
+        authors: "Guian Fang, Mengsha Liu, Mike Zheng Shou",
+        venue: "ECCV Workshop (MDA)",
+        year: 2026,
+        award: "Talk",
+        links: [
+            ["Paper", "data/declare-compile-look.pdf"],
+        ],
+        bibtex: `
+@inproceedings{fang2026declare,
+  title     = {Declare, Compile, Look: Coordinate-Free Layout Generation with Vision-in-the-Loop Repair},
+  author    = {Guian Fang and Mengsha Liu and Mike Zheng Shou},
+  booktitle = {ECCV 2026 Multimodal Digital Agents Workshop},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=Romd50Ce0w},
+}
+`,
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/veditbench.webp",
+            width: 1890,
+            height: 946,
+            alt: "VEditBench overview — 420 real-world videos, 6 editing tasks, 9 evaluation dimensions",
+        },
+        href: "https://openreview.net/pdf?id=6325Jzc9eR",
+        title: "VEditBench",
+        subtitle: "Holistic Benchmark for Text-Guided Video Editing",
+        authors: "Jay Zhangjie Wu*, Guian Fang*, Dongrong Joe Fu, Vijay Anand Raghava Kanakagiri, Forrest Iandola, Kurt Keutzer, Wynne Hsu, Zhen Dong, Mike Zheng Shou",
+        venue: "Preprint",
+        year: 2025,
+        links: [
+            ["Paper", "https://openreview.net/pdf?id=6325Jzc9eR"],
+        ],
+        bibtex: `
+@misc{wu2025veditbench,
+  title  = {VEditBench: Holistic Benchmark for Text-Guided Video Editing},
+  author = {Jay Zhangjie Wu and Guian Fang and Dongrong Joe Fu and Vijay Anand Raghava Kanakagiri and Forrest Iandola and Kurt Keutzer and Wynne Hsu and Zhen Dong and Mike Zheng Shou},
+  year   = {2025},
+  url    = {https://openreview.net/forum?id=6325Jzc9eR},
+}
+`,
+    },
+    {
+        highlight: true,
+        media: {
+            type: "img",
+            src: "images/humanrefiner.webp",
+            width: 3200,
+            height: 1060,
+            alt: "HumanRefiner research visualization showing human pose refinement",
+        },
+        href: "https://github.com/Enderfga/HumanRefiner",
+        title: "HumanRefiner",
+        subtitle: "Benchmarking Abnormal Human Generation and Refining with Coarse-to-fine Pose-Reversible Guidance",
+        authors: "Guian Fang*, Wenbiao Yan*, Yuanfan Guo*, Jianhua Han, Zutao Jiang, Hang Xu, Shengcai Liao, Xiaodan Liang",
+        venue: "ECCV",
+        year: 2024,
+        metrics: [
+            { type: "hf-dataset", id: "Enderfga/HumanRefiner", href: "https://huggingface.co/datasets/Enderfga/HumanRefiner" },
+        ],
+        links: [
+            ["Dataset page", "https://huggingface.co/datasets/Enderfga/HumanRefiner"],
+            ["Paper", "https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf"],
+        ],
+        bibtex: `
+@inproceedings{fang2024humanrefiner,
+  author    = {Guian Fang and Wenbiao Yan and Yuanfan Guo and Jianhua Han and Zutao Jiang and Hang Xu and Shengcai Liao and Xiaodan Liang},
+  title     = {HumanRefiner: Benchmarking Abnormal Human Generation and Refining with Coarse-to-Fine Pose-Reversible Guidance},
+  booktitle = {Computer Vision - {ECCV} 2024 - 18th European Conference, Milan, Italy, September 29-October 4, 2024, Proceedings, Part {XXXII}},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {201--217},
+  publisher = {Springer},
+  year      = {2024},
+  doi       = {10.1007/978-3-031-73411-3_12},
+}
+`,
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/t2vscore.webp",
+            width: 2400,
+            height: 1558,
+            alt: "T2VScore framework — text alignment and video quality evaluation pipelines",
+        },
+        href: "https://arxiv.org/abs/2401.07781",
+        title: "T2VScore",
+        subtitle: "Towards A Better Metric for Text-to-Video Generation",
+        authors: "Jay Zhangjie Wu*, Guian Fang*, Haoning Wu*, Xintao Wang, Yixiao Ge, Xiaodong Cun, David Junhao Zhang, Jia-Wei Liu, Yuchao Gu, Rui Zhao, Weisi Lin, Wynne Hsu, Ying Shan, Mike Zheng Shou",
+        venue: "Preprint",
+        year: 2024,
+        links: [
+            ["Paper", "https://arxiv.org/abs/2401.07781"],
+            ["Project page", "https://showlab.github.io/T2VScore/"],
+            ["Code", "https://github.com/showlab/T2VScore"],
+        ],
+        bibtex: `
+@article{wu2024t2vscore,
+  title   = {Towards A Better Metric for Text-to-Video Generation},
+  author  = {Jay Zhangjie Wu and Guian Fang and Haoning Wu and Xintao Wang and Yixiao Ge and Xiaodong Cun and David Junhao Zhang and Jia-Wei Liu and Yuchao Gu and Rui Zhao and Weisi Lin and Wynne Hsu and Ying Shan and Mike Zheng Shou},
+  journal = {arXiv preprint arXiv:2401.07781},
+  year    = {2024},
+}
+`,
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/ChartThinker.webp",
+            width: 1100,
+            height: 1024,
+            alt: "ChartThinker framework diagram showing contextual chain-of-thought approach",
+        },
+        href: "https://github.com/Notonion/ChartThinker",
+        title: "ChartThinker",
+        subtitle: "A Contextual Chain-of-Thought Approach to Optimized Chart Summarization",
+        authors: "Mengsha Liu, Daoyuan Chen, Yaliang Li, Guian Fang, Ying Shen",
+        venue: "LREC-COLING",
+        year: 2024,
+        metrics: [
+            { type: "hf-dataset", id: "ChartThinker/Chart-Sum-QA", href: "https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA" },
+        ],
+        links: [
+            ["Dataset page", "https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA"],
+            ["Paper", "https://aclanthology.org/2024.lrec-main.273/"],
+        ],
+        bibtex: `
+@inproceedings{liu-etal-2024-chartthinker,
+    title     = {{C}hart{T}hinker: A Contextual Chain-of-Thought Approach to Optimized Chart Summarization},
+    author    = {Liu, Mengsha and Chen, Daoyuan and Li, Yaliang and Fang, Guian and Shen, Ying},
+    booktitle = {Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING 2024)},
+    month     = may,
+    year      = {2024},
+    address   = {Torino, Italia},
+    publisher = {ELRA and ICCL},
+    url       = {https://aclanthology.org/2024.lrec-main.273/},
+    pages     = {3057--3074},
+}
+`,
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/RealignDiff.webp",
+            width: 1600,
+            height: 772,
+            alt: "RealignDiff framework showing coarse-to-fine semantic re-alignment process",
+        },
+        href: "https://github.com/Enderfga/RealignDiff",
+        title: "RealignDiff",
+        subtitle: "Boosting Text-to-Image Diffusion Model with Coarse-to-fine Semantic Re-alignment",
+        authors: "Guian Fang*, Zutao Jiang*, Jianhua Han, Guansong Lu, Hang Xu, Shengcai Liao, Xiaojun Chang, Xiaodan Liang",
+        venue: "IEEE TNNLS",
+        year: 2023,
+        links: [
+            ["Paper", "https://ieeexplore.ieee.org/document/11084988"],
+        ],
+        bibtex: `
+@article{jiang2025realigndiff,
+  author  = {Zutao Jiang and Guian Fang and Jianhua Han and Guansong Lu and Hang Xu and Shengcai Liao and Xiaojun Chang and Xiaodan Liang},
+  title   = {RealignDiff: Boosting Text-to-Image Diffusion Model With Coarse-to-Fine Semantic Realignment},
+  journal = {{IEEE} Transactions on Neural Networks and Learning Systems},
+  volume  = {36},
+  number  = {10},
+  pages   = {19010--19023},
+  year    = {2025},
+  doi     = {10.1109/TNNLS.2025.3584554},
+}
+`,
+    },
+];
+
+export const products = [
+    {
+        highlight: true,
+        media: {
+            type: "youtube",
+            id: "qJLv6ltFw04",
+            label: "Play: PAI — Long-form Video Generation for Cinematic Storytelling",
+        },
+        chip: "Product",
+        href: "https://pai.utopaistudios.com/",
+        icon: "rocket",
+        title: "PAI-PRO",
+        subtitle: "A Video-Generation Agent for Long-form Cinematic Storytelling",
+        venue: "Productized at Utopai Studios",
+        year: 2026,
+        metrics: [
+            { type: "youtube-views", video: "qJLv6ltFw04", href: "https://www.youtube.com/watch?v=qJLv6ltFw04" },
+        ],
+        links: [
+            ["Launch post", "https://www.linkedin.com/posts/utopaistudios_introducing-pai-a-long-form-video-generation-activity-7434327612258258944-R6gr"],
+            ["Product page", "https://pai.utopaistudios.com/"],
+        ],
+    },
+    {
+        id: "work-claw",
+        highlight: true,
+        media: {
+            type: "img",
+            src: "https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg",
+            alt: "Claw Orchestrator architecture — entrypoints, session layer, engines, and orchestration modes",
+        },
+        chip: "Open Source",
+        href: "https://github.com/Enderfga/claw-orchestrator",
+        icon: "terminal",
+        title: "Claw Orchestrator",
+        subtitle: "A Unified Runtime for Coding Agent CLIs",
+        venue: "Open-source",
+        year: 2026,
+        metrics: [
+            { type: "github-stars", repo: "Enderfga/claw-orchestrator", href: "https://github.com/Enderfga/claw-orchestrator" },
+            { type: "npm", pkg: "@enderfga/claw-orchestrator", href: "https://www.npmjs.com/package/@enderfga/claw-orchestrator" },
+        ],
+    },
+    {
+        media: {
+            type: "youtube",
+            id: "UX46R72FsVs",
+            label: "Play: MikoAI — FramePrompt Animation Demo",
+        },
+        chip: "Product · Report",
+        href: "https://arxiv.org/abs/2506.17301",
+        icon: "video",
+        title: "FramePrompt",
+        subtitle: "ACG Creation Made Easy, Powering MikoAI",
+        venue: "Productized at MikoAI",
+        year: 2025,
+        links: [
+            ["Technical Report", "https://arxiv.org/abs/2506.17301"],
+            ["MikoAI", "https://mikomiko.ai/"],
+        ],
+    },
+    {
+        media: {
+            type: "img",
+            src: "images/cybever.webp",
+            width: 1600,
+            height: 966,
+            alt: "Cybever — AI 3D town scene generation interface",
+        },
+        chip: "Product",
+        href: "https://www.youtube.com/watch?v=uUqzCxnEURQ",
+        icon: "globe",
+        title: "Generate 3D Worlds in Production with AI",
+        venue: "Productized at Cybever",
+        year: 2024,
+        links: [
+            ["Demo", "https://www.youtube.com/watch?v=uUqzCxnEURQ"],
+            ["VentureBeat", "https://venturebeat.com/games/cybever-unveils-ai-based-3d-world-creation-platform/"],
+        ],
+    },
+    {
+        highlight: true,
+        media: {
+            type: "img",
+            src: "images/llama2.webp",
+            width: 1280,
+            height: 741,
+            alt: "LLaMA2-Accessory toolkit architecture diagram",
+        },
+        chip: "Open Source",
+        href: "https://github.com/Alpha-VLLM/LLaMA2-Accessory",
+        title: "LLaMA2-Accessory",
+        subtitle: "An Open-source Toolkit for LLM Development",
+        authors: "Chris Liu, Ziyi Lin, Guian Fang, Jiaming Han, Yijiang Liu, Renrui Zhang, Longtian Qiu, Yichi Zhang, Siyuan Huang",
+        venue: "Open-source",
+        year: 2023,
+        metrics: [
+            { type: "github-stars", repo: "Alpha-VLLM/LLaMA2-Accessory,OpenGVLab/LLaMA-Adapter", href: "https://github.com/Alpha-VLLM/LLaMA2-Accessory" },
+        ],
+        links: [
+            ["Checkpoint page", "https://huggingface.co/Alpha-VLLM/LLaMA2-Accessory"],
+            ["Documentation", "https://llama2-accessory.readthedocs.io/en/latest/"],
+            ["LLaMA-Adapter", "https://github.com/OpenGVLab/LLaMA-Adapter"],
+        ],
+    },
+];
