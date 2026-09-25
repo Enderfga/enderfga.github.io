@@ -45,7 +45,7 @@ function media(m) {
                 `     alt="${esc(m.alt)}"\n     loading="lazy">`;
         case 'video':
             return `<video class="paper-video"\n       src="${esc(m.src)}"\n       poster="${esc(m.poster)}"\n` +
-                `       loop\n       muted\n       playsinline\n       preload="none"\n       aria-label="${esc(m.label)}"></video>`;
+                `       loop\n       muted\n       playsinline\n       controls\n       preload="none"\n       aria-label="${esc(m.label)}"></video>`;
         case 'youtube':
             return `<lite-youtube videoid="${esc(m.id)}" playlabel="${esc(m.label)}"></lite-youtube>`;
         default:

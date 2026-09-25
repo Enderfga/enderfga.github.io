@@ -41,12 +41,12 @@
     <link rel="canonical" href="https://enderfga.cn/">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="stylesheet.css?v=20260905f" as="style">
+    <link rel="preload" href="stylesheet.css?v=20260925a" as="style">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="stylesheet.css?v=20260905f">
+    <link rel="stylesheet" href="stylesheet.css?v=20260925a">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css">
     <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" defer></script>
     
@@ -177,7 +177,7 @@
                 <p>I am a Ph.D. student at <a href="https://sites.google.com/view/showlab/" target="_blank" rel="noopener">Show Lab</a>, <strong><a href="https://www.nus.edu.sg/" target="_blank" rel="noopener">National University of Singapore</a></strong>, advised by <a href="https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl" target="_blank" rel="noopener">Prof. Mike Zheng Shou</a>.</p>
                 <p>My research centers on <strong>generative video models</strong> and <strong>world models</strong> for long-form visual generation, currently on few-step distillation, long-horizon memory, and <strong>embodied intelligence</strong>.</p>
                 <p>I also work on agents that produce visual content rather than only consume it, and on runtime infrastructure for coding agents. I am open to collaboration.</p>
-                <p class="profile-background">Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(梁小丹)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
+                <p class="profile-background">Previously, I received my B.Eng. in Intelligent Science and Technology at the School of Intelligent Systems Engineering, <strong><a href="https://ise.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a></strong>, advised by Xiaodan Liang <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html" target="_blank" rel="noopener">(<span lang="zh-CN">梁小丹</span>)</a>, co-supervised by <a href="https://shengcailiao.github.io/" target="_blank" rel="noopener">Shengcai Liao</a>.</p>
             </div>
             <div class="profile-contact" aria-label="Contact and profiles">
                 <a href="mailto:guianfang@u.nus.edu" aria-label="Email" title="Email"><svg class="fa-svg" aria-hidden="true"><use href="#i-envelope"/></svg></a>
@@ -212,7 +212,7 @@
             </div>
         </section>
 
-        <section id="selected" aria-labelledby="selected-title">
+        <section id="selected">
             <div class="selected-heading">
                 <h2 id="selected-title">Selected Work</h2>
                 <span class="work-count" aria-hidden="true">01 <span>/ 03</span></span>
@@ -220,7 +220,7 @@
             <div class="work-carousel" role="region" aria-roledescription="carousel" aria-label="Selected work">
                 <div class="work-window">
                     <div class="work-track">
-                        <article class="work-card" data-name="AnyFlow" role="group" aria-roledescription="slide" aria-label="AnyFlow, 1 of 3">
+                        <div class="work-card" data-name="AnyFlow" role="group" aria-roledescription="slide" aria-label="AnyFlow, 1 of 3">
                             <div class="work-cover">
                                 <video class="work-video" src="images/anyflow-demo.mp4" poster="images/anyflow-poster.webp"
                                        loop muted playsinline controls preload="none"
@@ -230,8 +230,8 @@
                                 <div><h3><a href="#work-anyflow">AnyFlow</a></h3><p>ECCV 2026 <span class="work-award">Oral</span></p></div>
                                 <a class="work-detail" href="#work-anyflow" aria-label="View AnyFlow details">View work <span aria-hidden="true">↗</span></a>
                             </div>
-                        </article>
-                        <article class="work-card" data-name="SolarWM" role="group" aria-roledescription="slide" aria-label="SolarWM, 2 of 3">
+                        </div>
+                        <div class="work-card" data-name="SolarWM" role="group" aria-roledescription="slide" aria-label="SolarWM, 2 of 3">
                             <div class="work-cover">
                                 <video class="work-video" src="images/solarwm-demo.mp4" poster="images/solarwm.webp"
                                        loop muted playsinline controls preload="none"
@@ -241,8 +241,8 @@
                                 <div><h3><a href="#work-solarwm">SolarWM</a></h3><p>Preprint · 2026</p></div>
                                 <a class="work-detail" href="#work-solarwm" aria-label="View SolarWM details">View work <span aria-hidden="true">↗</span></a>
                             </div>
-                        </article>
-                        <article class="work-card" data-name="Claw Orchestrator" role="group" aria-roledescription="slide" aria-label="Claw Orchestrator, 3 of 3">
+                        </div>
+                        <div class="work-card" data-name="Claw Orchestrator" role="group" aria-roledescription="slide" aria-label="Claw Orchestrator, 3 of 3">
                             <a class="work-cover" href="#work-claw" aria-label="View Claw Orchestrator details">
                                 <img src="https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg" alt="Claw Orchestrator architecture" loading="eager">
                             </a>
@@ -250,7 +250,7 @@
                                 <div><h3><a href="#work-claw">Claw Orchestrator</a></h3><p>Open Source · 2026</p></div>
                                 <a class="work-detail" href="#work-claw" aria-label="View Claw Orchestrator details">View work <span aria-hidden="true">↗</span></a>
                             </div>
-                        </article>
+                        </div>
                     </div>
                 </div>
                 <div class="work-controls">
@@ -334,6 +334,7 @@
                                loop
                                muted
                                playsinline
+                               controls
                                preload="none"
                                aria-label="PAI-Actor — single- and multi-character replacement in film scenes"></video>
                     </div>
@@ -412,6 +413,7 @@
                                loop
                                muted
                                playsinline
+                               controls
                                preload="none"
                                aria-label="AnyFlow — any-step video diffusion demo"></video>
                     </div>
@@ -454,6 +456,7 @@
                                loop
                                muted
                                playsinline
+                               controls
                                preload="none"
                                aria-label="PAI-Studio — cinematic video background replacement demo"></video>
                     </div>
@@ -930,10 +933,10 @@
             </ul>
         </section>
         
-        <footer role="contentinfo">
+        <footer>
             <p>Feel free to steal this website's <a href="https://github.com/Enderfga/enderfga.github.io" target="_blank" rel="noopener">source code</a> — please grab it from the repo, not by scraping this page.</p>
         </footer>
     </main>
-    <script src="app.js?v=20260905f" defer></script>
+    <script src="app.js?v=20260925a" defer></script>
 </body>
 </html>

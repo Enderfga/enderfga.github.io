@@ -503,11 +503,13 @@ span.highlight {
     z-index: 999;
     /* Hidden until scrolled — fades in via .is-visible (no display snap) */
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
 }
 
     .to-top.is-visible {
     opacity: 1;
+        visibility: visible;
     pointer-events: auto;
 }
 

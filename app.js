@@ -310,6 +310,9 @@ const Website = {
             const clone = (node) => {
                 const c = node.cloneNode(true);
                 c.setAttribute('aria-hidden', 'true');
+                // aria-hidden alone leaves the clone's links tabbable; keep them clickable
+                // (a peek can be tapped mid-wrap) but out of the keyboard order.
+                c.querySelectorAll('a, button').forEach((el) => { el.tabIndex = -1; });
                 return c;
             };
             real.slice(N - PAD).forEach((node) => track.insertBefore(clone(node), real[0]));
