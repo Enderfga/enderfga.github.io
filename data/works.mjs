@@ -8,7 +8,8 @@
 // authors and adoption are HTML, venue is shown in italics, metrics become the
 // live chips on the venue line, links render in order, and bibtex is copied
 // verbatim by the BibTeX button — it is deliberately NOT derived from the other
-// fields, so a record can differ from the display on purpose.
+// fields, so a record can differ from the display on purpose. It is a String.raw
+// template so LaTeX escapes such as Malm{\"{o}} keep their backslashes.
 
 export const publications = [
     {
@@ -30,7 +31,7 @@ export const publications = [
             ["Project page", "https://alicezrzhao.github.io/mask_forcing/"],
             ["Code", "https://github.com/delaprada/Mask-Forcing"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @misc{zhao2026maskforcing,
   title  = {Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout},
   author = {Zhuoran Zhao and Shengju Qian and Tongtong Liang and Xianghao Kong and Songchun Zhang and Junchao Huang and Guian Fang and Xin Wang and Pan Hui and Anyi Rao},
@@ -59,7 +60,7 @@ export const publications = [
             ["Paper", "https://arxiv.org/abs/2609.05918"],
             ["Code", "https://github.com/showlab/PAI-Actor"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @misc{tang2026paiactor,
       title={PAI-Actor: Cinematic Multi-Character Replacement in Dynamic Scenes},
       author={Bangxun Tang and Heyuan Gao and Yiren Song and Guian Fang and Zijian He and Jie Yang and Mike Zheng Shou},
@@ -99,7 +100,7 @@ export const publications = [
             ["Dataset", "https://huggingface.co/datasets/junchaoh-cs/SolarWM-Data"],
             ["Code", "https://github.com/Junchao-cs/SolarWM"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @misc{huang2026solarwm,
   title  = {SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models},
   author = {Junchao Huang and Guian Fang and Shengju Qian and Xianghao Kong and Zhuoran Zhao and Wei Huang and Yihua Du and Zixin Zhang and Justin Cui and Yuchao Gu and Yukang Chen and Xinting Hu and Tianyu He and Shaoshuai Shi and Zhuotao Tian and Xin Wang and Mike Zheng Shou and Li Jiang},
@@ -144,15 +145,16 @@ export const publications = [
             ["Project page", "https://nvlabs.github.io/AnyFlow/"],
             ["Models", "https://huggingface.co/collections/nvidia/anyflow"],
         ],
-        bibtex: `
-@misc{gu2026anyflow,
-      title={AnyFlow: Any-Step Video Diffusion Model with On-Policy Flow Map Distillation},
-      author={Yuchao Gu and Guian Fang and Yuxin Jiang and Weijia Mao and Song Han and Han Cai and Mike Zheng Shou},
-      year={2026},
-      eprint={2605.13724},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2605.13724},
+        bibtex: String.raw`
+@inproceedings{gu2026anyflow,
+  author    = {Yuchao Gu and Guian Fang and Yuxin Jiang and Weijia Mao and Song Han and Han Cai and Mike Zheng Shou},
+  title     = {AnyFlow: Any-Step Video Diffusion Model with On-Policy Flow Map Distillation},
+  booktitle = {Computer Vision - {ECCV} 2026 - 19th European Conference, Malm{\"{o}}, Sweden, September 8-12, 2026, Proceedings, Part {LII}},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {163--181},
+  publisher = {Springer},
+  year      = {2026},
+  doi       = {10.1007/978-3-032-37235-2_10},
 }
 `,
     },
@@ -174,15 +176,16 @@ export const publications = [
             ["Project page", "https://showlab.github.io/PAI-Studio/"],
             ["Code", "https://github.com/showlab/PAI-Studio"],
         ],
-        bibtex: `
-@misc{gao2026paistudio,
-      title={PAI-Studio: Cinematic Video Background Replacement with Camera-Aware Motion},
-      author={Heyuan Gao and Bangxun Tang and Yiren Song and Guian Fang and Zijian He and Jie Yang and Mike Zheng Shou},
-      year={2026},
-      eprint={2606.01399},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2606.01399},
+        bibtex: String.raw`
+@inproceedings{gao2026paistudio,
+  author    = {Heyuan Gao and Bangxun Tang and Yiren Song and Guian Fang and Zijian He and Jie Yang and Mike Zheng Shou},
+  title     = {PAI-Studio: Cinematic Video Background Replacement with Camera-Aware Motion},
+  booktitle = {Computer Vision - {ECCV} 2026 - 19th European Conference, Malm{\"{o}}, Sweden, September 8-12, 2026, Proceedings, Part {LIII}},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {455--472},
+  publisher = {Springer},
+  year      = {2026},
+  doi       = {10.1007/978-3-032-37255-0_25},
 }
 `,
     },
@@ -204,7 +207,7 @@ export const publications = [
         links: [
             ["Paper", "data/declare-compile-look.pdf"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @inproceedings{fang2026declare,
   title     = {Declare, Compile, Look: Coordinate-Free Layout Generation with Vision-in-the-Loop Repair},
   author    = {Guian Fang and Mengsha Liu and Mike Zheng Shou},
@@ -231,7 +234,7 @@ export const publications = [
         links: [
             ["Paper", "https://openreview.net/pdf?id=6325Jzc9eR"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @misc{wu2025veditbench,
   title  = {VEditBench: Holistic Benchmark for Text-Guided Video Editing},
   author = {Jay Zhangjie Wu and Guian Fang and Dongrong Joe Fu and Vijay Anand Raghava Kanakagiri and Forrest Iandola and Kurt Keutzer and Wynne Hsu and Zhen Dong and Mike Zheng Shou},
@@ -262,7 +265,7 @@ export const publications = [
             ["Dataset page", "https://huggingface.co/datasets/Enderfga/HumanRefiner"],
             ["Paper", "https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04696.pdf"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @inproceedings{fang2024humanrefiner,
   author    = {Guian Fang and Wenbiao Yan and Yuanfan Guo and Jianhua Han and Zutao Jiang and Hang Xu and Shengcai Liao and Xiaodan Liang},
   title     = {HumanRefiner: Benchmarking Abnormal Human Generation and Refining with Coarse-to-Fine Pose-Reversible Guidance},
@@ -294,7 +297,7 @@ export const publications = [
             ["Project page", "https://showlab.github.io/T2VScore/"],
             ["Code", "https://github.com/showlab/T2VScore"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @article{wu2024t2vscore,
   title   = {Towards A Better Metric for Text-to-Video Generation},
   author  = {Jay Zhangjie Wu and Guian Fang and Haoning Wu and Xintao Wang and Yixiao Ge and Xiaodong Cun and David Junhao Zhang and Jia-Wei Liu and Yuchao Gu and Rui Zhao and Weisi Lin and Wynne Hsu and Ying Shan and Mike Zheng Shou},
@@ -324,7 +327,7 @@ export const publications = [
             ["Dataset page", "https://huggingface.co/datasets/ChartThinker/Chart-Sum-QA"],
             ["Paper", "https://aclanthology.org/2024.lrec-main.273/"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @inproceedings{liu-etal-2024-chartthinker,
     title     = {{C}hart{T}hinker: A Contextual Chain-of-Thought Approach to Optimized Chart Summarization},
     author    = {Liu, Mengsha and Chen, Daoyuan and Li, Yaliang and Fang, Guian and Shen, Ying},
@@ -355,7 +358,7 @@ export const publications = [
         links: [
             ["Paper", "https://ieeexplore.ieee.org/document/11084988"],
         ],
-        bibtex: `
+        bibtex: String.raw`
 @article{jiang2025realigndiff,
   author  = {Zutao Jiang and Guian Fang and Jianhua Han and Guansong Lu and Hang Xu and Shengcai Liao and Xiaojun Chang and Xiaodan Liang},
   title   = {RealignDiff: Boosting Text-to-Image Diffusion Model With Coarse-to-Fine Semantic Realignment},
