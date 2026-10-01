@@ -231,12 +231,23 @@
         <section id="selected">
             <div class="selected-heading">
                 <h2 id="selected-title">Selected Work</h2>
-                <span class="work-count" aria-hidden="true">01 <span>/ 03</span></span>
+                <span class="work-count" aria-hidden="true">01 <span>/ 04</span></span>
             </div>
             <div class="work-carousel" role="region" aria-roledescription="carousel" aria-label="Selected work">
                 <div class="work-window">
                     <div class="work-track">
-                        <div class="work-card" data-name="AnyFlow" role="group" aria-roledescription="slide" aria-label="AnyFlow, 1 of 3">
+                        <div class="work-card" data-name="Utopai X" role="group" aria-roledescription="slide" aria-label="Utopai X, 1 of 4">
+                            <div class="work-cover">
+                                <video class="work-video" src="images/utopaix-promo.mp4" poster="images/utopaix-poster.webp"
+                                       loop muted playsinline controls preload="none"
+                                       aria-label="Utopai X launch film"></video>
+                            </div>
+                            <div class="work-caption">
+                                <div><h3><a href="#work-utopaix">Utopai X</a></h3><p>Product · 2026 <span class="work-award">#2 AA T2V</span></p></div>
+                                <a class="work-detail" href="#work-utopaix" aria-label="View Utopai X details">View work <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </div>
+                        <div class="work-card" data-name="AnyFlow" role="group" aria-roledescription="slide" aria-label="AnyFlow, 2 of 4">
                             <div class="work-cover">
                                 <video class="work-video" src="images/anyflow-demo.mp4" poster="images/anyflow-poster.webp"
                                        loop muted playsinline controls preload="none"
@@ -247,7 +258,7 @@
                                 <a class="work-detail" href="#work-anyflow" aria-label="View AnyFlow details">View work <span aria-hidden="true">↗</span></a>
                             </div>
                         </div>
-                        <div class="work-card" data-name="SolarWM" role="group" aria-roledescription="slide" aria-label="SolarWM, 2 of 3">
+                        <div class="work-card" data-name="SolarWM" role="group" aria-roledescription="slide" aria-label="SolarWM, 3 of 4">
                             <div class="work-cover">
                                 <video class="work-video" src="images/solarwm-demo.mp4" poster="images/solarwm.webp"
                                        loop muted playsinline controls preload="none"
@@ -258,7 +269,7 @@
                                 <a class="work-detail" href="#work-solarwm" aria-label="View SolarWM details">View work <span aria-hidden="true">↗</span></a>
                             </div>
                         </div>
-                        <div class="work-card" data-name="Claw Orchestrator" role="group" aria-roledescription="slide" aria-label="Claw Orchestrator, 3 of 3">
+                        <div class="work-card" data-name="Claw Orchestrator" role="group" aria-roledescription="slide" aria-label="Claw Orchestrator, 4 of 4">
                             <a class="work-cover" href="#work-claw" aria-label="View Claw Orchestrator details">
                                 <img src="https://raw.githubusercontent.com/Enderfga/claw-orchestrator/main/assets/banner.jpg" alt="Claw Orchestrator architecture" loading="eager">
                             </a>
@@ -282,9 +293,10 @@
             <h2>News</h2>
             <div class="news-list-wrap">
                 <ul class="news-list" id="news-list">
+                    <li><span class="news-date">2026.09</span> Launched <a href="#work-utopaix">Utopai X</a> at Utopai Studios — debuting at <strong>#2</strong> on the <a href="https://artificialanalysis.ai/video/leaderboard/text-to-video" target="_blank" rel="noopener">Artificial Analysis Text to Video leaderboard</a>.</li>
                     <li><span class="news-date">2026.09</span> <a href="https://arxiv.org/abs/2609.05918" target="_blank" rel="noopener">PAI-Actor</a> accepted to <em>NeurIPS 2026</em> — cinematic multi-character replacement in dynamic scenes.</li>
                     <li><span class="news-date">2026.09</span> Released <a href="https://junchao-cs.github.io/SolarWM-Web/" target="_blank" rel="noopener">SolarWM</a> — open data and scalable training for long-horizon video world models.</li>
-                    <li><span class="news-date">2026.06</span> Two papers — <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> and <a href="https://arxiv.org/abs/2606.01399" target="_blank" rel="noopener">PAI-Studio</a> — accepted to <em>ECCV 2026</em>.</li>
+                    <li class="news-extra" hidden><span class="news-date">2026.06</span> Two papers — <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> and <a href="https://arxiv.org/abs/2606.01399" target="_blank" rel="noopener">PAI-Studio</a> — accepted to <em>ECCV 2026</em>.</li>
                     <li class="news-extra" hidden><span class="news-date">2026.05</span> Open-sourced <a href="https://arxiv.org/abs/2605.13724" target="_blank" rel="noopener">AnyFlow</a> with <span class="brand-nvidia">NVIDIA</span> — any-step video diffusion via <strong>on-policy distillation</strong>.</li>
                     <li class="news-extra" hidden><span class="news-date">2026.05</span> Released <a href="https://github.com/Enderfga/claw-orchestrator" target="_blank" rel="noopener">Claw Orchestrator</a> — a unified runtime for Claude Code, Codex and other coding CLIs.</li>
                     <li class="news-extra" hidden><span class="news-date">2026.03</span> Launched <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">PAI</a> at Utopai Studios — long-form video generation for cinematic storytelling.</li>
@@ -721,6 +733,35 @@
 
             <div class="research-content">
                 <!-- works:products — generated from data/works.mjs by scripts/build-works.mjs; edit the data, not this block -->
+                <article class="research-paper highlight" id="work-utopaix" tabindex="-1">
+                    <div class="paper-media">
+                        <video class="paper-video"
+                               src="images/utopaix-aa.mp4"
+                               poster="images/utopaix-aa.webp"
+                               loop
+                               muted
+                               playsinline
+                               controls
+                               preload="none"
+                               aria-label="Utopai X entering the Artificial Analysis Text to Video leaderboard at #2"></video>
+                    </div>
+                    <div class="paper-content">
+                        <span class="cat-chip">Product</span>
+                        <h3 class="paper-title">
+                            <a href="https://artificialanalysis.ai/video/leaderboard/text-to-video" target="_blank" rel="noopener">
+                                <svg class="fa-svg" aria-hidden="true" focusable="false"><use href="#i-video"/></svg> Utopai X:<br>A Cinematic Video Generation Model, Post-trained on MiniMax H3
+                            </a>
+                        </h3>
+                        <p class="paper-venue"><em>Productized at Utopai Studios</em>, 2026<span class="paper-award">#2 on Artificial Analysis Text to Video</span></p>
+                        <div class="paper-links">
+                            <a href="https://artificialanalysis.ai/video/leaderboard/text-to-video" target="_blank" rel="noopener">Leaderboard</a>
+                            <a href="https://x.com/ArtificialAnlys/status/2105343643251032304" target="_blank" rel="noopener">Announcement</a>
+                            <a href="https://x.com/UtopaiStudios/status/2105352264294793639" target="_blank" rel="noopener">Launch film</a>
+                            <a href="https://pai.utopaistudios.com/" target="_blank" rel="noopener">Try it in PAI</a>
+                        </div>
+                    </div>
+                </article>
+
                 <article class="research-paper highlight">
                     <div class="paper-media">
                         <lite-youtube videoid="qJLv6ltFw04" playlabel="Play: PAI — Long-form Video Generation for Cinematic Storytelling"></lite-youtube>

@@ -375,6 +375,30 @@ export const publications = [
 
 export const products = [
     {
+        id: "work-utopaix",
+        highlight: true,
+        media: {
+            type: "video",
+            src: "images/utopaix-aa.mp4",
+            poster: "images/utopaix-aa.webp",
+            label: "Utopai X entering the Artificial Analysis Text to Video leaderboard at #2",
+        },
+        chip: "Product",
+        href: "https://artificialanalysis.ai/video/leaderboard/text-to-video",
+        icon: "video",
+        title: "Utopai X",
+        subtitle: "A Cinematic Video Generation Model, Post-trained on MiniMax H3",
+        venue: "Productized at Utopai Studios",
+        year: 2026,
+        award: "#2 on Artificial Analysis Text to Video",
+        links: [
+            ["Leaderboard", "https://artificialanalysis.ai/video/leaderboard/text-to-video"],
+            ["Announcement", "https://x.com/ArtificialAnlys/status/2105343643251032304"],
+            ["Launch film", "https://x.com/UtopaiStudios/status/2105352264294793639"],
+            ["Try it in PAI", "https://pai.utopaistudios.com/"],
+        ],
+    },
+    {
         highlight: true,
         media: {
             type: "youtube",
